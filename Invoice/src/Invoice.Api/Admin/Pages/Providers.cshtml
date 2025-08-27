@@ -1,0 +1,328 @@
+@page
+@model Invoice.Api.Admin.Pages.ProvidersModel
+@{
+    ViewData["Title"] = "Entegratör Yönetimi";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Entegratör Yönetimi</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addProviderModal">
+                            <i class="fas fa-plus"></i> Yeni Entegratör
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped" id="providersTable">
+                            <thead>
+                                <tr>
+                                    <th>Entegratör</th>
+                                    <th>Firma Adı</th>
+                                    <th>VKN/TCKN</th>
+                                    <th>İmzalama Modu</th>
+                                    <th>Durum</th>
+                                    <th>Son Güncelleme</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var provider in Model.Providers)
+                                {
+                                    <tr>
+                                        <td>
+                                            <span class="badge badge-info">@provider.ProviderKey</span>
+                                        </td>
+                                        <td>@provider.Title</td>
+                                        <td>@provider.VknTckn</td>
+                                        <td>
+                                            @if (provider.SignMode == Invoice.Application.Models.SignMode.ProviderSign)
+                                            {
+                                                <span class="badge badge-warning">Provider İmza</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-success">Kendi İmza</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (provider.IsActive)
+                                            {
+                                                <span class="badge badge-success">Aktif</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-danger">Pasif</span>
+                                            }
+                                        </td>
+                                        <td>@provider.UpdatedAt.ToString("dd.MM.yyyy HH:mm")</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-sm btn-info" 
+                                                        onclick="testConnection('@provider.Id')">
+                                                    <i class="fas fa-plug"></i> Test Bağlantı
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-warning" 
+                                                        onclick="testSend('@provider.Id')">
+                                                    <i class="fas fa-paper-plane"></i> Test Gönder
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-primary" 
+                                                        onclick="editProvider('@provider.Id')">
+                                                    <i class="fas fa-edit"></i> Düzenle
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-danger" 
+                                                        onclick="deleteProvider('@provider.Id')">
+                                                    <i class="fas fa-trash"></i> Sil
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Yeni Entegratör Modal -->
+<div class="modal fade" id="addProviderModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Yeni Entegratör Ekle</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <form id="addProviderForm">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Tenant ID</label>
+                                <input type="text" class="form-control" name="TenantId" value="default" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Entegratör Anahtarı *</label>
+                                <select class="form-control" name="ProviderKey" required>
+                                    <option value="">Seçiniz...</option>
+                                    <option value="foriba">Foriba</option>
+                                    <option value="logo">Logo</option>
+                                    <option value="mikro">Mikro</option>
+                                    <option value="uyumsoft">Uyumsoft</option>
+                                    <option value="kolaybi">KolayBi</option>
+                                    <option value="parasut">Parasut</option>
+                                    <option value="dia">Dia</option>
+                                    <option value="idea">Idea</option>
+                                    <option value="bizimhesap">BizimHesap</option>
+                                    <option value="netsis">Netsis</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Firma Adı *</label>
+                                <input type="text" class="form-control" name="Title" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>VKN/TCKN *</label>
+                                <input type="text" class="form-control" name="VknTckn" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Şube Kodu</label>
+                                <input type="text" class="form-control" name="BranchCode">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>API Base URL *</label>
+                                <input type="url" class="form-control" name="ApiBaseUrl" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>API Anahtarı *</label>
+                                <input type="password" class="form-control" name="ApiKey" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>API Gizli Anahtarı *</label>
+                                <input type="password" class="form-control" name="ApiSecret" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Webhook Gizli Anahtarı *</label>
+                                <input type="password" class="form-control" name="WebhookSecret" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>İmzalama Modu *</label>
+                                <select class="form-control" name="SignMode" required>
+                                    <option value="1">Provider İmza</option>
+                                    <option value="2">Kendi İmza</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Timeout (saniye)</label>
+                                <input type="number" class="form-control" name="TimeoutSec" value="30" min="1" max="300">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">İptal</button>
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Test Sonuç Modal -->
+<div class="modal fade" id="testResultModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Test Sonucu</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="testResultContent"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // DataTable
+            $('#providersTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Turkish.json"
+                },
+                "pageLength": 25,
+                "order": [[0, "asc"]]
+            });
+
+            // Yeni entegratör formu
+            $('#addProviderForm').on('submit', function(e) {
+                e.preventDefault();
+                
+                var formData = {};
+                $(this).serializeArray().forEach(function(item) {
+                    formData[item.name] = item.value;
+                });
+
+                $.ajax({
+                    url: '/api/admin/providers',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(formData),
+                    success: function(response) {
+                        $('#addProviderModal').modal('hide');
+                        location.reload();
+                    },
+                    error: function(xhr) {
+                        alert('Hata: ' + xhr.responseJSON?.error || 'Bilinmeyen hata');
+                    }
+                });
+            });
+        });
+
+        function testConnection(providerId) {
+            $.ajax({
+                url: '/api/admin/providers/' + providerId + '/test-connection',
+                type: 'POST',
+                success: function(response) {
+                    showTestResult('Bağlantı Testi', response);
+                },
+                error: function(xhr) {
+                    showTestResult('Bağlantı Testi', { error: xhr.responseJSON?.error || 'Test başarısız' });
+                }
+            });
+        }
+
+        function testSend(providerId) {
+            $.ajax({
+                url: '/api/admin/providers/' + providerId + '/test-send',
+                type: 'POST',
+                success: function(response) {
+                    showTestResult('Gönderim Testi', response);
+                },
+                error: function(xhr) {
+                    showTestResult('Gönderim Testi', { error: xhr.responseJSON?.error || 'Test başarısız' });
+                }
+            });
+        }
+
+        function showTestResult(title, result) {
+            var content = '<h6>' + title + '</h6>';
+            
+            if (result.error) {
+                content += '<div class="alert alert-danger">' + result.error + '</div>';
+            } else {
+                content += '<div class="alert alert-success">Test başarılı!</div>';
+                content += '<pre>' + JSON.stringify(result, null, 2) + '</pre>';
+            }
+            
+            $('#testResultContent').html(content);
+            $('#testResultModal').modal('show');
+        }
+
+        function editProvider(providerId) {
+            // Düzenleme modal'ı açılacak
+            alert('Düzenleme özelliği henüz implement edilmedi');
+        }
+
+        function deleteProvider(providerId) {
+            if (confirm('Bu entegratörü silmek istediğinizden emin misiniz?')) {
+                $.ajax({
+                    url: '/api/admin/providers/' + providerId,
+                    type: 'DELETE',
+                    success: function() {
+                        location.reload();
+                    },
+                    error: function(xhr) {
+                        alert('Hata: ' + xhr.responseJSON?.error || 'Silme başarısız');
+                    }
+                });
+            }
+        }
+    </script>
+}

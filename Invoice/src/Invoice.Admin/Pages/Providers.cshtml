@@ -1,0 +1,263 @@
+@page
+@model Invoice.Admin.Pages.ProvidersModel
+@{
+    ViewData["Title"] = "Sağlayıcı Ayarları";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-cogs"></i> Sağlayıcı Ayarları
+                    </h3>
+                    <div class="card-tools">
+                        <a href="/Providers/Create" class="btn btn-primary btn-sm">
+                            <i class="fas fa-plus"></i> Yeni Sağlayıcı
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    @if (Model.Providers?.Any() == true)
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Sağlayıcı</th>
+                                        <th>Firma Adı</th>
+                                        <th>VKN/TCKN</th>
+                                        <th>API URL</th>
+                                        <th>İmzalama Modu</th>
+                                        <th>Durum</th>
+                                        <th>Son Güncelleme</th>
+                                        <th>İşlemler</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var provider in Model.Providers)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <span class="badge badge-info">@provider.ProviderKey.ToUpper()</span>
+                                            </td>
+                                            <td>@provider.Title</td>
+                                            <td>@provider.VknTckn</td>
+                                            <td>
+                                                <small class="text-muted">@provider.ApiBaseUrl</small>
+                                            </td>
+                                            <td>
+                                                @if (provider.SignMode == Invoice.Application.Models.SignMode.ProviderSign)
+                                                {
+                                                    <span class="badge badge-success">Provider İmza</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge badge-warning">Kendi İmzamız</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (provider.IsActive)
+                                                {
+                                                    <span class="badge badge-success">Aktif</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge badge-danger">Pasif</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                <small>@provider.UpdatedAt.ToString("dd.MM.yyyy HH:mm")</small>
+                                            </td>
+                                            <td>
+                                                <div class="btn-group btn-group-sm">
+                                                    <a href="/Providers/Edit/@provider.Id" class="btn btn-info" title="Düzenle">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    <button type="button" class="btn btn-success" title="Test Bağlantı" 
+                                                            onclick="testConnection('@provider.Id', '@provider.ProviderKey')">
+                                                        <i class="fas fa-plug"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-warning" title="Test Gönderim" 
+                                                            onclick="testSend('@provider.Id', '@provider.ProviderKey')">
+                                                        <i class="fas fa-paper-plane"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger" title="Sil" 
+                                                            onclick="deleteProvider('@provider.Id', '@provider.ProviderKey')">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle"></i> Henüz sağlayıcı ayarı eklenmemiş. 
+                            <a href="/Providers/Create" class="alert-link">İlk sağlayıcıyı eklemek için tıklayın</a>.
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Test Bağlantı Modal -->
+<div class="modal fade" id="testConnectionModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Test Bağlantı</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="testConnectionResult"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Test Gönderim Modal -->
+<div class="modal fade" id="testSendModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Test Gönderim</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="testSendResult"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function testConnection(providerId, providerKey) {
+            $('#testConnectionResult').html('<div class="text-center"><i class="fas fa-spinner fa-spin"></i> Test ediliyor...</div>');
+            $('#testConnectionModal').modal('show');
+            
+            fetch(`/api/admin/providers/${providerId}/test-connection`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Api-Key': '@Model.ApiKey'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    $('#testConnectionResult').html(`
+                        <div class="alert alert-success">
+                            <i class="fas fa-check-circle"></i> 
+                            <strong>Başarılı!</strong> ${providerKey.toUpperCase()} bağlantısı kuruldu.
+                            <br><small>Yanıt süresi: ${data.responseTime}ms</small>
+                        </div>
+                    `);
+                } else {
+                    $('#testConnectionResult').html(`
+                        <div class="alert alert-danger">
+                            <i class="fas fa-times-circle"></i> 
+                            <strong>Hata!</strong> ${data.message}
+                        </div>
+                    `);
+                }
+            })
+            .catch(error => {
+                $('#testConnectionResult').html(`
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-triangle"></i> 
+                        <strong>Hata!</strong> Test sırasında bir hata oluştu: ${error.message}
+                    </div>
+                `);
+            });
+        }
+        
+        function testSend(providerId, providerKey) {
+            $('#testSendResult').html('<div class="text-center"><i class="fas fa-spinner fa-spin"></i> Test gönderimi yapılıyor...</div>');
+            $('#testSendModal').modal('show');
+            
+            fetch(`/api/admin/providers/${providerId}/test-send`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Api-Key': '@Model.ApiKey'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    $('#testSendResult').html(`
+                        <div class="alert alert-success">
+                            <i class="fas fa-check-circle"></i> 
+                            <strong>Başarılı!</strong> Test fatura gönderimi tamamlandı.
+                            <br><small>Provider ID: ${data.providerInvoiceId}</small>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h6>Yanıt Detayları</h6>
+                            </div>
+                            <div class="card-body">
+                                <pre><code>${JSON.stringify(data.rawResponse, null, 2)}</code></pre>
+                            </div>
+                        </div>
+                    `);
+                } else {
+                    $('#testSendResult').html(`
+                        <div class="alert alert-danger">
+                            <i class="fas fa-times-circle"></i> 
+                            <strong>Hata!</strong> ${data.message}
+                            <br><small>Hata Kodu: ${data.errorCode}</small>
+                        </div>
+                    `);
+                }
+            })
+            .catch(error => {
+                $('#testSendResult').html(`
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-triangle"></i> 
+                        <strong>Hata!</strong> Test sırasında bir hata oluştu: ${error.message}
+                    </div>
+                `);
+            });
+        }
+        
+        function deleteProvider(providerId, providerKey) {
+            if (confirm(`${providerKey.toUpperCase()} sağlayıcısını silmek istediğinizden emin misiniz?`)) {
+                fetch(`/api/admin/providers/${providerId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-Api-Key': '@Model.ApiKey'
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        alert('Silme işlemi başarısız oldu.');
+                    }
+                })
+                .catch(error => {
+                    alert('Silme sırasında hata oluştu: ' + error.message);
+                });
+            }
+        }
+    </script>
+}

@@ -1,0 +1,281 @@
+@page
+@model Invoice.Admin.Pages.QueuesModel
+@{
+    ViewData["Title"] = "Kuyruklar";
+}
+
+<div class="container-fluid">
+    <h1 class="h3 mb-4">Kuyruklar</h1>
+
+    <!-- Sekmeler -->
+    <ul class="nav nav-tabs" id="queueTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="retry-tab" data-bs-toggle="tab" data-bs-target="#retry" type="button" role="tab">
+                Retry İşleri (@Model.RetryJobs.Count)
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="dlq-tab" data-bs-toggle="tab" data-bs-target="#dlq" type="button" role="tab">
+                DLQ (@Model.DlqMessages.Count)
+            </button>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="queueTabsContent">
+        <!-- Retry İşleri Sekmesi -->
+        <div class="tab-pane fade show active" id="retry" role="tabpanel">
+            <div class="card mt-3">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h5 class="mb-0">Retry İşleri</h5>
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-primary btn-sm" onclick="refreshRetryJobs()">
+                                <i class="fas fa-sync-alt"></i> Yenile
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    @if (Model.RetryJobs.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>İş Tipi</th>
+                                        <th>Durum</th>
+                                        <th>Sonraki Deneme</th>
+                                        <th>Deneme Sayısı</th>
+                                        <th>Hata</th>
+                                        <th>İşlemler</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var job in Model.RetryJobs)
+                                    {
+                                        <tr>
+                                            <td>@job.Id.ToString("N")[..8]...</td>
+                                            <td>@job.JobType</td>
+                                            <td>
+                                                <span class="badge bg-@(job.Status == "Pending" ? "warning" : "danger")">
+                                                    @job.Status
+                                                </span>
+                                            </td>
+                                            <td>@job.NextRetryDate?.ToString("dd.MM.yyyy HH:mm")</td>
+                                            <td>@job.RetryCount</td>
+                                            <td>
+                                                @if (!string.IsNullOrEmpty(job.ErrorMessage))
+                                                {
+                                                    <span class="text-danger" title="@job.ErrorMessage">
+                                                        @(job.ErrorMessage.Length > 50 ? job.ErrorMessage[..50] + "..." : job.ErrorMessage)
+                                                    </span>
+                                                }
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-success btn-sm" onclick="retryJob('@job.Id')">
+                                                    <i class="fas fa-redo"></i> Yeniden Dene
+                                                </button>
+                                                <button class="btn btn-info btn-sm" onclick="viewJobDetails('@job.Id')">
+                                                    <i class="fas fa-eye"></i> Detay
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center text-muted py-4">
+                            <i class="fas fa-inbox fa-3x mb-3"></i>
+                            <p>Retry işi bulunamadı</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- DLQ Sekmesi -->
+        <div class="tab-pane fade" id="dlq" role="tabpanel">
+            <div class="card mt-3">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h5 class="mb-0">Dead Letter Queue (DLQ)</h5>
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-primary btn-sm" onclick="refreshDlqMessages()">
+                                <i class="fas fa-sync-alt"></i> Yenile
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    @if (Model.DlqMessages.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Message ID</th>
+                                        <th>Kuyruk</th>
+                                        <th>Mesaj Tipi</th>
+                                        <th>Durum</th>
+                                        <th>Hata</th>
+                                        <th>Oluşturulma</th>
+                                        <th>İşlemler</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var message in Model.DlqMessages)
+                                    {
+                                        <tr>
+                                            <td>@message.MessageId[..8]...</td>
+                                            <td>@message.QueueName</td>
+                                            <td>@message.MessageType</td>
+                                            <td>
+                                                <span class="badge bg-danger">@message.Status</span>
+                                            </td>
+                                            <td>
+                                                @if (!string.IsNullOrEmpty(message.ErrorMessage))
+                                                {
+                                                    <span class="text-danger" title="@message.ErrorMessage">
+                                                        @(message.ErrorMessage.Length > 50 ? message.ErrorMessage[..50] + "..." : message.ErrorMessage)
+                                                    </span>
+                                                }
+                                            </td>
+                                            <td>@message.CreatedAt.ToString("dd.MM.yyyy HH:mm")</td>
+                                            <td>
+                                                <button class="btn btn-success btn-sm" onclick="requeueMessage('@message.Id')">
+                                                    <i class="fas fa-redo"></i> Yeniden Kuyrukla
+                                                </button>
+                                                <button class="btn btn-info btn-sm" onclick="viewMessageDetails('@message.Id')">
+                                                    <i class="fas fa-eye"></i> Detay
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center text-muted py-4">
+                            <i class="fas fa-inbox fa-3x mb-3"></i>
+                            <p>DLQ mesajı bulunamadı</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Detay Modal -->
+<div class="modal fade" id="detailModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Detay</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <pre id="detailContent" class="bg-light p-3 rounded"></pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Retry işi yeniden dene
+        function retryJob(jobId) {
+            if (confirm('Bu işi yeniden denemek istediğinizden emin misiniz?')) {
+                fetch(`/api/admin/retry-jobs/${jobId}/retry`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert('İş yeniden kuyruğa eklendi');
+                        location.reload();
+                    } else {
+                        alert('Hata oluştu');
+                    }
+                });
+            }
+        }
+
+        // DLQ mesajını yeniden kuyrukla
+        function requeueMessage(messageId) {
+            if (confirm('Bu mesajı yeniden kuyruğa almak istediğinizden emin misiniz?')) {
+                fetch(`/api/admin/outbox-messages/${messageId}/requeue`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Mesaj yeniden kuyruğa eklendi');
+                        location.reload();
+                    } else {
+                        alert('Hata oluştu');
+                    }
+                });
+            }
+        }
+
+        // İş detaylarını göster
+        function viewJobDetails(jobId) {
+            fetch(`/api/admin/retry-jobs/${jobId}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('detailContent').textContent = 
+                        JSON.stringify(data, null, 2);
+                    new bootstrap.Modal(document.getElementById('detailModal')).show();
+                });
+        }
+
+        // Mesaj detaylarını göster
+        function viewMessageDetails(messageId) {
+            fetch(`/api/admin/outbox-messages/${messageId}`)
+                .then(response => response.json())
+                .then(data => {
+                    // PII maskeleme uygula
+                    if (data.messageContent) {
+                        try {
+                            const content = JSON.parse(data.messageContent);
+                            // Basit maskeleme (gerçek implementasyonda MaskingHelper kullanılır)
+                            const maskedContent = JSON.stringify(content, null, 2)
+                                .replace(/"plate":\s*"([^"]+)"/g, '"plate": "***"')
+                                .replace(/"vkn":\s*"([^"]+)"/g, '"vkn": "***"');
+                            data.messageContent = maskedContent;
+                        } catch (e) {
+                            // JSON parse edilemezse olduğu gibi göster
+                        }
+                    }
+                    
+                    document.getElementById('detailContent').textContent = 
+                        JSON.stringify(data, null, 2);
+                    new bootstrap.Modal(document.getElementById('detailModal')).show();
+                });
+        }
+
+        // Sayfaları yenile
+        function refreshRetryJobs() {
+            location.reload();
+        }
+
+        function refreshDlqMessages() {
+            location.reload();
+        }
+    </script>
+}

@@ -1,0 +1,41 @@
+# Build results
+bin/
+obj/
+**/bin/
+**/obj/
+.DS_Store
+
+# Visual Studio files
+.vs/
+*.user
+*.suo
+*.cache
+*.dll
+*.exe
+*.pdb
+
+# macOS
+.DS_Store
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# Logs
+*.log
+logs/
+
+# Database
+*.db
+*.sqlite
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# NuGet
+*.nupkg
+packages/

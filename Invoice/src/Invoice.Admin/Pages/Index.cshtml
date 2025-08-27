@@ -1,0 +1,195 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Invoice Admin - Ana Sayfa";
+}
+
+<!-- Monitoring Widget - Üst kısımda küçük bir monitoring widget -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <h5 class="card-title">Günlük Gönderim</h5>
+                <h3 class="card-text">@Model.DailySendCount</h3>
+                <small>Bugün gönderilen fatura sayısı</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <h5 class="card-title">Başarı Oranı</h5>
+                <h3 class="card-text">%@Model.SuccessRate</h3>
+                <small>Son 24 saat başarı oranı</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <h5 class="card-title">P95 Gönderim Süresi</h5>
+                <h3 class="card-text">@Model.P95SendTime ms</h3>
+                <small>95. persentil gönderim süresi</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-warning text-white">
+            <div class="card-body">
+                <h5 class="card-title">Bekleyen Faturalar</h5>
+                <h3 class="card-text">@Model.PendingInvoiceCount</h3>
+                <small>Gönderim bekleyen fatura sayısı</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Fatura Listesi -->
+<div class="card">
+    <div class="card-header">
+        <h4>Fatura Listesi</h4>
+        <div class="float-right">
+            <a href="/Invoices/Create" class="btn btn-primary">Yeni Fatura</a>
+            <a href="/Invoices/Retry" class="btn btn-warning">Başarısız Faturaları Tekrar Dene</a>
+        </div>
+    </div>
+    <div class="card-body">
+        @if (Model.Invoices.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Fatura No</th>
+                            <th>Müşteri</th>
+                            <th>Tutar (TRY)</th>
+                            <th>Durum</th>
+                            <th>Oluşturma Tarihi</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var invoice in Model.Invoices)
+                        {
+                            <tr>
+                                <td>@invoice.InvoiceNumber</td>
+                                <td>@invoice.CustomerName</td>
+                                <td>@invoice.TotalAmount.ToString("C", new System.Globalization.CultureInfo("tr-TR"))</td>
+                                <td>
+                                    <span class="badge badge-@(invoice.Status switch {
+                                        "READY_TO_SEND" => "warning",
+                                        "SENT" => "success",
+                                        "FAILED" => "danger",
+                                        "CANCELLED" => "secondary",
+                                        _ => "info"
+                                    })">
+                                        @invoice.Status
+                                    </span>
+                                </td>
+                                <td>@invoice.CreatedAt.ToString("dd.MM.yyyy HH:mm")</td>
+                                <td>
+                                    <a href="/Invoices/Details/@invoice.Id" class="btn btn-sm btn-info">Detay</a>
+                                    @if (invoice.Status == "FAILED")
+                                    {
+                                        <a href="/Invoices/Retry/@invoice.Id" class="btn btn-sm btn-warning">Tekrar Dene</a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-4">
+                <p class="text-muted">Henüz fatura bulunmuyor.</p>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Hızlı İşlemler -->
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5>Hızlı İşlemler</h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+                    <a href="/Logs/Integration" class="list-group-item list-group-item-action">
+                        <i class="fas fa-exchange-alt"></i> Integration Logları
+                    </a>
+                    <a href="/Logs/Webhook" class="list-group-item list-group-item-action">
+                        <i class="fas fa-webhook"></i> Webhook Logları
+                    </a>
+                    <a href="/Providers/Settings" class="list-group-item list-group-item-action">
+                        <i class="fas fa-cog"></i> Provider Ayarları
+                    </a>
+                    <a href="/Reports/Generate" class="list-group-item list-group-item-action">
+                        <i class="fas fa-chart-bar"></i> Rapor Oluştur
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5>Sistem Durumu</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <small class="text-muted">API Durumu</small>
+                        <div class="d-flex align-items-center">
+                            <div class="status-indicator @(Model.ApiStatus ? "online" : "offline")"></div>
+                            <span class="ml-2">@(Model.ApiStatus ? "Çevrimiçi" : "Çevrimdışı")</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <small class="text-muted">Veritabanı</small>
+                        <div class="d-flex align-items-center">
+                            <div class="status-indicator @(Model.DatabaseStatus ? "online" : "offline")"></div>
+                            <span class="ml-2">@(Model.DatabaseStatus ? "Bağlı" : "Bağlantı Yok")</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-6">
+                        <small class="text-muted">SendWorker</small>
+                        <div class="d-flex align-items-center">
+                            <div class="status-indicator @(Model.SendWorkerStatus ? "online" : "offline")"></div>
+                            <span class="ml-2">@(Model.SendWorkerStatus ? "Çalışıyor" : "Durdu")</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <small class="text-muted">SchedulerWorker</small>
+                        <div class="d-flex align-items-center">
+                            <div class="status-indicator @(Model.SchedulerWorkerStatus ? "online" : "offline")"></div>
+                            <span class="ml-2">@(Model.SchedulerWorkerStatus ? "Çalışıyor" : "Durdu")</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .status-indicator {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        display: inline-block;
+    }
+    
+    .status-indicator.online {
+        background-color: #28a745;
+    }
+    
+    .status-indicator.offline {
+        background-color: #dc3545;
+    }
+</style>
