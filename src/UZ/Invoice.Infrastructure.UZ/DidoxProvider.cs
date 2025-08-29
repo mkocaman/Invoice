@@ -163,7 +163,7 @@ public class DidoxProvider : IInvoiceProvider
         var payload = new
         {
             invoice_number = envelope.InvoiceNumber,
-            invoice_date = envelope.InvoiceDate.ToString("yyyy-MM-dd"),
+            invoice_date = envelope.InvoiceDate?.ToString("yyyy-MM-dd") ?? envelope.IssueDate.ToString("yyyy-MM-dd"),
             total_amount = envelope.TotalAmount,
             currency = "UZS",
             customer = new

@@ -1,0 +1,17 @@
+<Project>
+  <!-- Türkçe yorum: Merkezi paket versiyonu yönetimi -->
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Türkçe yorum: Json'u 9.0.0'a sabitle -->
+    <PackageVersion Include="System.Text.Json" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Türkçe yorum: Bazı paketler restore sırasında System.Xml.Linq isteyebilir.
+         Referans eklemeden sadece indirilmesini garanti ediyoruz. -->
+    <PackageDownload Include="System.Xml.Linq" Version="[4.3.0]" />
+  </ItemGroup>
+</Project>

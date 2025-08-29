@@ -5,7 +5,7 @@ using Invoice.Application.Models;
 using Invoice.Domain.Entities;
 using Invoice.Domain.Enums;
 using System.Text.Json;
-using System.Xml.Linq;
+// using System.Xml.Linq; // .NET 9'da paket gerekiyor, şimdilik kaldırıldı
 
 namespace Invoice.Infrastructure.KZ.Providers;
 
@@ -153,32 +153,31 @@ public class IsEsfProvider : IInvoiceProvider
 
     private string CreateXmlInvoice(InvoiceEnvelope envelope, ProviderConfig config)
     {
-        // Türkçe: IS ESF XML formatına uygun fatura oluştur
-        var xmlDoc = new XDocument(
-            new XElement("Invoice",
-                new XAttribute("xmlns", "http://kgd.gov.kz/esf"),
-                new XElement("InvoiceNumber", envelope.InvoiceNumber),
-                new XElement("InvoiceDate", envelope.InvoiceDate.ToString("yyyy-MM-dd")),
-                new XElement("TotalAmount", envelope.TotalAmount),
-                new XElement("Currency", "KZT"),
-                new XElement("Customer",
-                    new XElement("Name", envelope.CustomerName),
-                    new XElement("TaxNumber", envelope.CustomerTaxNumber)
-                ),
-                new XElement("Items",
-                    envelope.Items?.Select(item => 
-                        new XElement("Item",
-                            new XElement("Name", item.Name),
-                            new XElement("Quantity", item.Quantity),
-                            new XElement("UnitPrice", item.UnitPrice),
-                            new XElement("Total", item.Total)
-                        )
-                    )
-                )
-            )
-        );
-
-        return xmlDoc.ToString();
+        // Türkçe: IS ESF XML formatına uygun fatura oluştur (string olarak)
+        var invoiceDate = envelope.InvoiceDate?.ToString("yyyy-MM-dd") ?? envelope.IssueDate.ToString("yyyy-MM-dd");
+        
+        var itemsXml = "";
+        if (envelope.Items != null)
+        {
+            itemsXml = string.Join("", envelope.Items.Select(item => 
+                $"<Item><Name>{item.Name}</Name><Quantity>{item.Quantity}</Quantity><UnitPrice>{item.UnitPrice}</UnitPrice><Total>{item.Total}</Total></Item>"
+            ));
+        }
+        
+        var xml = $@"<?xml version=""1.0"" encoding=""utf-8""?>
+<Invoice xmlns=""http://kgd.gov.kz/esf"">
+    <InvoiceNumber>{envelope.InvoiceNumber}</InvoiceNumber>
+    <InvoiceDate>{invoiceDate}</InvoiceDate>
+    <TotalAmount>{envelope.TotalAmount}</TotalAmount>
+    <Currency>KZT</Currency>
+    <Customer>
+        <Name>{envelope.CustomerName}</Name>
+        <TaxNumber>{envelope.CustomerTaxNumber}</TaxNumber>
+    </Customer>
+    <Items>{itemsXml}</Items>
+</Invoice>";
+        
+        return xml;
     }
 
     private async Task<IsEsfResponse> SendInvoiceToIsEsfAsync(

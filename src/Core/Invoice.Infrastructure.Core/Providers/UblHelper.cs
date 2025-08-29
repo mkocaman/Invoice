@@ -1,5 +1,5 @@
 // Türkçe: InvoiceEnvelope'dan minimum gerekli alanlarla UBL XML üretimini sağlayan yardımcı (basitleştirilmiş).
-using System.Xml.Linq;
+// using System.Xml.Linq; // .NET 9'da paket gerekiyor, şimdilik kaldırıldı
 using Invoice.Application.Models;
 
 namespace Invoice.Infrastructure.Core.Providers.Common

@@ -1,6 +1,0 @@
-/Users/muhammetkocaman/Invoice/src/UZ/Invoice.Infrastructure.UZ/obj/Debug/net9.0/Invoice.Infrastructure.UZ.GeneratedMSBuildEditorConfig.editorconfig
-/Users/muhammetkocaman/Invoice/src/UZ/Invoice.Infrastructure.UZ/obj/Debug/net9.0/Invoice.Infrastructure.UZ.AssemblyInfoInputs.cache
-/Users/muhammetkocaman/Invoice/src/UZ/Invoice.Infrastructure.UZ/obj/Debug/net9.0/Invoice.Infrastructure.UZ.AssemblyInfo.cs
-/Users/muhammetkocaman/Invoice/src/UZ/Invoice.Infrastructure.UZ/obj/Debug/net9.0/Invoice.Infrastructure.UZ.csproj.CoreCompileInputs.cache
-/Users/muhammetkocaman/Invoice/src/UZ/Invoice.Infrastructure.UZ/obj/Debug/net9.0/Invoice.Infrastructure.UZ.sourcelink.json
-/Users/muhammetkocaman/Invoice/src/UZ/Invoice.Infrastructure.UZ/obj/Debug/net9.0/Invoice.Infrastructure.UZ.csproj.AssemblyReference.cache

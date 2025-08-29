@@ -1,6 +1,6 @@
 using System.ServiceModel;
 using System.ServiceModel.Channels;
-using System.Xml.Linq;
+// using System.Xml.Linq; // .NET 9'da paket gerekiyor, şimdilik kaldırıldı
 using Invoice.Application.Interfaces;
 using Invoice.Application.Models;
 using Invoice.Domain.Entities;
