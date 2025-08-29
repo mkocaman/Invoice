@@ -1,3 +1,4 @@
+#nullable enable
 // Türkçe yorum: Derleme hatalarını gidermek için InvoiceEnvelope'a eksik alanlar eklendi.
 // Bu dosya güvenli: Ana sınıf 'partial' yapıldı ve burada yalnızca nullable property'ler var.
 // İhtiyaç oldukça tipler/sözleşme netleştirilip daraltılabilir.

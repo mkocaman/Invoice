@@ -1,0 +1,429 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/muhammetkocaman/Invoice/src/TR/Invoice.Infrastructure.TR/Invoice.Infrastructure.TR.csproj": {}
+  },
+  "projects": {
+    "/Users/muhammetkocaman/Invoice/src/Core/Invoice.Application/Invoice.Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/muhammetkocaman/Invoice/src/Core/Invoice.Application/Invoice.Application.csproj",
+        "projectName": "Invoice.Application",
+        "projectPath": "/Users/muhammetkocaman/Invoice/src/Core/Invoice.Application/Invoice.Application.csproj",
+        "packagesPath": "/Users/muhammetkocaman/.nuget/packages/",
+        "outputPath": "/Users/muhammetkocaman/Invoice/src/Core/Invoice.Application/obj/",
+        "projectStyle": "PackageReference",
+        "centralPackageVersionsManagementEnabled": true,
+        "configFilePaths": [
+          "/Users/muhammetkocaman/Invoice/NuGet.Config",
+          "/Users/muhammetkocaman/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {
+              "/Users/muhammetkocaman/Invoice/src/Core/Invoice.Domain/Invoice.Domain.csproj": {
+                "projectPath": "/Users/muhammetkocaman/Invoice/src/Core/Invoice.Domain/Invoice.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "noWarn": [
+            "NU1605",
+            "NU1701"
+          ],
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.Extensions.DependencyInjection.Abstractions": {
+              "target": "Package",
+              "version": "[9.0.0, )",
+              "versionCentrallyManaged": true
+            },
+            "Microsoft.Extensions.Logging.Abstractions": {
+              "target": "Package",
+              "version": "[9.0.0, )",
+              "versionCentrallyManaged": true
+            },
+            "Polly": {
+              "target": "Package",
+              "version": "[8.4.1, )",
+              "versionCentrallyManaged": true
+            },
+            "Polly.Extensions.Http": {
+              "target": "Package",
+              "version": "[3.0.0, )",
+              "versionCentrallyManaged": true
+            }
+          },
+          "centralPackageVersions": {
+            "Microsoft.EntityFrameworkCore": "9.0.0",
+            "Microsoft.EntityFrameworkCore.Design": "9.0.0",
+            "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.0",
+            "Microsoft.Extensions.Http": "9.0.0",
+            "Microsoft.Extensions.Http.Polly": "9.0.0",
+            "Microsoft.Extensions.Logging.Abstractions": "9.0.0",
+            "Npgsql.EntityFrameworkCore.PostgreSQL": "9.0.0",
+            "Polly": "8.4.1",
+            "Polly.Extensions.Http": "3.0.0",
+            "System.ServiceModel.Http": "8.1.2",
+            "System.Text.Json": "9.0.0"
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.102/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/muhammetkocaman/Invoice/src/Core/Invoice.Domain/Invoice.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/muhammetkocaman/Invoice/src/Core/Invoice.Domain/Invoice.Domain.csproj",
+        "projectName": "Invoice.Domain",
+        "projectPath": "/Users/muhammetkocaman/Invoice/src/Core/Invoice.Domain/Invoice.Domain.csproj",
+        "packagesPath": "/Users/muhammetkocaman/.nuget/packages/",
+        "outputPath": "/Users/muhammetkocaman/Invoice/src/Core/Invoice.Domain/obj/",
+        "projectStyle": "PackageReference",
+        "centralPackageVersionsManagementEnabled": true,
+        "configFilePaths": [
+          "/Users/muhammetkocaman/Invoice/NuGet.Config",
+          "/Users/muhammetkocaman/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "noWarn": [
+            "NU1605",
+            "NU1701"
+          ],
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "centralPackageVersions": {
+            "Microsoft.EntityFrameworkCore": "9.0.0",
+            "Microsoft.EntityFrameworkCore.Design": "9.0.0",
+            "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.0",
+            "Microsoft.Extensions.Http": "9.0.0",
+            "Microsoft.Extensions.Http.Polly": "9.0.0",
+            "Microsoft.Extensions.Logging.Abstractions": "9.0.0",
+            "Npgsql.EntityFrameworkCore.PostgreSQL": "9.0.0",
+            "Polly": "8.4.1",
+            "Polly.Extensions.Http": "3.0.0",
+            "System.ServiceModel.Http": "8.1.2",
+            "System.Text.Json": "9.0.0"
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.102/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/muhammetkocaman/Invoice/src/Core/Invoice.Infrastructure.Core/Invoice.Infrastructure.Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/muhammetkocaman/Invoice/src/Core/Invoice.Infrastructure.Core/Invoice.Infrastructure.Core.csproj",
+        "projectName": "Invoice.Infrastructure.Core",
+        "projectPath": "/Users/muhammetkocaman/Invoice/src/Core/Invoice.Infrastructure.Core/Invoice.Infrastructure.Core.csproj",
+        "packagesPath": "/Users/muhammetkocaman/.nuget/packages/",
+        "outputPath": "/Users/muhammetkocaman/Invoice/src/Core/Invoice.Infrastructure.Core/obj/",
+        "projectStyle": "PackageReference",
+        "centralPackageVersionsManagementEnabled": true,
+        "configFilePaths": [
+          "/Users/muhammetkocaman/Invoice/NuGet.Config",
+          "/Users/muhammetkocaman/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {
+              "/Users/muhammetkocaman/Invoice/src/Core/Invoice.Application/Invoice.Application.csproj": {
+                "projectPath": "/Users/muhammetkocaman/Invoice/src/Core/Invoice.Application/Invoice.Application.csproj"
+              },
+              "/Users/muhammetkocaman/Invoice/src/Core/Invoice.Domain/Invoice.Domain.csproj": {
+                "projectPath": "/Users/muhammetkocaman/Invoice/src/Core/Invoice.Domain/Invoice.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "noWarn": [
+            "NU1605",
+            "NU1701"
+          ],
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.0, )",
+              "versionCentrallyManaged": true
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.0, )",
+              "versionCentrallyManaged": true
+            },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[9.0.0, )",
+              "versionCentrallyManaged": true
+            },
+            "Microsoft.Extensions.Http.Polly": {
+              "target": "Package",
+              "version": "[9.0.0, )",
+              "versionCentrallyManaged": true
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[9.0.0, )",
+              "versionCentrallyManaged": true
+            },
+            "Polly": {
+              "target": "Package",
+              "version": "[8.4.1, )",
+              "versionCentrallyManaged": true
+            },
+            "Polly.Extensions.Http": {
+              "target": "Package",
+              "version": "[3.0.0, )",
+              "versionCentrallyManaged": true
+            },
+            "System.ServiceModel.Http": {
+              "target": "Package",
+              "version": "[8.1.2, )",
+              "versionCentrallyManaged": true
+            }
+          },
+          "centralPackageVersions": {
+            "Microsoft.EntityFrameworkCore": "9.0.0",
+            "Microsoft.EntityFrameworkCore.Design": "9.0.0",
+            "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.0",
+            "Microsoft.Extensions.Http": "9.0.0",
+            "Microsoft.Extensions.Http.Polly": "9.0.0",
+            "Microsoft.Extensions.Logging.Abstractions": "9.0.0",
+            "Npgsql.EntityFrameworkCore.PostgreSQL": "9.0.0",
+            "Polly": "8.4.1",
+            "Polly.Extensions.Http": "3.0.0",
+            "System.ServiceModel.Http": "8.1.2",
+            "System.Text.Json": "9.0.0"
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.102/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/muhammetkocaman/Invoice/src/TR/Invoice.Infrastructure.TR/Invoice.Infrastructure.TR.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/muhammetkocaman/Invoice/src/TR/Invoice.Infrastructure.TR/Invoice.Infrastructure.TR.csproj",
+        "projectName": "Invoice.Infrastructure.TR",
+        "projectPath": "/Users/muhammetkocaman/Invoice/src/TR/Invoice.Infrastructure.TR/Invoice.Infrastructure.TR.csproj",
+        "packagesPath": "/Users/muhammetkocaman/.nuget/packages/",
+        "outputPath": "/Users/muhammetkocaman/Invoice/src/TR/Invoice.Infrastructure.TR/obj/",
+        "projectStyle": "PackageReference",
+        "centralPackageVersionsManagementEnabled": true,
+        "configFilePaths": [
+          "/Users/muhammetkocaman/Invoice/NuGet.Config",
+          "/Users/muhammetkocaman/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {
+              "/Users/muhammetkocaman/Invoice/src/Core/Invoice.Application/Invoice.Application.csproj": {
+                "projectPath": "/Users/muhammetkocaman/Invoice/src/Core/Invoice.Application/Invoice.Application.csproj"
+              },
+              "/Users/muhammetkocaman/Invoice/src/Core/Invoice.Domain/Invoice.Domain.csproj": {
+                "projectPath": "/Users/muhammetkocaman/Invoice/src/Core/Invoice.Domain/Invoice.Domain.csproj"
+              },
+              "/Users/muhammetkocaman/Invoice/src/Core/Invoice.Infrastructure.Core/Invoice.Infrastructure.Core.csproj": {
+                "projectPath": "/Users/muhammetkocaman/Invoice/src/Core/Invoice.Infrastructure.Core/Invoice.Infrastructure.Core.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "noWarn": [
+            "NU1605",
+            "NU1701"
+          ],
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[9.0.0, )",
+              "versionCentrallyManaged": true
+            },
+            "Microsoft.Extensions.Http.Polly": {
+              "target": "Package",
+              "version": "[9.0.0, )",
+              "versionCentrallyManaged": true
+            },
+            "Polly": {
+              "target": "Package",
+              "version": "[8.4.1, )",
+              "versionCentrallyManaged": true
+            },
+            "Polly.Extensions.Http": {
+              "target": "Package",
+              "version": "[3.0.0, )",
+              "versionCentrallyManaged": true
+            }
+          },
+          "centralPackageVersions": {
+            "Microsoft.EntityFrameworkCore": "9.0.0",
+            "Microsoft.EntityFrameworkCore.Design": "9.0.0",
+            "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.0",
+            "Microsoft.Extensions.Http": "9.0.0",
+            "Microsoft.Extensions.Http.Polly": "9.0.0",
+            "Microsoft.Extensions.Logging.Abstractions": "9.0.0",
+            "Npgsql.EntityFrameworkCore.PostgreSQL": "9.0.0",
+            "Polly": "8.4.1",
+            "Polly.Extensions.Http": "3.0.0",
+            "System.ServiceModel.Http": "8.1.2",
+            "System.Text.Json": "9.0.0"
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.102/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

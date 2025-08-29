@@ -1,9 +1,9 @@
 <Project>
-  <!-- Türkçe yorum:
-       Gerekirse ortak paket versiyonlarını burada tek noktadan kontrol edebilirsin.
-       Örnek:
-       <ItemGroup>
-         <PackageVersion Include="System.Text.Json" Version="9.0.0" />
-       </ItemGroup>
-  -->
+  <PropertyGroup>
+    <!-- Türkçe: Uyarıları geçici olarak hata yapma; kalanlarını raporla -->
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+
+    <!-- Türkçe: Eski hedeften restore uyarısı ve geçici downgrade uyarısı bastırmaları -->
+    <NoWarn>$(NoWarn);NU1701;NU1605</NoWarn>
+  </PropertyGroup>
 </Project>

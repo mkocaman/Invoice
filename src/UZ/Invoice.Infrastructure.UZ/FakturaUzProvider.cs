@@ -38,6 +38,16 @@ public class FakturaUzProvider : IInvoiceProvider
 
         try
         {
+            // Türkçe: Özbekistan özel validasyonları
+            var validationResult = ValidateUzbekistanInvoice(envelope);
+            if (!validationResult.IsValid)
+            {
+                return ProviderSendResult.Failed(
+                    provider: ProviderType,
+                    errorCode: "VALIDATION_ERROR",
+                    errorMessage: validationResult.ErrorMessage);
+            }
+
             // Türkçe: Para birimini UZS'de sabitliyoruz
             envelope.Currency = "UZS";
 
@@ -168,7 +178,7 @@ public class FakturaUzProvider : IInvoiceProvider
 
     private object CreateInvoicePayload(InvoiceEnvelope envelope, ProviderConfig config)
     {
-        // Türkçe: Faktura.uz API formatına uygun payload oluştur
+        // Türkçe: Faktura.uz API formatına uygun payload oluştur (Özbekistan gereksinimleri)
         return new
         {
             invoice_number = envelope.InvoiceNumber,
@@ -177,17 +187,53 @@ public class FakturaUzProvider : IInvoiceProvider
             currency = "UZS",
             customer = new
             {
-                name = envelope.CustomerName,
-                tin = envelope.CustomerTaxNumber
+                name = envelope.Customer?.Name ?? envelope.CustomerName ?? "Mijoz",
+                tin = envelope.Customer?.TaxNumber ?? envelope.CustomerTaxNumber,
+                address = envelope.Customer?.AddressLine,
+                country_code = envelope.Customer?.CountryCode ?? "UZ",
+                email = envelope.Customer?.Email
             },
-            items = envelope.Items?.Select(item => new
+            items = (envelope.Items ?? envelope.LineItems)?.Select(item => new
             {
-                name = item.Name,
+                name = item.Name ?? item.Description,
                 quantity = item.Quantity,
                 unit_price = item.UnitPrice,
-                total = item.Total
-            }).ToArray()
+                total = item.Total,
+                unit_code = item.UnitCode ?? "796", // Özbekistan standart birim kodu
+                tax_rate = item.TaxRate
+            }).ToArray() ?? Array.Empty<object>()
         };
+    }
+
+    private (bool IsValid, string ErrorMessage) ValidateUzbekistanInvoice(InvoiceEnvelope envelope)
+    {
+        // Türkçe: Özbekistan özel validasyonları
+        var customerTaxNumber = envelope.Customer?.TaxNumber ?? envelope.CustomerTaxNumber;
+        
+        // Türkçe: Vergi numarası kontrolü (Özbekistan formatı: 9 haneli)
+        if (!string.IsNullOrWhiteSpace(customerTaxNumber))
+        {
+            if (customerTaxNumber.Length != 9 || !customerTaxNumber.All(char.IsDigit))
+            {
+                return (false, "Özbekistan vergi numarası 9 haneli olmalıdır");
+            }
+        }
+
+        // Türkçe: Müşteri adı zorunlu
+        var customerName = envelope.Customer?.Name ?? envelope.CustomerName;
+        if (string.IsNullOrWhiteSpace(customerName))
+        {
+            return (false, "Müşteri adı zorunludur");
+        }
+
+        // Türkçe: Kalem kontrolü
+        var items = envelope.Items ?? envelope.LineItems;
+        if (items == null || !items.Any())
+        {
+            return (false, "En az bir fatura kalemi olmalıdır");
+        }
+
+        return (true, "");
     }
 
     private async Task<FakturaUzResponse> SendInvoiceToFakturaAsync(

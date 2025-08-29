@@ -1,17 +1,25 @@
 <Project>
-  <!-- Türkçe yorum: Merkezi paket versiyonu yönetimi -->
   <PropertyGroup>
+    <!-- Türkçe: Merkezi paket sürüm yönetimini aç -->
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- Türkçe yorum: Json'u 9.0.0'a sabitle -->
-    <PackageVersion Include="System.Text.Json" Version="9.0.0" />
-  </ItemGroup>
+    <!-- Türkçe: EF paketleri (yalnızca Infra.Core'da kullanılacak) -->
+    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0" />
+    <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.0" />
 
-  <ItemGroup>
-    <!-- Türkçe yorum: Bazı paketler restore sırasında System.Xml.Linq isteyebilir.
-         Referans eklemeden sadece indirilmesini garanti ediyoruz. -->
-    <PackageDownload Include="System.Xml.Linq" Version="[4.3.0]" />
+    <!-- Türkçe: Uygulama bağımlılıkları -->
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Http" Version="9.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Http.Polly" Version="9.0.0" />
+    <PackageVersion Include="Polly" Version="8.4.1" />
+    <PackageVersion Include="Polly.Extensions.Http" Version="3.0.0" />
+    <PackageVersion Include="System.ServiceModel.Http" Version="8.1.2" />
+
+    <!-- Türkçe: Json sürümünü merkezden sabitleyerek NU1605'i bitir -->
+    <PackageVersion Include="System.Text.Json" Version="9.0.0" />
   </ItemGroup>
 </Project>

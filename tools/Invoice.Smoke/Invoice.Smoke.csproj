@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Core\Invoice.Domain\Invoice.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Core\Invoice.Application\Invoice.Application.csproj" />
+    <ProjectReference Include="..\..\src\Core\Invoice.Infrastructure.Core\Invoice.Infrastructure.Core.csproj" />
+    <ProjectReference Include="..\..\src\TR\Invoice.Infrastructure.TR\Invoice.Infrastructure.TR.csproj" />
+    <ProjectReference Include="..\..\src\UZ\Invoice.Infrastructure.UZ\Invoice.Infrastructure.UZ.csproj" />
+    <ProjectReference Include="..\..\src\KZ\Invoice.Infrastructure.KZ\Invoice.Infrastructure.KZ.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>

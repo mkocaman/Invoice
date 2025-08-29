@@ -5,6 +5,7 @@ using Invoice.Application.Models;
 using Invoice.Domain.Entities;
 using Invoice.Domain.Enums;
 using System.Text.Json;
+using System.Net; // HTML encoding için WebUtility
 // using System.Xml.Linq; // .NET 9'da paket gerekiyor, şimdilik kaldırıldı
 
 namespace Invoice.Infrastructure.KZ.Providers;
@@ -40,6 +41,16 @@ public class IsEsfProvider : IInvoiceProvider
 
         try
         {
+            // Türkçe: Kazakistan özel validasyonları
+            var validationResult = ValidateKazakhstanInvoice(envelope);
+            if (!validationResult.IsValid)
+            {
+                return ProviderSendResult.Failed(
+                    provider: ProviderType,
+                    errorCode: "VALIDATION_ERROR",
+                    errorMessage: validationResult.ErrorMessage);
+            }
+
             // Türkçe: Para birimini KZT'de sabitliyoruz
             envelope.Currency = "KZT";
 
@@ -153,16 +164,28 @@ public class IsEsfProvider : IInvoiceProvider
 
     private string CreateXmlInvoice(InvoiceEnvelope envelope, ProviderConfig config)
     {
-        // Türkçe: IS ESF XML formatına uygun fatura oluştur (string olarak)
+        // Türkçe: IS ESF XML formatına uygun fatura oluştur (Kazakistan gereksinimleri)
         var invoiceDate = envelope.InvoiceDate?.ToString("yyyy-MM-dd") ?? envelope.IssueDate.ToString("yyyy-MM-dd");
         
         var itemsXml = "";
-        if (envelope.Items != null)
+        var items = envelope.Items ?? envelope.LineItems;
+        if (items != null)
         {
-            itemsXml = string.Join("", envelope.Items.Select(item => 
-                $"<Item><Name>{item.Name}</Name><Quantity>{item.Quantity}</Quantity><UnitPrice>{item.UnitPrice}</UnitPrice><Total>{item.Total}</Total></Item>"
+            itemsXml = string.Join("", items.Select(item => 
+                $@"<Item>
+                    <Name>{WebUtility.HtmlEncode(item.Name ?? item.Description)}</Name>
+                    <Quantity>{item.Quantity}</Quantity>
+                    <UnitPrice>{item.UnitPrice}</UnitPrice>
+                    <Total>{item.Total}</Total>
+                    <UnitCode>{item.UnitCode ?? "796"}</UnitCode>
+                    <TaxRate>{item.TaxRate}</TaxRate>
+                </Item>"
             ));
         }
+        
+        var customerName = WebUtility.HtmlEncode(envelope.Customer?.Name ?? envelope.CustomerName ?? "Клиент");
+        var customerTaxNumber = envelope.Customer?.TaxNumber ?? envelope.CustomerTaxNumber ?? "";
+        var customerAddress = WebUtility.HtmlEncode(envelope.Customer?.AddressLine ?? "");
         
         var xml = $@"<?xml version=""1.0"" encoding=""utf-8""?>
 <Invoice xmlns=""http://kgd.gov.kz/esf"">
@@ -171,13 +194,46 @@ public class IsEsfProvider : IInvoiceProvider
     <TotalAmount>{envelope.TotalAmount}</TotalAmount>
     <Currency>KZT</Currency>
     <Customer>
-        <Name>{envelope.CustomerName}</Name>
-        <TaxNumber>{envelope.CustomerTaxNumber}</TaxNumber>
+        <Name>{customerName}</Name>
+        <TaxNumber>{customerTaxNumber}</TaxNumber>
+        <Address>{customerAddress}</Address>
+        <CountryCode>{envelope.Customer?.CountryCode ?? "KZ"}</CountryCode>
     </Customer>
     <Items>{itemsXml}</Items>
 </Invoice>";
         
         return xml;
+    }
+
+    private (bool IsValid, string ErrorMessage) ValidateKazakhstanInvoice(InvoiceEnvelope envelope)
+    {
+        // Türkçe: Kazakistan özel validasyonları
+        var customerTaxNumber = envelope.Customer?.TaxNumber ?? envelope.CustomerTaxNumber;
+        
+        // Türkçe: Vergi numarası kontrolü (Kazakistan formatı: 12 haneli BIN)
+        if (!string.IsNullOrWhiteSpace(customerTaxNumber))
+        {
+            if (customerTaxNumber.Length != 12 || !customerTaxNumber.All(char.IsDigit))
+            {
+                return (false, "Kazakistan BIN numarası 12 haneli olmalıdır");
+            }
+        }
+
+        // Türkçe: Müşteri adı zorunlu
+        var customerName = envelope.Customer?.Name ?? envelope.CustomerName;
+        if (string.IsNullOrWhiteSpace(customerName))
+        {
+            return (false, "Müşteri adı zorunludur");
+        }
+
+        // Türkçe: Kalem kontrolü
+        var items = envelope.Items ?? envelope.LineItems;
+        if (items == null || !items.Any())
+        {
+            return (false, "En az bir fatura kalemi olmalıdır");
+        }
+
+        return (true, "");
     }
 
     private async Task<IsEsfResponse> SendInvoiceToIsEsfAsync(

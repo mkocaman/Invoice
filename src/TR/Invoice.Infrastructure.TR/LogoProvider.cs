@@ -31,7 +31,7 @@ namespace Invoice.Infrastructure.Providers
         /// <summary>
         /// Fatura gönderir (minimal mock implementasyon)
         /// </summary>
-        public async Task<ProviderSendResult> SendInvoiceAsync(InvoiceEnvelope envelope, ProviderConfig config, CancellationToken cancellationToken = default)
+        public Task<ProviderSendResult> SendInvoiceAsync(InvoiceEnvelope envelope, ProviderConfig config, CancellationToken cancellationToken = default)
         {
             _logger.LogInformation("Logo'ya fatura gönderiliyor. Invoice Number: {InvoiceNumber}, Tenant: {TenantId}", 
                 envelope.InvoiceNumber, envelope.TenantId);
@@ -47,7 +47,7 @@ namespace Invoice.Infrastructure.Providers
                 _logger.LogInformation("Logo'ya fatura gönderildi. Invoice Number: {InvoiceNumber}, Payload: {Payload}", 
                     envelope.InvoiceNumber, payload);
 
-                return new ProviderSendResult(
+                var resp = new ProviderSendResult(
                     Success: true,
                     Provider: ProviderType,
                     ProviderReferenceNumber: $"LOGO-{Guid.NewGuid():N}",
@@ -55,15 +55,17 @@ namespace Invoice.Infrastructure.Providers
                     UblXml: ublXml,
                     ErrorCode: null,
                     ErrorMessage: null);
+                return Task.FromResult(resp);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Logo'ya fatura gönderilirken hata. Invoice Number: {InvoiceNumber}", envelope.InvoiceNumber);
                 
-                return ProviderSendResult.Failed(
+                var resp = ProviderSendResult.Failed(
                     provider: ProviderType,
                     errorCode: "MOCK_ERROR",
                     errorMessage: $"Mock hata: {ex.Message}");
+                return Task.FromResult(resp);
             }
         }
 
