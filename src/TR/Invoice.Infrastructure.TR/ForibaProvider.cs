@@ -4,7 +4,7 @@ using Invoice.Application.Models;
 using Invoice.Domain.Entities;
 using Invoice.Domain.Enums;
 
-namespace Invoice.Infrastructure.Providers
+namespace Invoice.Infrastructure.TR.Providers
 {
     /// <summary>
     /// Foriba entegratörü için provider
@@ -79,5 +79,7 @@ namespace Invoice.Infrastructure.Providers
             // Mock doğrulama - gerçek implementasyonda HMAC-SHA256 ile imza kontrolü yapılır
             return true;
         }
+
+
     }
 }

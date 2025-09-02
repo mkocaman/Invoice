@@ -7,6 +7,7 @@ using Invoice.Domain.Enums;
 using System.Text.Json;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Net; // HTML encoding için WebUtility
 
 namespace Invoice.Infrastructure.UZ.Providers;
 
@@ -182,26 +183,45 @@ public class FakturaUzProvider : IInvoiceProvider
         return new
         {
             invoice_number = envelope.InvoiceNumber,
-            invoice_date = envelope.InvoiceDate?.ToString("yyyy-MM-dd") ?? envelope.IssueDate.ToString("yyyy-MM-dd"),
-            total_amount = envelope.TotalAmount,
+            invoice_date = envelope.IssueDate.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
+            total_amount = envelope.TotalAmount.ToString(System.Globalization.CultureInfo.InvariantCulture),
             currency = "UZS",
             customer = new
             {
-                name = envelope.Customer?.Name ?? envelope.CustomerName ?? "Mijoz",
+                name = WebUtility.HtmlEncode(envelope.Customer?.Name ?? envelope.CustomerName ?? "Mijoz"),
                 tin = envelope.Customer?.TaxNumber ?? envelope.CustomerTaxNumber,
-                address = envelope.Customer?.AddressLine,
+                address = WebUtility.HtmlEncode(envelope.Customer?.AddressLine),
                 country_code = envelope.Customer?.CountryCode ?? "UZ",
                 email = envelope.Customer?.Email
             },
             items = (envelope.Items ?? envelope.LineItems)?.Select(item => new
             {
-                name = item.Name ?? item.Description,
+                name = WebUtility.HtmlEncode(item.Name ?? item.Description),
                 quantity = item.Quantity,
-                unit_price = item.UnitPrice,
-                total = item.Total,
-                unit_code = item.UnitCode ?? "796", // Özbekistan standart birim kodu
-                tax_rate = item.TaxRate
+                unit_price = item.UnitPrice.ToString(System.Globalization.CultureInfo.InvariantCulture),
+                total = item.Total.ToString(System.Globalization.CultureInfo.InvariantCulture),
+                unit_code = GetUzbekistanUnitCode(item.UnitCode), // UN/ECE Rec 20 kodu
+                tax_rate = item.TaxRate.ToString(System.Globalization.CultureInfo.InvariantCulture)
             }).ToArray() ?? Array.Empty<object>()
+        };
+    }
+
+    /// <summary>
+    /// UN/ECE Rec 20 birim kodlarını Özbekistan için döndürür
+    /// </summary>
+    private string GetUzbekistanUnitCode(string? unitCode)
+    {
+        return unitCode?.ToUpperInvariant() switch
+        {
+            "EA" or "ADET" or "PIECE" => "C62", // Adet
+            "KG" or "KILOGRAM" => "KGM", // Kilogram
+            "M" or "METER" => "MTR", // Metre
+            "L" or "LITRE" => "LTR", // Litre
+            "H" or "HOUR" => "HUR", // Saat
+            "DAY" => "DAY", // Gün
+            "MONTH" => "MON", // Ay
+            "YEAR" => "ANN", // Yıl
+            _ => "C62" // Varsayılan: Adet
         };
     }
 
@@ -266,4 +286,6 @@ public class FakturaUzProvider : IInvoiceProvider
         public string? InvoiceId { get; set; }
         public string? Message { get; set; }
     }
+
+
 }

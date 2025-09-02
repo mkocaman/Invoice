@@ -10,6 +10,7 @@ namespace Invoice.Infrastructure.Providers
 {
     /// <summary>
     /// BizimHesap B2B API – addinvoice uç noktası (GitBook dokümana göre).
+    /// NOT: Bu sınıf TR sürümüyle çakışmaması için referans dışıdır. Kullanılmamalıdır.
     /// </summary>
     public partial class BizimHesapProvider : IInvoiceProvider
     {

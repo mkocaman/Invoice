@@ -9,6 +9,7 @@ namespace Invoice.Infrastructure.Providers
 {
     /// <summary>
     /// İdea Teknoloji – partner dokümanına göre UBL/JSON gönderimi.
+    /// NOT: Bu sınıf TR sürümüyle çakışmaması için referans dışıdır. Kullanılmamalıdır.
     /// </summary>
     public partial class IdeaProvider : IInvoiceProvider
     {

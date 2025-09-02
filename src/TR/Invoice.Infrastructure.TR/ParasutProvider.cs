@@ -9,7 +9,7 @@ using Invoice.Infrastructure.Providers.Common;
 using Invoice.Infrastructure.Providers.Http;
 using Microsoft.Extensions.Logging;
 
-namespace Invoice.Infrastructure.Providers
+namespace Invoice.Infrastructure.TR.Providers
 {
     /// <summary>
     /// Paraşüt e-Fatura REST entegrasyonu (OAuth2 Client Credentials)
@@ -118,5 +118,7 @@ namespace Invoice.Infrastructure.Providers
             // Türkçe: Paraşüt webhook imza doğrulama dokümana göre eklenebilir.
             return true;
         }
+
+
     }
 }

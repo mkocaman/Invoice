@@ -6,7 +6,7 @@ namespace Invoice.Domain.Entities
     // Türkçe: Entegratör konfigürasyonu (çok kiracılı yapı için TenantId ile unique)
     public class ProviderConfig : BaseEntity
     {
-        public string TenantId { get; set; } = default!;
+        public new string TenantId { get; set; } = default!;
         public ProviderType ProviderType { get; set; }
         public string ProviderKey { get; set; } = default!;
         

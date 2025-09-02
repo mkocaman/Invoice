@@ -18,18 +18,20 @@ public class MockUblValidationService : IUblValidationService
     /// <summary>
     /// UBL XML validasyonu yapar (mock - her zaman geçerli döner)
     /// </summary>
-    public async Task<ValidationResult> ValidateUblAsync(string ublXml, string schemaVersion = "2.1")
+    public Task<ValidationResult> ValidateUblAsync(string ublXml, string schemaVersion = "2.1")
     {
         _logger.LogInformation("Mock UBL validasyonu yapılıyor. Schema: {SchemaVersion}", schemaVersion);
         
         // Mock validasyon - her zaman başarılı
-        await Task.Delay(10); // Simüle edilmiş işlem süresi
+        // Simüle edilmiş işlem süresi kaldırıldı (gereksiz async)
         
-        return new ValidationResult
+        var result = new ValidationResult
         {
             IsValid = true,
             Errors = new List<string>(),
             Warnings = new List<string>()
         };
+        
+        return Task.FromResult(result);
     }
 }

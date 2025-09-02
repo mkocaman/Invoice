@@ -8,6 +8,7 @@ namespace Invoice.Infrastructure.Providers
 {
     /// <summary>
     /// Foriba entegratörü için provider
+    /// NOT: Bu sınıf TR sürümüyle çakışmaması için referans dışıdır. Kullanılmamalıdır.
     /// </summary>
     public partial class ForibaProvider : IInvoiceProvider
     {
@@ -31,7 +32,7 @@ namespace Invoice.Infrastructure.Providers
         /// <summary>
         /// Fatura gönderir (minimal mock implementasyon)
         /// </summary>
-        public async Task<ProviderSendResult> SendInvoiceAsync(InvoiceEnvelope envelope, ProviderConfig config, CancellationToken cancellationToken = default)
+        public Task<ProviderSendResult> SendInvoiceAsync(InvoiceEnvelope envelope, ProviderConfig config, CancellationToken cancellationToken = default)
         {
             _logger.LogInformation("Foriba'ya fatura gönderiliyor. Invoice Number: {InvoiceNumber}, Tenant: {TenantId}", 
                 envelope.InvoiceNumber, envelope.TenantId);
@@ -47,7 +48,7 @@ namespace Invoice.Infrastructure.Providers
                 _logger.LogInformation("Foriba'ya fatura gönderildi. Invoice Number: {InvoiceNumber}, Payload: {Payload}", 
                     envelope.InvoiceNumber, payload);
 
-                return new ProviderSendResult(
+                var result = new ProviderSendResult(
                     Success: true,
                     Provider: ProviderType,
                     ProviderReferenceNumber: $"FORIBA-{Guid.NewGuid():N}",
@@ -55,15 +56,19 @@ namespace Invoice.Infrastructure.Providers
                     UblXml: ublXml,
                     ErrorCode: null,
                     ErrorMessage: null);
+                
+                return Task.FromResult(result);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Foriba'ya fatura gönderilirken hata. Invoice Number: {InvoiceNumber}", envelope.InvoiceNumber);
                 
-                return ProviderSendResult.Failed(
+                var result = ProviderSendResult.Failed(
                     provider: ProviderType,
                     errorCode: "MOCK_ERROR",
                     errorMessage: $"Mock hata: {ex.Message}");
+                
+                return Task.FromResult(result);
             }
         }
 

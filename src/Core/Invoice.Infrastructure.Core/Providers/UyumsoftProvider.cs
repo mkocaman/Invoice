@@ -12,6 +12,7 @@ namespace Invoice.Infrastructure.Providers
 {
     /// <summary>
     /// Uyumsoft e-Fatura SOAP entegrasyonu (test WSDL)
+    /// NOT: Bu sınıf TR sürümüyle çakışmaması için referans dışıdır. Kullanılmamalıdır.
     /// </summary>
     public partial class UyumsoftProvider : IInvoiceProvider
     {

@@ -5,7 +5,7 @@ using Invoice.Domain.Entities;
 using Invoice.Domain.Enums;
 using Microsoft.Extensions.Logging;
 
-namespace Invoice.Infrastructure.Providers
+namespace Invoice.Infrastructure.TR.Providers
 {
     /// <summary>
     /// Logo/Netsis NetOpenX REST – firmaya göre endpoint değişebilir.
@@ -90,5 +90,7 @@ namespace Invoice.Infrastructure.Providers
         }
 
         public bool VerifyWebhookSignature(IReadOnlyDictionary<string, string> headers, string body, ProviderConfig config) => true;
+
+
     }
 }

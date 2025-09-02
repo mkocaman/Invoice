@@ -21,12 +21,12 @@ public class MockSigningService : ISigningService
     /// <summary>
     /// UBL XML'i XAdES-BES ile imzalar (mock)
     /// </summary>
-    public async Task<string> SignUblAsync(string ublXml, string certificatePath, string certificatePassword)
+    public Task<string> SignUblAsync(string ublXml, string certificatePath, string certificatePassword)
     {
         _logger.LogInformation("Mock XAdES-BES imzalama başlatılıyor. Certificate: {CertificatePath}", certificatePath);
 
         // Mock imzalama - gerçek implementasyonda XAdES-BES imzalama yapılır
-        await Task.Delay(100); // Simüle edilmiş gecikme
+        // Simüle edilmiş gecikme kaldırıldı (gereksiz async)
 
         // Mock imzalı XML oluştur
         var signedXml = $@"<?xml version=""1.0"" encoding=""UTF-8""?>
@@ -59,33 +59,33 @@ public class MockSigningService : ISigningService
 
         _logger.LogInformation("Mock XAdES-BES imzalama tamamlandı. İmzalı XML boyutu: {Size} karakter", signedXml.Length);
 
-        return signedXml;
+        return Task.FromResult(signedXml);
     }
 
     /// <summary>
     /// İmza doğrulama (mock)
     /// </summary>
-    public async Task<bool> VerifySignatureAsync(string signedXml)
+    public Task<bool> VerifySignatureAsync(string signedXml)
     {
         _logger.LogInformation("Mock imza doğrulama başlatılıyor");
 
         // Mock doğrulama - her zaman true döner
-        await Task.Delay(50); // Simüle edilmiş gecikme
+        // Simüle edilmiş gecikme kaldırıldı (gereksiz async)
 
         _logger.LogInformation("Mock imza doğrulama tamamlandı: Geçerli");
 
-        return true;
+        return Task.FromResult(true);
     }
 
     /// <summary>
     /// Sertifika bilgilerini alır (mock)
     /// </summary>
-    public async Task<CertificateInfo> GetCertificateInfoAsync(string certificatePath, string certificatePassword)
+    public Task<CertificateInfo> GetCertificateInfoAsync(string certificatePath, string certificatePassword)
     {
         _logger.LogInformation("Mock sertifika bilgileri alınıyor. Certificate: {CertificatePath}", certificatePath);
 
         // Mock sertifika bilgileri
-        await Task.Delay(50); // Simüle edilmiş gecikme
+        // Simüle edilmiş gecikme kaldırıldı (gereksiz async)
 
         var certificateInfo = new CertificateInfo
         {
@@ -98,6 +98,6 @@ public class MockSigningService : ISigningService
 
         _logger.LogInformation("Mock sertifika bilgileri alındı. Serial: {SerialNumber}", certificateInfo.SerialNumber);
 
-        return certificateInfo;
+        return Task.FromResult(certificateInfo);
     }
 }

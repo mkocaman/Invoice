@@ -12,6 +12,7 @@ namespace Invoice.Infrastructure.Providers
 {
     /// <summary>
     /// KolayBi e-Fatura REST entegrasyonu
+    /// NOT: Bu sınıf TR sürümüyle çakışmaması için referans dışıdır. Kullanılmamalıdır.
     /// </summary>
     public partial class KolayBiProvider : IInvoiceProvider
     {

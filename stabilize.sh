@@ -1,9 +1,27 @@
 #!/usr/bin/env bash
 # ============================================================
-# Invoice — NuGet/Derleme Stabilizasyonu + UZ/KZ Son Düzeltmeler
-# macOS uyumlu, soru sormaz; gerekeni yapar.
+ # Invoice — NuGet/Derleme Stabilizasyonu + Platform Uyumlu Bakım
+# macOS/Linux/Windows uyumlu, soru sormaz; gerekeni yapar.
 # ============================================================
 set -euo pipefail
+
+# Platform uyumluluğu için sed komutunu algıla
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    # macOS: BSD sed
+    SED_CMD="sed"
+    SED_INPLACE="-i ''"
+    echo "🌍 Platform: macOS (BSD sed)"
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    # Linux: GNU sed
+    SED_CMD="sed"
+    SED_INPLACE="-i"
+    echo "🌍 Platform: Linux (GNU sed)"
+else
+    # Windows veya diğer: varsayılan
+    SED_CMD="sed"
+    SED_INPLACE="-i"
+    echo "🌍 Platform: $OSTYPE (varsayılan sed)"
+fi
 
 root_hint="Invoice.sln"
 if [ ! -f "$root_hint" ]; then
@@ -25,7 +43,7 @@ remove_pkg_block () {
   # Perl ile tüm dosyayı içeri alıp PackageReference bloklarını güvenli biçimde temizliyoruz.
   local pattern=""
   for pkg in "$@"; do
-    local escaped=$(printf '%s\n' "$pkg" | sed 's/[.[\*^$(){}+?|]/\\&/g')
+    local escaped=$(printf '%s\n' "$pkg" | $SED_CMD 's/[.[\*^$(){}+?|]/\\&/g')
     pattern="${pattern}${pattern:+|}${escaped}"
   done
   perl -0777 -i -pe "s#\\s*<PackageReference[^>]*Include=\\\"(${pattern})\\\"[^>]*/>\\s*\\n##gis" "$csproj"

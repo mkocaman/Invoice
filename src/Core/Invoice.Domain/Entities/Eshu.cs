@@ -92,7 +92,7 @@ public class Eshu : BaseEntity
     /// <summary>
     /// EŞÜ durumu (aktif/pasif)
     /// </summary>
-    public bool IsActive { get; set; } = true;
+    public new bool IsActive { get; set; } = true;
     
     /// <summary>
     /// EŞÜ son bakım tarihi

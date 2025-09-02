@@ -1,3 +1,5 @@
+#nullable enable
+
 using System.ComponentModel.DataAnnotations;
 
 namespace Invoice.Domain.Entities;

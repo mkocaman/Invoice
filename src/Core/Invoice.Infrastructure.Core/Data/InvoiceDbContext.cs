@@ -1,3 +1,5 @@
+#nullable enable
+
 using Microsoft.EntityFrameworkCore;
 using Invoice.Domain.Entities;
 

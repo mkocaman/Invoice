@@ -6,7 +6,7 @@ using Invoice.Domain.Enums;
 using Microsoft.Extensions.Logging;
 
 
-namespace Invoice.Infrastructure.Providers
+namespace Invoice.Infrastructure.TR.Providers
 {
     /// <summary>
     /// DİA e-Fatura entegrasyonu (dokümanlara göre gerçek endpoint/path doldurulacak).

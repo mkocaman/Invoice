@@ -9,6 +9,7 @@ namespace Invoice.Infrastructure.Providers
 {
     /// <summary>
     /// Logo/Netsis NetOpenX REST – firmaya göre endpoint değişebilir.
+    /// NOT: Bu sınıf TR sürümüyle çakışmaması için referans dışıdır. Kullanılmamalıdır.
     /// </summary>
     public partial class NetsisProvider : IInvoiceProvider
     {

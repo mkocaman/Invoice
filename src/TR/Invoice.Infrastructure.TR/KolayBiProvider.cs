@@ -8,7 +8,7 @@ using Invoice.Infrastructure.Providers.Common;
 using Invoice.Infrastructure.Providers.Http;
 using Microsoft.Extensions.Logging;
 
-namespace Invoice.Infrastructure.Providers
+namespace Invoice.Infrastructure.TR.Providers
 {
     /// <summary>
     /// KolayBi e-Fatura REST entegrasyonu
@@ -97,5 +97,7 @@ namespace Invoice.Infrastructure.Providers
             // Türkçe: KolayBi özel imza başlığı varsa burada doğrulanır (dokümana göre). Yoksa true döner.
             return true;
         }
+
+
     }
 }

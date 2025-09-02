@@ -1,3 +1,5 @@
+#nullable enable
+
 using System.ComponentModel.DataAnnotations;
 using Invoice.Domain.Enums;
 using Invoice.Domain.ValueObjects;

@@ -103,7 +103,7 @@ public class UblValidationService : IUblValidationService
     /// <summary>
     /// İş kuralları validasyonu
     /// </summary>
-    private async Task ValidateBusinessRulesAsync(XmlDocument xmlDoc, ValidationResult result)
+    private Task ValidateBusinessRulesAsync(XmlDocument xmlDoc, ValidationResult result)
     {
         _logger.LogDebug("İş kuralları validasyonu başlatılıyor");
 
@@ -113,16 +113,16 @@ public class UblValidationService : IUblValidationService
             nsManager.AddNamespace("ubl", "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2");
 
             // Zorunlu alanlar kontrolü
-            await ValidateRequiredFieldsAsync(xmlDoc, nsManager, result);
+            ValidateRequiredFields(xmlDoc, nsManager, result);
 
             // Tarih kontrolü
-            await ValidateDatesAsync(xmlDoc, nsManager, result);
+            ValidateDates(xmlDoc, nsManager, result);
 
             // Tutar kontrolü
-            await ValidateAmountsAsync(xmlDoc, nsManager, result);
+            ValidateAmounts(xmlDoc, nsManager, result);
 
             // Vergi kontrolü
-            await ValidateTaxesAsync(xmlDoc, nsManager, result);
+            ValidateTaxes(xmlDoc, nsManager, result);
 
             _logger.LogDebug("İş kuralları validasyonu tamamlandı");
         }
@@ -131,12 +131,14 @@ public class UblValidationService : IUblValidationService
             _logger.LogError(ex, "İş kuralları validasyonu sırasında hata");
             result.Errors.Add($"İş kuralları validasyon hatası: {ex.Message}");
         }
+
+        return Task.CompletedTask;
     }
 
     /// <summary>
     /// Zorunlu alanlar kontrolü
     /// </summary>
-    private async Task ValidateRequiredFieldsAsync(XmlDocument xmlDoc, XmlNamespaceManager nsManager, ValidationResult result)
+    private void ValidateRequiredFields(XmlDocument xmlDoc, XmlNamespaceManager nsManager, ValidationResult result)
     {
         var requiredFields = new[]
         {
@@ -156,14 +158,12 @@ public class UblValidationService : IUblValidationService
                 result.Errors.Add($"Zorunlu alan eksik: {field}");
             }
         }
-
-        await Task.CompletedTask;
     }
 
     /// <summary>
     /// Tarih kontrolü
     /// </summary>
-    private async Task ValidateDatesAsync(XmlDocument xmlDoc, XmlNamespaceManager nsManager, ValidationResult result)
+    private void ValidateDates(XmlDocument xmlDoc, XmlNamespaceManager nsManager, ValidationResult result)
     {
         var issueDateNode = xmlDoc.SelectSingleNode("//ubl:Invoice/ubl:IssueDate", nsManager);
         if (issueDateNode != null && DateTime.TryParse(issueDateNode.InnerText, out var issueDate))
@@ -173,14 +173,12 @@ public class UblValidationService : IUblValidationService
                 result.Warnings.Add("Fatura tarihi gelecek bir tarih olamaz");
             }
         }
-
-        await Task.CompletedTask;
     }
 
     /// <summary>
     /// Tutar kontrolü
     /// </summary>
-    private async Task ValidateAmountsAsync(XmlDocument xmlDoc, XmlNamespaceManager nsManager, ValidationResult result)
+    private void ValidateAmounts(XmlDocument xmlDoc, XmlNamespaceManager nsManager, ValidationResult result)
     {
         var lineExtensionAmountNode = xmlDoc.SelectSingleNode("//ubl:Invoice/ubl:LegalMonetaryTotal/ubl:LineExtensionAmount", nsManager);
         if (lineExtensionAmountNode != null && decimal.TryParse(lineExtensionAmountNode.InnerText, out var lineAmount))
@@ -190,14 +188,12 @@ public class UblValidationService : IUblValidationService
                 result.Errors.Add("Satır tutarı sıfırdan büyük olmalıdır");
             }
         }
-
-        await Task.CompletedTask;
     }
 
     /// <summary>
     /// Vergi kontrolü
     /// </summary>
-    private async Task ValidateTaxesAsync(XmlDocument xmlDoc, XmlNamespaceManager nsManager, ValidationResult result)
+    private void ValidateTaxes(XmlDocument xmlDoc, XmlNamespaceManager nsManager, ValidationResult result)
     {
         var taxAmountNode = xmlDoc.SelectSingleNode("//ubl:Invoice/ubl:LegalMonetaryTotal/ubl:TaxExclusiveAmount", nsManager);
         if (taxAmountNode != null && decimal.TryParse(taxAmountNode.InnerText, out var taxAmount))
@@ -207,7 +203,5 @@ public class UblValidationService : IUblValidationService
                 result.Errors.Add("Vergi tutarı negatif olamaz");
             }
         }
-
-        await Task.CompletedTask;
     }
 }

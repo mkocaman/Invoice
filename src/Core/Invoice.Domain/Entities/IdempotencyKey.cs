@@ -10,7 +10,7 @@ public class IdempotencyKey : BaseEntity
     /// <summary>
     /// Tenant ID (müşteri organizasyonu)
     /// </summary>
-    public string TenantId { get; set; } = string.Empty;
+    public new string TenantId { get; set; } = string.Empty;
     
     /// <summary>
     /// İdempotency anahtarı (unique)
@@ -35,7 +35,7 @@ public class IdempotencyKey : BaseEntity
     /// <summary>
     /// Oluşturulma zamanı
     /// </summary>
-    public DateTime CreatedAt { get; set; }
+    public new DateTime CreatedAt { get; set; }
     
     /// <summary>
     /// Geçerlilik süresi

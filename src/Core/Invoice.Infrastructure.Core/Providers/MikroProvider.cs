@@ -9,6 +9,7 @@ namespace Invoice.Infrastructure.Providers
 {
     /// <summary>
     /// Mikro Yazılım e-Fatura (EMukellefSorgulamaV2, FaturaToEFaturaV2 vb. OpenAPI'ye göre).
+    /// NOT: Bu sınıf TR sürümüyle çakışmaması için referans dışıdır. Kullanılmamalıdır.
     /// </summary>
     public partial class MikroProvider : IInvoiceProvider
     {

@@ -12,6 +12,7 @@ namespace Invoice.Infrastructure.Providers
     /// DİA e-Fatura entegrasyonu (dokümanlara göre gerçek endpoint/path doldurulacak).
     /// - Giriş/oturum bilgileri ProviderConfig'ten alınır.
     /// - UBL/Envelope verisinden DİA modeline dönüştürme yapılır.
+    /// NOT: Bu sınıf TR sürümüyle çakışmaması için referans dışıdır. Kullanılmamalıdır.
     /// </summary>
     public partial class DiaProvider : IInvoiceProvider
     {

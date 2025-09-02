@@ -13,6 +13,7 @@ namespace Invoice.Infrastructure.Providers
 {
     /// <summary>
     /// Paraşüt e-Fatura REST entegrasyonu (OAuth2 Client Credentials)
+    /// NOT: Bu sınıf TR sürümüyle çakışmaması için referans dışıdır. Kullanılmamalıdır.
     /// </summary>
     public partial class ParasutProvider : IInvoiceProvider
     {

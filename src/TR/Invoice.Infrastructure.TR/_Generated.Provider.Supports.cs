@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Invoice.Application.Interfaces;
 using Invoice.Domain.Enums;
 
-namespace Invoice.Infrastructure.Providers
+namespace Invoice.Infrastructure.TR.Providers
 {
     // Türkçe yorum: Ortak yardımcı - TR destekli sağlayıcılar listesi
     internal static class ProviderSupport
@@ -17,7 +17,7 @@ namespace Invoice.Infrastructure.Providers
 }
 
 // DIA
-namespace Invoice.Infrastructure.Providers
+namespace Invoice.Infrastructure.TR.Providers
 {
     public partial class DiaProvider
     {
@@ -27,7 +27,7 @@ namespace Invoice.Infrastructure.Providers
 }
 
 // FORIBA
-namespace Invoice.Infrastructure.Providers
+namespace Invoice.Infrastructure.TR.Providers
 {
     public partial class ForibaProvider
     {
@@ -37,7 +37,7 @@ namespace Invoice.Infrastructure.Providers
 }
 
 // IDEA
-namespace Invoice.Infrastructure.Providers
+namespace Invoice.Infrastructure.TR.Providers
 {
     public partial class IdeaProvider
     {
@@ -47,7 +47,7 @@ namespace Invoice.Infrastructure.Providers
 }
 
 // LOGO
-namespace Invoice.Infrastructure.Providers
+namespace Invoice.Infrastructure.TR.Providers
 {
     public partial class LogoProvider
     {
@@ -57,7 +57,7 @@ namespace Invoice.Infrastructure.Providers
 }
 
 // KOLAYBİ
-namespace Invoice.Infrastructure.Providers
+namespace Invoice.Infrastructure.TR.Providers
 {
     public partial class KolayBiProvider
     {
@@ -67,7 +67,7 @@ namespace Invoice.Infrastructure.Providers
 }
 
 // MIKRO
-namespace Invoice.Infrastructure.Providers
+namespace Invoice.Infrastructure.TR.Providers
 {
     public partial class MikroProvider
     {
@@ -77,7 +77,7 @@ namespace Invoice.Infrastructure.Providers
 }
 
 // NETSIS
-namespace Invoice.Infrastructure.Providers
+namespace Invoice.Infrastructure.TR.Providers
 {
     public partial class NetsisProvider
     {
@@ -87,7 +87,7 @@ namespace Invoice.Infrastructure.Providers
 }
 
 // PARASUT
-namespace Invoice.Infrastructure.Providers
+namespace Invoice.Infrastructure.TR.Providers
 {
     public partial class ParasutProvider
     {
@@ -97,7 +97,7 @@ namespace Invoice.Infrastructure.Providers
 }
 
 // BIZIMHESAP
-namespace Invoice.Infrastructure.Providers
+namespace Invoice.Infrastructure.TR.Providers
 {
     public partial class BizimHesapProvider
     {
@@ -107,7 +107,7 @@ namespace Invoice.Infrastructure.Providers
 }
 
 // UYUMSOFT
-namespace Invoice.Infrastructure.Providers
+namespace Invoice.Infrastructure.TR.Providers
 {
     public partial class UyumsoftProvider
     {

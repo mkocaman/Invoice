@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Invoice.Application.Interfaces;
-using Invoice.Infrastructure.Providers;
+using Invoice.Infrastructure.TR.Providers;
 
 namespace Invoice.Infrastructure.TR;
 

@@ -165,7 +165,7 @@ public class IsEsfProvider : IInvoiceProvider
     private string CreateXmlInvoice(InvoiceEnvelope envelope, ProviderConfig config)
     {
         // Türkçe: IS ESF XML formatına uygun fatura oluştur (Kazakistan gereksinimleri)
-        var invoiceDate = envelope.InvoiceDate?.ToString("yyyy-MM-dd") ?? envelope.IssueDate.ToString("yyyy-MM-dd");
+        var invoiceDate = envelope.IssueDate.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
         
         var itemsXml = "";
         var items = envelope.Items ?? envelope.LineItems;
@@ -175,10 +175,10 @@ public class IsEsfProvider : IInvoiceProvider
                 $@"<Item>
                     <Name>{WebUtility.HtmlEncode(item.Name ?? item.Description)}</Name>
                     <Quantity>{item.Quantity}</Quantity>
-                    <UnitPrice>{item.UnitPrice}</UnitPrice>
-                    <Total>{item.Total}</Total>
-                    <UnitCode>{item.UnitCode ?? "796"}</UnitCode>
-                    <TaxRate>{item.TaxRate}</TaxRate>
+                    <UnitPrice>{item.UnitPrice.ToString(System.Globalization.CultureInfo.InvariantCulture)}</UnitPrice>
+                    <Total>{item.Total.ToString(System.Globalization.CultureInfo.InvariantCulture)}</Total>
+                    <UnitCode>{GetKazakhstanUnitCode(item.UnitCode)}</UnitCode>
+                    <TaxRate>{item.TaxRate.ToString(System.Globalization.CultureInfo.InvariantCulture)}</TaxRate>
                 </Item>"
             ));
         }
@@ -191,7 +191,7 @@ public class IsEsfProvider : IInvoiceProvider
 <Invoice xmlns=""http://kgd.gov.kz/esf"">
     <InvoiceNumber>{envelope.InvoiceNumber}</InvoiceNumber>
     <InvoiceDate>{invoiceDate}</InvoiceDate>
-    <TotalAmount>{envelope.TotalAmount}</TotalAmount>
+    <TotalAmount>{envelope.TotalAmount.ToString(System.Globalization.CultureInfo.InvariantCulture)}</TotalAmount>
     <Currency>KZT</Currency>
     <Customer>
         <Name>{customerName}</Name>
@@ -203,6 +203,25 @@ public class IsEsfProvider : IInvoiceProvider
 </Invoice>";
         
         return xml;
+    }
+
+    /// <summary>
+    /// UN/ECE Rec 20 birim kodlarını Kazakistan için döndürür
+    /// </summary>
+    private string GetKazakhstanUnitCode(string? unitCode)
+    {
+        return unitCode?.ToUpperInvariant() switch
+        {
+            "EA" or "ADET" or "PIECE" => "C62", // Adet
+            "KG" or "KILOGRAM" => "KGM", // Kilogram
+            "M" or "METER" => "MTR", // Metre
+            "L" or "LITRE" => "LTR", // Litre
+            "H" or "HOUR" => "HUR", // Saat
+            "DAY" => "DAY", // Gün
+            "MONTH" => "MON", // Ay
+            "YEAR" => "ANN", // Yıl
+            _ => "C62" // Varsayılan: Adet
+        };
     }
 
     private (bool IsValid, string ErrorMessage) ValidateKazakhstanInvoice(InvoiceEnvelope envelope)
@@ -260,6 +279,8 @@ public class IsEsfProvider : IInvoiceProvider
         public string? InvoiceId { get; set; }
         public string? Message { get; set; }
     }
+
+
 }
 
 /// <summary>

@@ -8,111 +8,86 @@ using Invoice.Domain.Enums;
 
 namespace Invoice.Infrastructure.Providers
 {
-    // Türkçe yorum: Ortak yardımcı - TR destekli sağlayıcılar listesi
-    internal static class ProviderSupport
-    {
-        // Türkçe yorum: Şimdilik TR odaklı. UZ/KZ için ilgili projeler zaten ayrıdır.
-        public static bool SupportsCountry(string countryCode)
-            => string.Equals(countryCode, "TR", StringComparison.OrdinalIgnoreCase);
-    }
-}
-
-// DIA
-namespace Invoice.Infrastructure.Providers
-{
-    public partial class DiaProvider
-    {
-        public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
-        public bool Supports(ProviderType type) => type == ProviderType;
-    }
-}
-
-// FORIBA
-namespace Invoice.Infrastructure.Providers
-{
-    public partial class ForibaProvider
-    {
-        public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
-        public bool Supports(ProviderType type) => type == ProviderType;
-    }
-}
-
-// IDEA
-namespace Invoice.Infrastructure.Providers
-{
-    public partial class IdeaProvider
-    {
-        public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
-        public bool Supports(ProviderType type) => type == ProviderType;
-    }
-}
-
-// LOGO
-namespace Invoice.Infrastructure.Providers
-{
-    public partial class LogoProvider
-    {
-        public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
-        public bool Supports(ProviderType type) => type == ProviderType;
-    }
-}
-
-// KOLAYBİ
-namespace Invoice.Infrastructure.Providers
-{
-    public partial class KolayBiProvider
-    {
-        public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
-        public bool Supports(ProviderType type) => type == ProviderType;
-    }
-}
-
-// MIKRO
-namespace Invoice.Infrastructure.Providers
-{
-    public partial class MikroProvider
-    {
-        public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
-        public bool Supports(ProviderType type) => type == ProviderType;
-    }
-}
-
-// NETSIS
-namespace Invoice.Infrastructure.Providers
-{
-    public partial class NetsisProvider
-    {
-        public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
-        public bool Supports(ProviderType type) => type == ProviderType;
-    }
-}
-
-// PARASUT
-namespace Invoice.Infrastructure.Providers
-{
-    public partial class ParasutProvider
-    {
-        public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
-        public bool Supports(ProviderType type) => type == ProviderType;
-    }
-}
-
-// BIZIMHESAP
-namespace Invoice.Infrastructure.Providers
-{
+    // Core Infrastructure Provider'ları için Supports/SupportsCountry implementasyonları
+    // Bu dosya otomatik olarak oluşturulmuştur - manuel düzenlemeyin
+    
+    // BIZIMHESAP
     public partial class BizimHesapProvider
     {
         public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
-        public bool Supports(ProviderType type) => type == ProviderType;
+        public bool Supports(ProviderType type) => type == ProviderType.BIZIMHESAP;
     }
-}
-
-// UYUMSOFT
-namespace Invoice.Infrastructure.Providers
-{
+    
+    // DIA
+    public partial class DiaProvider
+    {
+        public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
+        public bool Supports(ProviderType type) => type == ProviderType.DIA;
+    }
+    
+    // FORIBA
+    public partial class ForibaProvider
+    {
+        public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
+        public bool Supports(ProviderType type) => type == ProviderType.FORIBA;
+    }
+    
+    // IDEA
+    public partial class IdeaProvider
+    {
+        public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
+        public bool Supports(ProviderType type) => type == ProviderType.IDEA;
+    }
+    
+    // KOLAYBI
+    public partial class KolayBiProvider
+    {
+        public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
+        public bool Supports(ProviderType type) => type == ProviderType.KOLAYBI;
+    }
+    
+    // LOGO
+    public partial class LogoProvider
+    {
+        public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
+        public bool Supports(ProviderType type) => type == ProviderType.LOGO;
+    }
+    
+    // MIKRO
+    public partial class MikroProvider
+    {
+        public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
+        public bool Supports(ProviderType type) => type == ProviderType.MIKRO;
+    }
+    
+    // NETSIS
+    public partial class NetsisProvider
+    {
+        public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
+        public bool Supports(ProviderType type) => type == ProviderType.NETSIS;
+    }
+    
+    // PARASUT
+    public partial class ParasutProvider
+    {
+        public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
+        public bool Supports(ProviderType type) => type == ProviderType.PARASUT;
+    }
+    
+    // UYUMSOFT
     public partial class UyumsoftProvider
     {
         public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
-        public bool Supports(ProviderType type) => type == ProviderType;
+        public bool Supports(ProviderType type) => type == ProviderType.UYUMSOFT;
+    }
+}
+
+// ProviderSupport yardımcı sınıfı
+namespace Invoice.Infrastructure.Providers
+{
+    internal static class ProviderSupport
+    {
+        public static bool SupportsCountry(string countryCode) => 
+            string.Equals(countryCode, "TR", StringComparison.OrdinalIgnoreCase);
     }
 }
