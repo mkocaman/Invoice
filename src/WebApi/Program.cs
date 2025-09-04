@@ -5,6 +5,7 @@
 // PHASE 2 eklemeleri (FluentValidation, Pagination, ProblemDetails)
 // PHASE 3 eklemeleri (Serilog rolling files, Health checks, HTTP resilience)
 // PHASE 5 eklemeleri (Observability - Prometheus metrics, SLA reporting)
+// PHASE 6 eklemeleri (Multi-provider registry, selection strategy, health monitoring)
 
 using Serilog;
 using WebApi.Infrastructure.Logging;
@@ -30,6 +31,7 @@ using Infrastructure.Providers.Config;
 using Infrastructure.Providers.Core;
 using Infrastructure.Providers.Contracts;
 using Infrastructure.Providers.Adapters;
+using Infrastructure.Providers;
 
 // Türkçe: Serilog'u appsettings'ten kur (dosya/konsol)
 SerilogExtensions.ConfigureSerilogFromConfiguration(new ConfigurationBuilder()
@@ -92,6 +94,9 @@ builder.Services.AddObservabilityHealthChecks(builder.Configuration);
 // Örnek (genel amaçlı):
 builder.Services.AddHttpClient("provider-default")
     .AddResiliencePolicies();
+
+// [PHASE 6] Multi-provider çekirdek servisler
+builder.Services.AddMultiProviderCore();
 
 // [CONTROLLERS] Controller davranışları
 builder.Services.AddControllers()
