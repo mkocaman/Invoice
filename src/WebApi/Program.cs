@@ -3,6 +3,7 @@
 // CorrelationMiddleware entegrasyonu
 // PHASE 1 eklemeleri (CSMS-JWT, CORS, RateLimit, Swagger, Exception)
 // PHASE 2 eklemeleri (FluentValidation, Pagination, ProblemDetails)
+// PHASE 3 eklemeleri (Serilog rolling files, Health checks, HTTP resilience)
 
 using Serilog;
 using WebApi.Infrastructure.Logging;
@@ -12,8 +13,12 @@ using WebApi.Infrastructure.Security.Jwt;
 using WebApi.Infrastructure.Security.Policies;
 using WebApi.Infrastructure.Swagger;
 using WebApi.Infrastructure.ProblemDetails;
+using WebApi.Infrastructure.Health;
+using WebApi.Infrastructure.Http.Resilience;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using System.Text.Json;
 using RabbitMQ.Client;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Db;
@@ -23,7 +28,17 @@ using Infrastructure.Providers.Core;
 using Infrastructure.Providers.Contracts;
 using Infrastructure.Providers.Adapters;
 
+// Türkçe: Serilog'u appsettings'ten kur (dosya/konsol)
+SerilogExtensions.ConfigureSerilogFromConfiguration(new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json", optional: true)
+    .AddJsonFile("appsettings.Development.json", optional: true)
+    .AddEnvironmentVariables()
+    .Build());
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Türkçe: ASP.NET loglarını Serilog'a yönlendir
+builder.Host.UseSerilog();
 
 // [GÜVENLİK] Kestrel max request boyutu (örn. 25MB) — XML gövdeleri için koruma
 builder.WebHost.ConfigureKestrel(k =>
@@ -31,27 +46,6 @@ builder.WebHost.ConfigureKestrel(k =>
     // Türkçe: Büyük istekleri sınırlayalım
     k.Limits.MaxRequestBodySize = 25 * 1024 * 1024; // 25 MB
 });
-
-// Serilog konfigürasyonu - kategoriye göre farklı dosyalara yazdırma
-Log.Logger = new LoggerConfiguration()
-    .ReadFrom.Configuration(builder.Configuration)
-    .Enrich.FromLogContext()
-    .WriteTo.Console()
-    // Uygulama logları
-    .WriteTo.File("logs/app/app-.log", rollingInterval: RollingInterval.Day)
-    // DB kategorisi
-    .WriteTo.Logger(lc => lc
-        .Filter.ByIncludingOnly(le => le.Properties.ContainsKey("SourceContext") && 
-            le.Properties["SourceContext"].ToString().Contains("Microsoft.EntityFrameworkCore"))
-        .WriteTo.File("logs/db/db-.log", rollingInterval: RollingInterval.Day))
-    // RabbitMQ kategorisi
-    .WriteTo.Logger(lc => lc
-        .Filter.ByIncludingOnly(le => le.Properties.ContainsKey("SourceContext") && 
-            le.Properties["SourceContext"].ToString().Contains("RabbitMq"))
-        .WriteTo.File("logs/rabbitmq/rabbitmq-.log", rollingInterval: RollingInterval.Day))
-    .CreateLogger();
-
-builder.Host.UseSerilog();
 
 // [CORS] Basit whitelist
 var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? Array.Empty<string>();
@@ -86,6 +80,14 @@ builder.Services
 
 // [PROBLEMDETAILS] ModelState hatalarını ProblemDetails'a dönüştürmek için özel fabrika
 builder.Services.AddSingleton<Microsoft.AspNetCore.Mvc.Infrastructure.ProblemDetailsFactory, ValidationProblemDetailsFactory>();
+
+// [HEALTH] Liveness & Readiness
+builder.Services.AddInvoiceHealthChecks(builder.Configuration);
+
+// [HTTP RESILIENCE] Not: Kayıtlı named HttpClient'larınıza bu politikayı ekleyin.
+// Örnek (genel amaçlı):
+builder.Services.AddHttpClient("provider-default")
+    .AddResiliencePolicies();
 
 // [CONTROLLERS] Controller davranışları
 builder.Services.AddControllers()
@@ -144,6 +146,9 @@ builder.Services.AddSingleton<IConnectionFactory>(provider =>
 
 var app = builder.Build();
 
+// [SERILOG] İstek loglama (otomatik — status/süre/route)
+app.UseSerilogRequestLogging();
+
 // [EXCEPTION] global
 app.UseGlobalExceptionHandling();
 
@@ -157,6 +162,35 @@ app.UseRateLimiter();
 // Türkçe: Correlation middleware'i en başa yakın konumda ekleyin
 app.UseMiddleware<CorrelationMiddleware>();
 
+// [HEALTH ENDPOINTS] - Map before authorization to ensure they're anonymous
+// Türkçe: Liveness (anonim erişime açık olabilir)
+app.MapHealthChecks("/health/live", new HealthCheckOptions
+{
+    Predicate = r => r.Tags.Contains("live"),
+    ResponseWriter = async (ctx, report) =>
+    {
+        ctx.Response.ContentType = "application/json";
+        var body = JsonSerializer.Serialize(new { status = report.Status.ToString(), checks = report.Entries.Keys });
+        await ctx.Response.WriteAsync(body);
+    }
+});
+
+// Türkçe: Readiness (genelde iç ağdan; dilersen CsmsOnly ile koru)
+app.MapHealthChecks("/health/ready", new HealthCheckOptions
+{
+    Predicate = r => r.Tags.Contains("ready"),
+    ResponseWriter = async (ctx, report) =>
+    {
+        ctx.Response.ContentType = "application/json";
+        var details = report.Entries.ToDictionary(
+            e => e.Key,
+            e => new { status = e.Value.Status.ToString(), description = e.Value.Description }
+        );
+        var body = JsonSerializer.Serialize(new { status = report.Status.ToString(), details });
+        await ctx.Response.WriteAsync(body);
+    }
+});
+
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -168,8 +202,7 @@ app.UseSwaggerUI(c =>
     c.DisplayRequestDuration();
 });
 
-// Türkçe: Varsayılan olarak tüm controller'lar CsmsOnly İSTEMEZ; her controller kendisi karar verir.
-// (Phase1'de global RequireAuthorization kaldırıldı; TestController anonim kalacak şekilde tutulur.)
+// Türkçe: Controller'lar. Not: InvoicesController vb. üzerinde [Authorize(Policy="CsmsOnly")] kullanın.
 app.MapControllers();
 
 app.Run();

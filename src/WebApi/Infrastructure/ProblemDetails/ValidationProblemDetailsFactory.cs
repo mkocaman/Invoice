@@ -1,6 +1,7 @@
 // Türkçe: ModelState (FluentValidation) hatalarını RFC7807 ProblemDetails formatında döndürmek için özel fabrika.
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 
 namespace WebApi.Infrastructure.ProblemDetails
@@ -14,10 +15,10 @@ namespace WebApi.Infrastructure.ProblemDetails
             _logger = logger;
         }
 
-        public override ProblemDetails CreateProblemDetails(HttpContext httpContext, int? statusCode = null,
+        public override Microsoft.AspNetCore.Mvc.ProblemDetails CreateProblemDetails(HttpContext httpContext, int? statusCode = null,
             string? title = null, string? type = null, string? detail = null, string? instance = null)
         {
-            var problem = new ProblemDetails
+            var problem = new Microsoft.AspNetCore.Mvc.ProblemDetails
             {
                 Status = statusCode ?? StatusCodes.Status500InternalServerError,
                 Title = title ?? "İşlenemeyen hata",
