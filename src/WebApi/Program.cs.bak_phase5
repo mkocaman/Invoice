@@ -4,7 +4,6 @@
 // PHASE 1 eklemeleri (CSMS-JWT, CORS, RateLimit, Swagger, Exception)
 // PHASE 2 eklemeleri (FluentValidation, Pagination, ProblemDetails)
 // PHASE 3 eklemeleri (Serilog rolling files, Health checks, HTTP resilience)
-// PHASE 5 eklemeleri (Observability - Prometheus metrics, SLA reporting)
 
 using Serilog;
 using WebApi.Infrastructure.Logging;
@@ -16,8 +15,6 @@ using WebApi.Infrastructure.Swagger;
 using WebApi.Infrastructure.ProblemDetails;
 using WebApi.Infrastructure.Health;
 using WebApi.Infrastructure.Http.Resilience;
-using WebApi.Infrastructure.Observability;
-using Prometheus;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -86,7 +83,6 @@ builder.Services.AddSingleton<Microsoft.AspNetCore.Mvc.Infrastructure.ProblemDet
 
 // [HEALTH] Liveness & Readiness
 builder.Services.AddInvoiceHealthChecks(builder.Configuration);
-builder.Services.AddObservabilityHealthChecks(builder.Configuration);
 
 // [HTTP RESILIENCE] Not: Kayıtlı named HttpClient'larınıza bu politikayı ekleyin.
 // Örnek (genel amaçlı):
@@ -114,9 +110,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // Audit servisi
 builder.Services.AddScoped<IInvoiceAuditService, InvoiceAuditService>();
-
-// SLA Report servisi
-builder.Services.AddScoped<SLAReportService>();
 
 // Türkçe: ProviderOptions binding
 builder.Services.Configure<ProviderOptions>(builder.Configuration.GetSection("Providers"));
@@ -169,9 +162,6 @@ app.UseRateLimiter();
 // Türkçe: Correlation middleware'i en başa yakın konumda ekleyin
 app.UseMiddleware<CorrelationMiddleware>();
 
-// [METRICS] Prometheus metrics middleware
-app.UseMiddleware<MetricsMiddleware>();
-
 // [HEALTH ENDPOINTS] - Map before authorization to ensure they're anonymous
 // Türkçe: Liveness (anonim erişime açık olabilir)
 app.MapHealthChecks("/health/live", new HealthCheckOptions
@@ -200,9 +190,6 @@ app.MapHealthChecks("/health/ready", new HealthCheckOptions
         await ctx.Response.WriteAsync(body);
     }
 });
-
-// [METRICS] Prometheus metrics endpoint
-app.MapMetrics("/metrics");
 
 app.UseAuthentication();
 app.UseAuthorization();
