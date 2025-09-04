@@ -1,0 +1,55 @@
+{
+  "scenario": "UZ_MULTI_ITEMS",
+  "invoiceNumber": "UZ-TEST-001",
+  "currency": "UZS",
+  "sellerInn": "123456789",
+  "buyerInn": "987654321",
+  "issueDate": "2025-09-03",
+  "dueDate": "2025-10-03",
+  "sellerName": "Test Supplier UZ",
+  "buyerName": "Test Customer UZ",
+  "sellerAddress": "Test Address, Tashkent, UZ",
+  "buyerAddress": "Test Customer Address, Samarkand, UZ",
+  "sellerPhone": "+998-71-123-4567",
+  "buyerPhone": "+998-66-987-6543",
+  "items": [
+    {
+      "id": 1,
+      "name": "Software License - Professional Edition",
+      "description": "Annual software license for professional use",
+      "quantity": "2",
+      "unit_code": "C62",
+      "unit_price": "0.00",
+      "line_total": "0.00",
+      "vat_percent": "15",
+      "vat_amount": "0.00"
+    },
+    {
+      "id": 2,
+      "name": "Technical Support - Premium",
+      "description": "24/7 technical support service",
+      "quantity": "1",
+      "unit_code": "C62",
+      "unit_price": "0.00",
+      "line_total": "0.00",
+      "vat_percent": "15",
+      "vat_amount": "0.00"
+    },
+    {
+      "id": 3,
+      "name": "Training Session - Advanced",
+      "description": "Advanced user training session",
+      "quantity": "3",
+      "unit_code": "C62",
+      "unit_price": "0.00",
+      "line_total": "0.00",
+      "vat_percent": "15",
+      "vat_amount": "0.00"
+    }
+  ],
+  "net": "0.00",
+  "vat": "0.00",
+  "gross": "0.00",
+  "paymentTerms": "Net 30",
+  "notes": "Test invoice for UZ sandbox integration"
+}

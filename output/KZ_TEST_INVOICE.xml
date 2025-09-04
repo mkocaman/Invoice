@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Invoice>
+  <DocumentType>KZ-LOCAL</DocumentType>
+  <Number>TEST-KZ-001</Number>
+  <Date>2025-09-03</Date>
+  <Currency>KZT</Currency>
+  <Supplier>
+    <BIN>123456789012</BIN>
+    <Name>Test Supplier KZ</Name>
+    <Address>Test Address, Almaty, KZ</Address>
+  </Supplier>
+  <Customer>
+    <BIN>210987654321</BIN>
+    <Name>Test Customer KZ</Name>
+    <Address>Test Customer Address, Astana, KZ</Address>
+  </Customer>
+  <Items>
+    <Item>
+      <Name>Test Item KZ - Software License</Name>
+      <Quantity>3</Quantity>
+      <UnitCode>C62</UnitCode>
+      <UnitPrice>1000.00</UnitPrice>
+      <LineExtensionAmount>3000.00</LineExtensionAmount>
+      <VatPercent>12</VatPercent>
+      <VatAmount>360.00</VatAmount>
+    </Item>
+    <Item>
+      <Name>Test Item KZ - Support Service</Name>
+      <Quantity>1</Quantity>
+      <UnitCode>C62</UnitCode>
+      <UnitPrice>500.00</UnitPrice>
+      <LineExtensionAmount>500.00</LineExtensionAmount>
+      <VatPercent>12</VatPercent>
+      <VatAmount>60.00</VatAmount>
+    </Item>
+  </Items>
+  <Totals>
+    <Net>3500.00</Net>
+    <Vat>420.00</Vat>
+    <Gross>3920.00</Gross>
+  </Totals>
+</Invoice>

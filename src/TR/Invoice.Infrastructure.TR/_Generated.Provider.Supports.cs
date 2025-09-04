@@ -22,7 +22,7 @@ namespace Invoice.Infrastructure.TR.Providers
     public partial class DiaProvider
     {
         public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
-        public bool Supports(ProviderType type) => type == ProviderType;
+        public bool Supports(ProviderType type) => type == ProviderType.DIA;
     }
 }
 
@@ -32,7 +32,7 @@ namespace Invoice.Infrastructure.TR.Providers
     public partial class ForibaProvider
     {
         public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
-        public bool Supports(ProviderType type) => type == ProviderType;
+        public bool Supports(ProviderType type) => type == ProviderType.FORIBA;
     }
 }
 
@@ -42,7 +42,7 @@ namespace Invoice.Infrastructure.TR.Providers
     public partial class IdeaProvider
     {
         public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
-        public bool Supports(ProviderType type) => type == ProviderType;
+        public bool Supports(ProviderType type) => type == ProviderType.IDEA;
     }
 }
 
@@ -52,7 +52,7 @@ namespace Invoice.Infrastructure.TR.Providers
     public partial class LogoProvider
     {
         public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
-        public bool Supports(ProviderType type) => type == ProviderType;
+        public bool Supports(ProviderType type) => type == ProviderType.LOGO;
     }
 }
 
@@ -62,7 +62,7 @@ namespace Invoice.Infrastructure.TR.Providers
     public partial class KolayBiProvider
     {
         public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
-        public bool Supports(ProviderType type) => type == ProviderType;
+        public bool Supports(ProviderType type) => type == ProviderType.KOLAYBI;
     }
 }
 
@@ -72,7 +72,7 @@ namespace Invoice.Infrastructure.TR.Providers
     public partial class MikroProvider
     {
         public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
-        public bool Supports(ProviderType type) => type == ProviderType;
+        public bool Supports(ProviderType type) => type == ProviderType.MIKRO;
     }
 }
 
@@ -82,7 +82,7 @@ namespace Invoice.Infrastructure.TR.Providers
     public partial class NetsisProvider
     {
         public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
-        public bool Supports(ProviderType type) => type == ProviderType;
+        public bool Supports(ProviderType type) => type == ProviderType.NETSIS;
     }
 }
 
@@ -92,7 +92,7 @@ namespace Invoice.Infrastructure.TR.Providers
     public partial class ParasutProvider
     {
         public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
-        public bool Supports(ProviderType type) => type == ProviderType;
+        public bool Supports(ProviderType type) => type == ProviderType.PARASUT;
     }
 }
 
@@ -102,7 +102,7 @@ namespace Invoice.Infrastructure.TR.Providers
     public partial class BizimHesapProvider
     {
         public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
-        public bool Supports(ProviderType type) => type == ProviderType;
+        public bool Supports(ProviderType type) => type == ProviderType.BIZIMHESAP;
     }
 }
 
@@ -112,6 +112,6 @@ namespace Invoice.Infrastructure.TR.Providers
     public partial class UyumsoftProvider
     {
         public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
-        public bool Supports(ProviderType type) => type == ProviderType;
+        public bool Supports(ProviderType type) => type == ProviderType.UYUMSOFT;
     }
 }

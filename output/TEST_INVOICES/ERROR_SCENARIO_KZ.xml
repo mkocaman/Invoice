@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Invoice>
+  <DocumentType>INVALID</DocumentType>
+  <Number></Number>
+  <Date></Date>
+  <Currency></Currency>
+  <Supplier>
+    <BIN>123</BIN>
+    <Name></Name>
+    <Address></Address>
+    <Phone>+7-701-123-4567</Phone>
+  </Supplier>
+  <Customer>
+    <BIN></BIN>
+    <Name></Name>
+    <Address></Address>
+    <Phone>+7-717-987-6543</Phone>
+  </Customer>
+  <Items>
+    <Item>
+      <ID>1</ID>
+      <Name></Name>
+      <Description>Test Description</Description>
+      <Quantity></Quantity>
+      <UnitCode></UnitCode>
+      <UnitPrice></UnitPrice>
+      <LineExtensionAmount></LineExtensionAmount>
+      <VatPercent></VatPercent>
+      <VatAmount></VatAmount>
+      <TotalAmount>0.00</TotalAmount>
+    </Item>
+  </Items>
+  <Totals>
+    <LineExtensionAmount></LineExtensionAmount>
+    <TaxExclusiveAmount>0.00</TaxExclusiveAmount>
+    <TaxAmount></TaxAmount>
+    <TaxInclusiveAmount></TaxInclusiveAmount>
+    <PayableAmount>0.00</PayableAmount>
+  </Totals>
+  <PaymentTerms>Net 30</PaymentTerms>
+  <Notes>This should generate validation errors</Notes>
+</Invoice>

@@ -1,0 +1,36 @@
+{
+  "scenario": "ERROR_SCENARIO",
+  "description": "Hatalı senaryo - eksik alanlarla error response bekle",
+  "documentType": "INVALID",
+  "invoiceNumber": "",
+  "issueDate": "",
+  "currency": "",
+  "supplier": {
+    "bin": "123",
+    "name": "",
+    "address": ""
+  },
+  "customer": {
+    "bin": "",
+    "name": "",
+    "address": ""
+  },
+  "items": [
+    {
+      "id": 1,
+      "name": "",
+      "quantity": "",
+      "unitCode": "",
+      "unitPrice": "",
+      "lineExtensionAmount": "",
+      "vatPercent": "",
+      "vatAmount": ""
+    }
+  ],
+  "totals": {
+    "lineExtensionAmount": "",
+    "taxAmount": "",
+    "taxInclusiveAmount": ""
+  },
+  "notes": "This should generate validation errors"
+}

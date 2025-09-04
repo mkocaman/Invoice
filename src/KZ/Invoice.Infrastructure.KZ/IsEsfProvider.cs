@@ -6,7 +6,8 @@ using Invoice.Domain.Entities;
 using Invoice.Domain.Enums;
 using System.Text.Json;
 using System.Net; // HTML encoding için WebUtility
-// using System.Xml.Linq; // .NET 9'da paket gerekiyor, şimdilik kaldırıldı
+using System.Xml.Linq;
+using Invoice.Infrastructure.KZ.Providers.KZ;
 
 namespace Invoice.Infrastructure.KZ.Providers;
 
@@ -19,17 +20,20 @@ public class IsEsfProvider : IInvoiceProvider
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly IConfiguration _configuration;
     private readonly IKzEsfAuthClient? _authClient;
+    private readonly IIsEsfClient _isEsfClient;
 
     public IsEsfProvider(
         ILogger<IsEsfProvider> logger,
         IHttpClientFactory httpClientFactory,
         IConfiguration configuration,
-        IKzEsfAuthClient? authClient = null)
+        IKzEsfAuthClient? authClient = null,
+        IIsEsfClient? isEsfClient = null)
     {
         _logger = logger;
         _httpClientFactory = httpClientFactory;
         _configuration = configuration;
         _authClient = authClient;
+        _isEsfClient = isEsfClient ?? throw new ArgumentNullException(nameof(isEsfClient));
     }
 
     public ProviderType ProviderType => ProviderType.IS_ESF_KZ;
@@ -69,19 +73,11 @@ public class IsEsfProvider : IInvoiceProvider
                     ErrorMessage: null);
             }
 
-            // Türkçe: Konfigürasyon kontrolü
-            if (string.IsNullOrWhiteSpace(config?.ApiBaseUrl))
-            {
-                return ProviderSendResult.Failed(
-                    provider: ProviderType,
-                    errorCode: "CONFIG_MISSING",
-                    errorMessage: "IS ESF için ApiBaseUrl tanımlı değil.");
-            }
-
-            var httpClient = _httpClientFactory.CreateClient("isEsfKz");
+            // Türkçe: Yeni IS ESF Client kullan
+            var username = _configuration["Secrets:KZ:Username"] ?? "sandbox_user";
+            var password = _configuration["Secrets:KZ:Password"] ?? "sandbox_pass";
             
-            // Türkçe: SDK tabanlı kimlik doğrulama
-            var token = await GetSdkTokenAsync(config, cancellationToken);
+            var token = await _isEsfClient.LoginAsync(username, password, cancellationToken);
             if (string.IsNullOrEmpty(token))
             {
                 return ProviderSendResult.Failed(
@@ -90,9 +86,9 @@ public class IsEsfProvider : IInvoiceProvider
                     errorMessage: "IS ESF SDK token alınamadı.");
             }
 
-            // Türkçe: XML imzalı fatura gönder
-            var xmlInvoice = CreateXmlInvoice(envelope, config);
-            var response = await SendInvoiceToIsEsfAsync(xmlInvoice, token, config, httpClient, cancellationToken);
+            // Türkçe: XML imzalı fatura gönder (yeni client ile)
+            var xmlInvoice = ToKzXml(envelope);
+            var response = await _isEsfClient.SendInvoiceXmlAsync(xmlInvoice, token, cancellationToken);
 
             _logger.LogInformation("IS ESF'ye fatura gönderildi. Invoice Number: {InvoiceNumber}, Response: {Response}", 
                 envelope.InvoiceNumber, response);
@@ -100,9 +96,9 @@ public class IsEsfProvider : IInvoiceProvider
             return new ProviderSendResult(
                 Success: true,
                 Provider: ProviderType,
-                ProviderReferenceNumber: response.InvoiceId ?? $"IS-ESF-KZ-{Guid.NewGuid():N}",
+                ProviderReferenceNumber: response ?? $"IS-ESF-KZ-{Guid.NewGuid():N}",
                 ProviderResponseMessage: "IS ESF: e-Fatura başarıyla gönderildi",
-                UblXml: xmlInvoice,
+                UblXml: xmlInvoice.ToString(),
                 ErrorCode: null,
                 ErrorMessage: null);
         }
@@ -141,68 +137,68 @@ public class IsEsfProvider : IInvoiceProvider
         return type == ProviderType.IS_ESF_KZ;
     }
 
-    private async Task<string?> GetSdkTokenAsync(ProviderConfig config, CancellationToken cancellationToken)
+    /// <summary>
+    /// InvoiceEnvelope'i KZ-native XML'e dönüştürür
+    /// </summary>
+    private XDocument ToKzXml(InvoiceEnvelope envelope)
     {
-        try
-        {
-            // Türkçe: SDK tabanlı kimlik doğrulama
-            if (_authClient != null)
-            {
-                return await _authClient.GetTokenAsync(config, cancellationToken);
-            }
-
-            // Türkçe: Mock SDK token (dev modda)
-            _logger.LogWarning("IS ESF SDK client bulunamadı, mock token kullanılıyor.");
-            return "mock-sdk-token";
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "IS ESF SDK token alınırken hata");
-            return null;
-        }
-    }
-
-    private string CreateXmlInvoice(InvoiceEnvelope envelope, ProviderConfig config)
-    {
-        // Türkçe: IS ESF XML formatına uygun fatura oluştur (Kazakistan gereksinimleri)
         var invoiceDate = envelope.IssueDate.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
         
-        var itemsXml = "";
-        var items = envelope.Items ?? envelope.LineItems;
-        if (items != null)
+        var items = (envelope.Items ?? envelope.LineItems)?.Select(item => new
         {
-            itemsXml = string.Join("", items.Select(item => 
-                $@"<Item>
-                    <Name>{WebUtility.HtmlEncode(item.Name ?? item.Description)}</Name>
-                    <Quantity>{item.Quantity}</Quantity>
-                    <UnitPrice>{item.UnitPrice.ToString(System.Globalization.CultureInfo.InvariantCulture)}</UnitPrice>
-                    <Total>{item.Total.ToString(System.Globalization.CultureInfo.InvariantCulture)}</Total>
-                    <UnitCode>{GetKazakhstanUnitCode(item.UnitCode)}</UnitCode>
-                    <TaxRate>{item.TaxRate.ToString(System.Globalization.CultureInfo.InvariantCulture)}</TaxRate>
-                </Item>"
-            ));
+            Name = WebUtility.HtmlEncode(item.Name ?? item.Description ?? "Unnamed"),
+            Quantity = item.Quantity,
+            UnitPrice = item.UnitPrice.ToString("F2", System.Globalization.CultureInfo.InvariantCulture),
+            Total = item.Total.ToString("F2", System.Globalization.CultureInfo.InvariantCulture),
+            UnitCode = GetKazakhstanUnitCode(item.UnitCode),
+            TaxRate = (item.TaxRate ?? 12).ToString("F2", System.Globalization.CultureInfo.InvariantCulture)
+        }).ToList() ?? new List<object>();
+
+        var net = items.Sum(item => decimal.Parse(item.Total.ToString())).ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
+        var vat = items.Sum(item => decimal.Parse(item.Total.ToString()) * 0.12m).ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
+        var gross = (decimal.Parse(net) + decimal.Parse(vat)).ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
+
+        var root = new XElement("Invoice");
+        root.Add(new XElement("DocumentType", "KZ-LOCAL")); // [SIMULASYON]
+        root.Add(new XElement("Number", envelope.InvoiceNumber));
+        root.Add(new XElement("Date", invoiceDate));
+        root.Add(new XElement("Currency", "KZT"));
+
+        var supplier = new XElement("Supplier");
+        supplier.Add(new XElement("BIN", envelope.Supplier?.TaxNumber ?? "123456789012")); // Varsayılan BIN
+        root.Add(supplier);
+
+        var customer = new XElement("Customer");
+        customer.Add(new XElement("BIN", envelope.Customer?.TaxNumber ?? envelope.CustomerTaxNumber ?? "210987654321"));
+        root.Add(customer);
+
+        var itemsElement = new XElement("Items");
+        foreach (var item in items)
+        {
+            var itemElement = new XElement("Item");
+            itemElement.Add(new XElement("Name", item.Name));
+            itemElement.Add(new XElement("Quantity", item.Quantity));
+            itemElement.Add(new XElement("UnitCode", item.UnitCode));
+            itemElement.Add(new XElement("UnitPrice", item.UnitPrice));
+            itemElement.Add(new XElement("LineExtensionAmount", item.Total));
+            itemElement.Add(new XElement("VatPercent", item.TaxRate));
+            itemElement.Add(new XElement("VatAmount", (decimal.Parse(item.Total.ToString()) * 0.12m).ToString("F2", System.Globalization.CultureInfo.InvariantCulture)));
+            itemsElement.Add(itemElement);
         }
-        
-        var customerName = WebUtility.HtmlEncode(envelope.Customer?.Name ?? envelope.CustomerName ?? "Клиент");
-        var customerTaxNumber = envelope.Customer?.TaxNumber ?? envelope.CustomerTaxNumber ?? "";
-        var customerAddress = WebUtility.HtmlEncode(envelope.Customer?.AddressLine ?? "");
-        
-        var xml = $@"<?xml version=""1.0"" encoding=""utf-8""?>
-<Invoice xmlns=""http://kgd.gov.kz/esf"">
-    <InvoiceNumber>{envelope.InvoiceNumber}</InvoiceNumber>
-    <InvoiceDate>{invoiceDate}</InvoiceDate>
-    <TotalAmount>{envelope.TotalAmount.ToString(System.Globalization.CultureInfo.InvariantCulture)}</TotalAmount>
-    <Currency>KZT</Currency>
-    <Customer>
-        <Name>{customerName}</Name>
-        <TaxNumber>{customerTaxNumber}</TaxNumber>
-        <Address>{customerAddress}</Address>
-        <CountryCode>{envelope.Customer?.CountryCode ?? "KZ"}</CountryCode>
-    </Customer>
-    <Items>{itemsXml}</Items>
-</Invoice>";
-        
-        return xml;
+        root.Add(itemsElement);
+
+        var totals = new XElement("Totals");
+        totals.Add(new XElement("Net", net));
+        totals.Add(new XElement("Vat", vat));
+        totals.Add(new XElement("Gross", gross));
+        root.Add(totals);
+
+        var meta = new XElement("Meta");
+        meta.Add(new XElement("Source", "InvoiceEnvelope"));
+        meta.Add(new XElement("Simulasyon", "true"));
+        root.Add(meta);
+
+        return new XDocument(root);
     }
 
     /// <summary>
@@ -255,23 +251,6 @@ public class IsEsfProvider : IInvoiceProvider
         return (true, "");
     }
 
-    private async Task<IsEsfResponse> SendInvoiceToIsEsfAsync(
-        string xmlInvoice, 
-        string token, 
-        ProviderConfig config, 
-        HttpClient httpClient, 
-        CancellationToken cancellationToken)
-    {
-        httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
-
-        var content = new StringContent(xmlInvoice, System.Text.Encoding.UTF8, "application/xml");
-        var response = await httpClient.PostAsync("/api/documents/invoice/send", content, cancellationToken);
-        response.EnsureSuccessStatusCode();
-
-        var responseContent = await response.Content.ReadAsStringAsync(cancellationToken);
-        return JsonSerializer.Deserialize<IsEsfResponse>(responseContent) ?? new IsEsfResponse();
-    }
-
     // Türkçe: Response modelleri
     private class IsEsfResponse
     {
@@ -279,8 +258,6 @@ public class IsEsfProvider : IInvoiceProvider
         public string? InvoiceId { get; set; }
         public string? Message { get; set; }
     }
-
-
 }
 
 /// <summary>

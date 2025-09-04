@@ -1,11 +1,10 @@
-// Türkçe: Paraşüt gerçek REST entegrasyonu (OAuth2) – apidocs.parasut.com referanslı.
+// Türkçe: Parasut e-Fatura entegrasyonu
 using System.Net.Http.Json;
 using System.Text.Json;
 using Invoice.Application.Interfaces;
 using Invoice.Application.Models;
 using Invoice.Domain.Entities;
 using Invoice.Domain.Enums;
-using Invoice.Infrastructure.Providers.Common;
 using Invoice.Infrastructure.Providers.Http;
 using Microsoft.Extensions.Logging;
 

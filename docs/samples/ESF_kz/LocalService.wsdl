@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="esf" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="LocalService" targetNamespace="esf" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="esf" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:complexType name="ListWithReasonSignatureRequest">
+        <xs:sequence>
+          <xs:element name="idsWithReasons">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="idWithReason" type="tns:InvoiceIdWithReason" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="certificatePath" type="xs:string" />
+          <xs:element name="certificatePin" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="InvoiceIdWithReason">
+        <xs:sequence>
+          <xs:element name="id" type="xs:long" />
+          <xs:element name="reason" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ListSignatureResponse">
+        <xs:sequence>
+          <xs:element name="signature" type="xs:string" />
+          <xs:element name="hash" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DocumentSignatureRequest">
+        <xs:sequence>
+          <xs:element name="signableData" type="xs:string" />
+          <xs:element name="certificatePath" type="xs:string" />
+          <xs:element name="certificatePin" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DocumentSignatureResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="signedData" type="xs:string" />
+          <xs:element minOccurs="0" name="signature" type="xs:string" />
+          <xs:element minOccurs="0" name="certificate" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ListSignatureRequest">
+        <xs:sequence>
+          <xs:element name="ids">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="id" type="xs:long" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="certificatePath" type="xs:string" />
+          <xs:element name="certificatePin" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="SignatureRequest">
+        <xs:sequence>
+          <xs:element name="invoiceBodies">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="invoiceBody" type="xs:string" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="version" type="xs:string" />
+          <xs:element name="certificatePath" type="xs:string" />
+          <xs:element name="certificatePin" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="SignatureResponse">
+        <xs:sequence>
+          <xs:element name="invoiceHashList">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="invoiceHash" type="tns:invoiceHash" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="invoiceHash">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="hash" type="xs:string" />
+          <xs:element minOccurs="0" name="invoiceNum" type="xs:string" />
+          <xs:element minOccurs="0" name="signature" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="idWithReasonListRequest" nillable="true" type="tns:ListWithReasonSignatureRequest" />
+      <xs:element name="listSignatureResponse" nillable="true" type="tns:ListSignatureResponse" />
+      <xs:element name="documentSignatureRequest" nillable="true" type="tns:DocumentSignatureRequest" />
+      <xs:element name="documentSignatureResponse" nillable="true" type="tns:DocumentSignatureResponse" />
+      <xs:element name="idListRequest" nillable="true" type="tns:ListSignatureRequest" />
+      <xs:element name="signatureRequest" nillable="true" type="tns:SignatureRequest" />
+      <xs:element name="signatureResponse" nillable="true" type="tns:SignatureResponse" />
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="generateDocumentSignatureResponse">
+    <wsdl:part name="documentSignatureResponse" element="tns:documentSignatureResponse" />
+  </wsdl:message>
+  <wsdl:message name="signIdWithReasonList">
+    <wsdl:part name="idWithReasonListRequest" element="tns:idWithReasonListRequest" />
+  </wsdl:message>
+  <wsdl:message name="generateDocumentSignature">
+    <wsdl:part name="documentSignatureRequest" element="tns:documentSignatureRequest" />
+  </wsdl:message>
+  <wsdl:message name="signIdList">
+    <wsdl:part name="idListRequest" element="tns:idListRequest" />
+  </wsdl:message>
+  <wsdl:message name="signIdWithReasonListResponse">
+    <wsdl:part name="listSignatureResponse" element="tns:listSignatureResponse" />
+  </wsdl:message>
+  <wsdl:message name="generateSignature">
+    <wsdl:part name="signatureRequest" element="tns:signatureRequest" />
+  </wsdl:message>
+  <wsdl:message name="generateSignatureResponse">
+    <wsdl:part name="signatureResponse" element="tns:signatureResponse" />
+  </wsdl:message>
+  <wsdl:message name="signIdListResponse">
+    <wsdl:part name="listSignatureResponse" element="tns:listSignatureResponse" />
+  </wsdl:message>
+  <wsdl:portType name="LocalService">
+    <wsdl:documentation>Локальный сервис для работы с ИС ЭСФ</wsdl:documentation>
+    <wsdl:operation name="signIdWithReasonList">
+      <wsdl:input name="signIdWithReasonList" message="tns:signIdWithReasonList" />
+      <wsdl:output name="signIdWithReasonListResponse" message="tns:signIdWithReasonListResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="generateDocumentSignature">
+      <wsdl:input name="generateDocumentSignature" message="tns:generateDocumentSignature" />
+      <wsdl:output name="generateDocumentSignatureResponse" message="tns:generateDocumentSignatureResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="signIdList">
+      <wsdl:input name="signIdList" message="tns:signIdList" />
+      <wsdl:output name="signIdListResponse" message="tns:signIdListResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="generateSignature">
+      <wsdl:input name="generateSignature" message="tns:generateSignature" />
+      <wsdl:output name="generateSignatureResponse" message="tns:generateSignatureResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="LocalServiceSoapBinding" type="tns:LocalService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="signIdWithReasonList">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="signIdWithReasonList">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="signIdWithReasonListResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="generateDocumentSignature">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="generateDocumentSignature">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="generateDocumentSignatureResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="signIdList">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="signIdList">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="signIdListResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="generateSignature">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="generateSignature">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="generateSignatureResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="LocalService">
+    <wsdl:port name="LocalServicePort" binding="tns:LocalServiceSoapBinding">
+      <soap:address location="http://localhost:6666/LocalService" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

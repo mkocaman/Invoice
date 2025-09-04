@@ -4,7 +4,6 @@ using Invoice.Application.Interfaces;
 using Invoice.Application.Models;
 using Invoice.Domain.Entities;
 using Invoice.Domain.Enums;
-using Invoice.Infrastructure.Providers.Common;
 using Invoice.Infrastructure.Providers.Http;
 using Microsoft.Extensions.Logging;
 

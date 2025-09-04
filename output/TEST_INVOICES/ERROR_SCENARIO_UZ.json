@@ -1,0 +1,33 @@
+{
+  "scenario": "ERROR_SCENARIO",
+  "invoiceNumber": "",
+  "currency": "",
+  "sellerInn": "123456789",
+  "buyerInn": "987654321",
+  "issueDate": "",
+  "dueDate": "2025-10-03",
+  "sellerName": "",
+  "buyerName": "",
+  "sellerAddress": "",
+  "buyerAddress": "",
+  "sellerPhone": "+998-71-123-4567",
+  "buyerPhone": "+998-66-987-6543",
+  "items": [
+    {
+      "id": 1,
+      "name": "",
+      "description": "Test Description",
+      "quantity": "",
+      "unit_code": "",
+      "unit_price": "",
+      "line_total": "",
+      "vat_percent": "",
+      "vat_amount": ""
+    }
+  ],
+  "net": "",
+  "vat": "",
+  "gross": "",
+  "paymentTerms": "Net 30",
+  "notes": "This should generate validation errors"
+}

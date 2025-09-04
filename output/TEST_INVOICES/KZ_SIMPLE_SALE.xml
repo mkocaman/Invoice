@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Invoice>
+  <DocumentType>KZ-LOCAL</DocumentType>
+  <Number>KZ-TEST-001</Number>
+  <Date>2025-09-03</Date>
+  <Currency>KZT</Currency>
+  <Supplier>
+    <BIN>123456789012</BIN>
+    <Name>Test Supplier KZ</Name>
+    <Address>Test Address, Almaty, KZ</Address>
+    <Phone>+7-701-123-4567</Phone>
+  </Supplier>
+  <Customer>
+    <BIN>210987654321</BIN>
+    <Name>Test Customer KZ</Name>
+    <Address>Test Customer Address, Astana, KZ</Address>
+    <Phone>+7-717-987-6543</Phone>
+  </Customer>
+  <Items>
+    <Item>
+      <ID>1</ID>
+      <Name>Software License - Enterprise Edition</Name>
+      <Description>Annual software license for enterprise use</Description>
+      <Quantity>1</Quantity>
+      <UnitCode>C62</UnitCode>
+      <UnitPrice>50000.0</UnitPrice>
+      <LineExtensionAmount>50000.0</LineExtensionAmount>
+      <VatPercent>12</VatPercent>
+      <VatAmount>6000.0</VatAmount>
+      <TotalAmount>56000.0</TotalAmount>
+    </Item>
+  </Items>
+  <Totals>
+    <LineExtensionAmount>50000.0</LineExtensionAmount>
+    <TaxExclusiveAmount>50000.0</TaxExclusiveAmount>
+    <TaxAmount>6000.0</TaxAmount>
+    <TaxInclusiveAmount>56000.0</TaxInclusiveAmount>
+    <PayableAmount>56000.0</PayableAmount>
+  </Totals>
+  <PaymentTerms>Net 30</PaymentTerms>
+  <Notes>Test invoice for KZ sandbox integration</Notes>
+</Invoice>

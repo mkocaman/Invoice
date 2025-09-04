@@ -1,0 +1,43 @@
+{
+  "scenario": "KZ_SIMPLE_SALE",
+  "description": "Kazakhstan basit satış - 1 ürün, %12 KDV",
+  "documentType": "KZ-LOCAL",
+  "invoiceNumber": "KZ-TEST-001",
+  "issueDate": "2025-09-03",
+  "currency": "KZT",
+  "supplier": {
+    "bin": "123456789012",
+    "name": "Test Supplier KZ",
+    "address": "Test Address, Almaty, KZ",
+    "phone": "+7-701-123-4567"
+  },
+  "customer": {
+    "bin": "210987654321",
+    "name": "Test Customer KZ",
+    "address": "Test Customer Address, Astana, KZ",
+    "phone": "+7-717-987-6543"
+  },
+  "items": [
+    {
+      "id": 1,
+      "name": "Software License - Enterprise Edition",
+      "description": "Annual software license for enterprise use",
+      "quantity": 1,
+      "unitCode": "C62",
+      "unitPrice": 50000.00,
+      "lineExtensionAmount": 50000.00,
+      "vatPercent": 12,
+      "vatAmount": 6000.00,
+      "totalAmount": 56000.00
+    }
+  ],
+  "totals": {
+    "lineExtensionAmount": 50000.00,
+    "taxExclusiveAmount": 50000.00,
+    "taxAmount": 6000.00,
+    "taxInclusiveAmount": 56000.00,
+    "payableAmount": 56000.00
+  },
+  "paymentTerms": "Net 30",
+  "notes": "Test invoice for KZ sandbox integration"
+}

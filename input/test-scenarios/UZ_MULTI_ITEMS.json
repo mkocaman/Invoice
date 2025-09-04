@@ -1,0 +1,63 @@
+{
+  "scenario": "UZ_MULTI_ITEMS",
+  "description": "Uzbekistan çok kalemli satış - 3 ürün, %15 KDV",
+  "documentType": "UZ-LOCAL",
+  "invoiceNumber": "UZ-TEST-001",
+  "issueDate": "2025-09-03",
+  "dueDate": "2025-10-03",
+  "currency": "UZS",
+  "supplier": {
+    "inn": "123456789",
+    "name": "Test Supplier UZ",
+    "address": "Test Address, Tashkent, UZ",
+    "phone": "+998-71-123-4567"
+  },
+  "customer": {
+    "inn": "987654321",
+    "name": "Test Customer UZ",
+    "address": "Test Customer Address, Samarkand, UZ",
+    "phone": "+998-66-987-6543"
+  },
+  "items": [
+    {
+      "id": 1,
+      "name": "Software License - Professional Edition",
+      "description": "Annual software license for professional use",
+      "quantity": 2,
+      "unit_code": "C62",
+      "unit_price": 15000.00,
+      "line_total": 30000.00,
+      "vat_percent": 15,
+      "vat_amount": 4500.00
+    },
+    {
+      "id": 2,
+      "name": "Technical Support - Premium",
+      "description": "24/7 technical support service",
+      "quantity": 1,
+      "unit_code": "C62",
+      "unit_price": 8000.00,
+      "line_total": 8000.00,
+      "vat_percent": 15,
+      "vat_amount": 1200.00
+    },
+    {
+      "id": 3,
+      "name": "Training Session - Advanced",
+      "description": "Advanced user training session",
+      "quantity": 3,
+      "unit_code": "C62",
+      "unit_price": 5000.00,
+      "line_total": 15000.00,
+      "vat_percent": 15,
+      "vat_amount": 2250.00
+    }
+  ],
+  "totals": {
+    "net": 53000.00,
+    "vat": 7950.00,
+    "gross": 60950.00
+  },
+  "paymentTerms": "Net 30",
+  "notes": "Test invoice for UZ sandbox integration"
+}

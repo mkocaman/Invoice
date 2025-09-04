@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Logging;
 using Invoice.Application.Interfaces;
 using Invoice.Application.Models;
+using Invoice.Application.Helpers;
 using Invoice.Domain.Entities;
 using Invoice.Domain.Enums;
 

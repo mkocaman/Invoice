@@ -8,6 +8,7 @@ using System.Text.Json;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Net; // HTML encoding için WebUtility
+using Invoice.Infrastructure.UZ.Providers.UZ;
 
 namespace Invoice.Infrastructure.UZ.Providers;
 
@@ -20,17 +21,20 @@ public class DidoxProvider : IInvoiceProvider
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly IConfiguration _configuration;
     private readonly ISigningService? _signingService;
+    private readonly IUzApiClient _uzApiClient;
 
     public DidoxProvider(
         ILogger<DidoxProvider> logger,
         IHttpClientFactory httpClientFactory,
         IConfiguration configuration,
-        ISigningService? signingService = null)
+        ISigningService? signingService = null,
+        IUzApiClient? uzApiClient = null)
     {
         _logger = logger;
         _httpClientFactory = httpClientFactory;
         _configuration = configuration;
         _signingService = signingService;
+        _uzApiClient = uzApiClient ?? throw new ArgumentNullException(nameof(uzApiClient));
     }
 
     public ProviderType ProviderType => ProviderType.DIDOX_UZ;
@@ -70,19 +74,8 @@ public class DidoxProvider : IInvoiceProvider
                     ErrorMessage: null);
             }
 
-            // Türkçe: Konfigürasyon kontrolü
-            if (string.IsNullOrWhiteSpace(config?.ApiBaseUrl))
-            {
-                return ProviderSendResult.Failed(
-                    provider: ProviderType,
-                    errorCode: "CONFIG_MISSING",
-                    errorMessage: "Didox için ApiBaseUrl tanımlı değil.");
-            }
-
-            var httpClient = _httpClientFactory.CreateClient("didoxUz");
-            
-            // Türkçe: E-IMZO ile token al
-            var token = await GetEImzoTokenAsync(config, httpClient, cancellationToken);
+            // Türkçe: Yeni UZ API Client kullan
+            var token = await _uzApiClient.GetTokenAsync(cancellationToken);
             if (string.IsNullOrEmpty(token))
             {
                 return ProviderSendResult.Failed(
@@ -91,9 +84,9 @@ public class DidoxProvider : IInvoiceProvider
                     errorMessage: "Didox E-IMZO token alınamadı.");
             }
 
-            // Türkçe: Fatura gönder (E-IMZO imzalı)
-            var invoicePayload = CreateInvoicePayload(envelope, config);
-            var response = await SendInvoiceToDidoxAsync(invoicePayload, token, config, httpClient, cancellationToken);
+            // Türkçe: Fatura gönder (yeni client ile)
+            var payload = ToUzPayload(envelope);
+            var response = await _uzApiClient.SendInvoiceAsync(payload, token, cancellationToken);
 
             _logger.LogInformation("Didox'a fatura gönderildi. Invoice Number: {InvoiceNumber}, Response: {Response}", 
                 envelope.InvoiceNumber, response);
@@ -101,7 +94,7 @@ public class DidoxProvider : IInvoiceProvider
             return new ProviderSendResult(
                 Success: true,
                 Provider: ProviderType,
-                ProviderReferenceNumber: response.InvoiceId ?? $"DIDOX-UZ-{Guid.NewGuid():N}",
+                ProviderReferenceNumber: response.id ?? $"DIDOX-UZ-{Guid.NewGuid():N}",
                 ProviderResponseMessage: "Didox: e-Fatura başarıyla gönderildi",
                 UblXml: null,
                 ErrorCode: null,
@@ -142,70 +135,36 @@ public class DidoxProvider : IInvoiceProvider
         return type == ProviderType.DIDOX_UZ;
     }
 
-    private async Task<string?> GetEImzoTokenAsync(ProviderConfig config, HttpClient httpClient, CancellationToken cancellationToken)
+    /// <summary>
+    /// InvoiceEnvelope'i UzInvoicePayload'e dönüştürür
+    /// </summary>
+    private UzInvoicePayload ToUzPayload(InvoiceEnvelope envelope)
     {
-        try
-        {
-            // Türkçe: E-IMZO ile kimlik doğrulama
-            var eImzoRequest = new
-            {
-                username = config.Username,
-                password = config.Password,
-                certificate_path = config.Extra1, // Sertifika yolu
-                certificate_password = config.Extra2 // Sertifika şifresi
-            };
+        var items = (envelope.Items ?? envelope.LineItems)?.Select(item => new UzInvoiceLine(
+            name: WebUtility.HtmlEncode(item.Name ?? item.Description ?? "Unnamed"),
+            quantity: item.Quantity.ToString(System.Globalization.CultureInfo.InvariantCulture),
+            unit_code: GetUzbekistanUnitCode(item.UnitCode),
+            unit_price: item.UnitPrice.ToString("F2", System.Globalization.CultureInfo.InvariantCulture),
+            line_total: item.Total.ToString("F2", System.Globalization.CultureInfo.InvariantCulture),
+            vat_percent: "12", // Özbekistan varsayılan KDV oranı
+            vat_amount: (item.Total * 0.12m).ToString("F2", System.Globalization.CultureInfo.InvariantCulture)
+        )).ToList() ?? new List<UzInvoiceLine>();
 
-            var response = await httpClient.PostAsJsonAsync("/api/auth/e-imzo", eImzoRequest, cancellationToken);
-            response.EnsureSuccessStatusCode();
+        var net = items.Sum(item => decimal.Parse(item.line_total)).ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
+        var vat = items.Sum(item => decimal.Parse(item.vat_amount)).ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
+        var gross = (decimal.Parse(net) + decimal.Parse(vat)).ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
 
-            var tokenResponse = await response.Content.ReadFromJsonAsync<DidoxTokenResponse>(cancellationToken: cancellationToken);
-            return tokenResponse?.AccessToken;
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Didox E-IMZO token alınırken hata");
-            return null;
-        }
-    }
-
-    private object CreateInvoicePayload(InvoiceEnvelope envelope, ProviderConfig config)
-    {
-        // Türkçe: Didox API formatına uygun payload oluştur (Özbekistan gereksinimleri)
-        var payload = new
-        {
-            invoice_number = envelope.InvoiceNumber,
-            invoice_date = envelope.IssueDate.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
-            total_amount = envelope.TotalAmount.ToString(System.Globalization.CultureInfo.InvariantCulture),
-            currency = "UZS",
-            customer = new
-            {
-                name = WebUtility.HtmlEncode(envelope.Customer?.Name ?? envelope.CustomerName ?? "Mijoz"),
-                tin = envelope.Customer?.TaxNumber ?? envelope.CustomerTaxNumber,
-                address = WebUtility.HtmlEncode(envelope.Customer?.AddressLine),
-                country_code = envelope.Customer?.CountryCode ?? "UZ"
-            },
-            items = (envelope.Items ?? envelope.LineItems)?.Select(item => new
-            {
-                name = WebUtility.HtmlEncode(item.Name ?? item.Description),
-                quantity = item.Quantity,
-                unit_price = item.UnitPrice.ToString(System.Globalization.CultureInfo.InvariantCulture),
-                total = item.Total.ToString(System.Globalization.CultureInfo.InvariantCulture),
-                unit_code = GetUzbekistanUnitCode(item.UnitCode) // UN/ECE Rec 20 kodu
-            }).ToArray() ?? Array.Empty<object>()
-        };
-
-        // Türkçe: E-IMZO imza ekle (şimdilik mock)
-        if (_signingService != null)
-        {
-            var signature = _signingService.SignDocument(JsonSerializer.Serialize(payload));
-            return new
-            {
-                data = payload,
-                signature = signature
-            };
-        }
-
-        return payload;
+        return new UzInvoicePayload(
+            invoiceNumber: envelope.InvoiceNumber,
+            currency: "UZS",
+            sellerInn: envelope.Supplier?.TaxNumber ?? "123456789", // Varsayılan INN
+            buyerInn: envelope.Customer?.TaxNumber ?? envelope.CustomerTaxNumber ?? "987654321",
+            issueDate: envelope.IssueDate.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
+            items: items,
+            net: net,
+            vat: vat,
+            gross: gross
+        );
     }
 
     /// <summary>
@@ -258,22 +217,6 @@ public class DidoxProvider : IInvoiceProvider
         return (true, "");
     }
 
-    private async Task<DidoxResponse> SendInvoiceToDidoxAsync(
-        object payload, 
-        string token, 
-        ProviderConfig config, 
-        HttpClient httpClient, 
-        CancellationToken cancellationToken)
-    {
-        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-        var response = await httpClient.PostAsJsonAsync("/api/documents/invoice/send", payload, cancellationToken);
-        response.EnsureSuccessStatusCode();
-
-        return await response.Content.ReadFromJsonAsync<DidoxResponse>(cancellationToken: cancellationToken) 
-               ?? new DidoxResponse();
-    }
-
     // Türkçe: Response modelleri
     private class DidoxTokenResponse
     {
@@ -288,6 +231,4 @@ public class DidoxProvider : IInvoiceProvider
         public string? InvoiceId { get; set; }
         public string? Message { get; set; }
     }
-
-
 }

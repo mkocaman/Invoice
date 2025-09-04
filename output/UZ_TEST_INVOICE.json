@@ -1,0 +1,35 @@
+{
+  "invoiceNumber": "TEST-UZ-001",
+  "currency": "UZS",
+  "sellerInn": "123456789",
+  "buyerInn": "987654321",
+  "issueDate": "2025-09-03",
+  "dueDate": "2025-10-03",
+  "sellerName": "Test Supplier UZ",
+  "buyerName": "Test Customer UZ",
+  "sellerAddress": "Test Address, Tashkent, UZ",
+  "buyerAddress": "Test Customer Address, Samarkand, UZ",
+  "items": [
+    {
+      "name": "Test Item UZ - Software License",
+      "quantity": "2",
+      "unit_code": "C62",
+      "unit_price": "10000.00",
+      "line_total": "20000.00",
+      "vat_percent": "12",
+      "vat_amount": "2400.00"
+    },
+    {
+      "name": "Test Item UZ - Support Service",
+      "quantity": "1",
+      "unit_code": "C62",
+      "unit_price": "5000.00",
+      "line_total": "5000.00",
+      "vat_percent": "12",
+      "vat_amount": "600.00"
+    }
+  ],
+  "net": "25000.00",
+  "vat": "3000.00",
+  "gross": "28000.00"
+}

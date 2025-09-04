@@ -8,86 +8,111 @@ using Invoice.Domain.Enums;
 
 namespace Invoice.Infrastructure.Providers
 {
-    // Core Infrastructure Provider'ları için Supports/SupportsCountry implementasyonları
-    // Bu dosya otomatik olarak oluşturulmuştur - manuel düzenlemeyin
-    
-    // BIZIMHESAP
-    public partial class BizimHesapProvider
+    // Türkçe: Ortak yardımcı - TR destekli sağlayıcılar listesi
+    internal static class ProviderSupport
     {
-        public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
-        public bool Supports(ProviderType type) => type == ProviderType.BIZIMHESAP;
+        // Türkçe: TR odaklı sağlayıcılar.
+        public static bool SupportsCountry(string countryCode)
+            => string.Equals(countryCode, "TR", StringComparison.OrdinalIgnoreCase);
     }
-    
-    // DIA
+}
+
+// DIA
+namespace Invoice.Infrastructure.Providers
+{
     public partial class DiaProvider
     {
         public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
         public bool Supports(ProviderType type) => type == ProviderType.DIA;
     }
-    
-    // FORIBA
+}
+
+// FORIBA
+namespace Invoice.Infrastructure.Providers
+{
     public partial class ForibaProvider
     {
         public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
         public bool Supports(ProviderType type) => type == ProviderType.FORIBA;
     }
-    
-    // IDEA
+}
+
+// IDEA
+namespace Invoice.Infrastructure.Providers
+{
     public partial class IdeaProvider
     {
         public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
         public bool Supports(ProviderType type) => type == ProviderType.IDEA;
     }
-    
-    // KOLAYBI
-    public partial class KolayBiProvider
-    {
-        public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
-        public bool Supports(ProviderType type) => type == ProviderType.KOLAYBI;
-    }
-    
-    // LOGO
+}
+
+// LOGO
+namespace Invoice.Infrastructure.Providers
+{
     public partial class LogoProvider
     {
         public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
         public bool Supports(ProviderType type) => type == ProviderType.LOGO;
     }
-    
-    // MIKRO
+}
+
+// KOLAYBİ
+namespace Invoice.Infrastructure.Providers
+{
+    public partial class KolayBiProvider
+    {
+        public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
+        public bool Supports(ProviderType type) => type == ProviderType.KOLAYBI;
+    }
+}
+
+// MIKRO
+namespace Invoice.Infrastructure.Providers
+{
     public partial class MikroProvider
     {
         public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
         public bool Supports(ProviderType type) => type == ProviderType.MIKRO;
     }
-    
-    // NETSIS
+}
+
+// NETSIS
+namespace Invoice.Infrastructure.Providers
+{
     public partial class NetsisProvider
     {
         public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
         public bool Supports(ProviderType type) => type == ProviderType.NETSIS;
     }
-    
-    // PARASUT
+}
+
+// PARASUT
+namespace Invoice.Infrastructure.Providers
+{
     public partial class ParasutProvider
     {
         public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
         public bool Supports(ProviderType type) => type == ProviderType.PARASUT;
     }
-    
-    // UYUMSOFT
+}
+
+// BIZIMHESAP
+namespace Invoice.Infrastructure.Providers
+{
+    public partial class BizimHesapProvider
+    {
+        public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
+        public bool Supports(ProviderType type) => type == ProviderType.BIZIMHESAP;
+    }
+}
+
+// UYUMSOFT
+namespace Invoice.Infrastructure.Providers
+{
     public partial class UyumsoftProvider
     {
         public bool SupportsCountry(string countryCode) => ProviderSupport.SupportsCountry(countryCode);
         public bool Supports(ProviderType type) => type == ProviderType.UYUMSOFT;
-    }
-}
-
-// ProviderSupport yardımcı sınıfı
-namespace Invoice.Infrastructure.Providers
-{
-    internal static class ProviderSupport
-    {
-        public static bool SupportsCountry(string countryCode) => 
-            string.Equals(countryCode, "TR", StringComparison.OrdinalIgnoreCase);
     }
 }

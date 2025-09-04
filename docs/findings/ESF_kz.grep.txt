@@ -1,0 +1,596 @@
+== SCAN ESF_kz ==
+# files
+.gitattributes
+.gitignore
+ESF_kz.sln
+ESF_kz/App.config
+ESF_kz/Connected Services/InvoiceService/ESF_kz.InvoiceService.DeleteInvoiceByIdResponse.datasource
+ESF_kz/Connected Services/InvoiceService/ESF_kz.InvoiceService.EnterpriseValidationResponse.datasource
+ESF_kz/Connected Services/InvoiceService/ESF_kz.InvoiceService.InvoiceErrorByIdResponse.datasource
+ESF_kz/Connected Services/InvoiceService/ESF_kz.InvoiceService.InvoiceSummaryResponse.datasource
+ESF_kz/Connected Services/InvoiceService/ESF_kz.InvoiceService.QueryInvoiceHistoryByIdResponse.datasource
+ESF_kz/Connected Services/InvoiceService/ESF_kz.InvoiceService.QueryInvoiceResponse.datasource
+ESF_kz/Connected Services/InvoiceService/ESF_kz.InvoiceService.QueryInvoiceUpdateResponse.datasource
+ESF_kz/Connected Services/InvoiceService/ESF_kz.InvoiceService.TryChangeStatusResponse.datasource
+ESF_kz/Connected Services/InvoiceService/ESF_kz.InvoiceService.confirmInvoiceByIdResponse.datasource
+ESF_kz/Connected Services/InvoiceService/ESF_kz.InvoiceService.declineInvoiceByIdResponse.datasource
+ESF_kz/Connected Services/InvoiceService/ESF_kz.InvoiceService.deleteInvoiceByIdResponse1.datasource
+ESF_kz/Connected Services/InvoiceService/ESF_kz.InvoiceService.enterpriseValidationResponse1.datasource
+ESF_kz/Connected Services/InvoiceService/ESF_kz.InvoiceService.queryInvoiceByIdResponse.datasource
+ESF_kz/Connected Services/InvoiceService/ESF_kz.InvoiceService.queryInvoiceByKeyResponse.datasource
+ESF_kz/Connected Services/InvoiceService/ESF_kz.InvoiceService.queryInvoiceErrorByIdResponse.datasource
+ESF_kz/Connected Services/InvoiceService/ESF_kz.InvoiceService.queryInvoiceHistoryByIdResponse1.datasource
+ESF_kz/Connected Services/InvoiceService/ESF_kz.InvoiceService.queryInvoiceResponse1.datasource
+ESF_kz/Connected Services/InvoiceService/ESF_kz.InvoiceService.queryInvoiceSummaryByIdResponse.datasource
+ESF_kz/Connected Services/InvoiceService/ESF_kz.InvoiceService.queryInvoiceSummaryByKeyResponse.datasource
+ESF_kz/Connected Services/InvoiceService/ESF_kz.InvoiceService.queryUpdatesResponse.datasource
+ESF_kz/Connected Services/InvoiceService/ESF_kz.InvoiceService.revokeInvoiceByIdResponse.datasource
+ESF_kz/Connected Services/InvoiceService/ESF_kz.InvoiceService.unrevokeInvoiceByIdResponse.datasource
+ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl
+ESF_kz/Connected Services/InvoiceService/Reference.cs
+ESF_kz/Connected Services/InvoiceService/Reference.svcmap
+ESF_kz/Connected Services/InvoiceService/configuration.svcinfo
+ESF_kz/Connected Services/InvoiceService/configuration91.svcinfo
+ESF_kz/Connected Services/LocalService/ESF_kz.LocalService.DocumentSignatureResponse.datasource
+ESF_kz/Connected Services/LocalService/ESF_kz.LocalService.ListSignatureResponse.datasource
+ESF_kz/Connected Services/LocalService/ESF_kz.LocalService.SignatureResponse.datasource
+ESF_kz/Connected Services/LocalService/ESF_kz.LocalService.generateDocumentSignatureResponse.datasource
+ESF_kz/Connected Services/LocalService/ESF_kz.LocalService.generateSignatureResponse.datasource
+ESF_kz/Connected Services/LocalService/ESF_kz.LocalService.signIdListResponse.datasource
+ESF_kz/Connected Services/LocalService/ESF_kz.LocalService.signIdWithReasonListResponse.datasource
+ESF_kz/Connected Services/LocalService/LocalService.wsdl
+ESF_kz/Connected Services/LocalService/Reference.cs
+ESF_kz/Connected Services/LocalService/Reference.svcmap
+ESF_kz/Connected Services/LocalService/configuration.svcinfo
+ESF_kz/Connected Services/LocalService/configuration91.svcinfo
+ESF_kz/Connected Services/SessionService/ESF_kz.SessionService.closeSessionByCredentialsResponse.datasource
+ESF_kz/Connected Services/SessionService/ESF_kz.SessionService.closeSessionResponse.datasource
+ESF_kz/Connected Services/SessionService/ESF_kz.SessionService.closeSessionResponse1.datasource
+ESF_kz/Connected Services/SessionService/ESF_kz.SessionService.createSessionResponse.datasource
+ESF_kz/Connected Services/SessionService/ESF_kz.SessionService.createSessionResponse1.datasource
+ESF_kz/Connected Services/SessionService/ESF_kz.SessionService.currentSessionStatusResponse.datasource
+ESF_kz/Connected Services/SessionService/ESF_kz.SessionService.currentSessionStatusResponse1.datasource
+ESF_kz/Connected Services/SessionService/ESF_kz.SessionService.currentUserProfilesResponse.datasource
+ESF_kz/Connected Services/SessionService/ESF_kz.SessionService.currentUserProfilesResponse1.datasource
+ESF_kz/Connected Services/SessionService/ESF_kz.SessionService.currentUserResponse.datasource
+ESF_kz/Connected Services/SessionService/ESF_kz.SessionService.currentUserResponse1.datasource
+ESF_kz/Connected Services/SessionService/Reference.cs
+ESF_kz/Connected Services/SessionService/Reference.svcmap
+ESF_kz/Connected Services/SessionService/SessionService.wsdl
+ESF_kz/Connected Services/SessionService/configuration.svcinfo
+ESF_kz/Connected Services/SessionService/configuration91.svcinfo
+ESF_kz/Connected Services/UploadInvoiceService/ESF_kz.UploadInvoiceService.SyncInvoiceResponse.datasource
+ESF_kz/Connected Services/UploadInvoiceService/ESF_kz.UploadInvoiceService.syncInvoiceResponse1.datasource
+ESF_kz/Connected Services/UploadInvoiceService/Reference.cs
+ESF_kz/Connected Services/UploadInvoiceService/Reference.svcmap
+ESF_kz/Connected Services/UploadInvoiceService/UploadInvoiceService.wsdl
+ESF_kz/Connected Services/UploadInvoiceService/configuration.svcinfo
+ESF_kz/Connected Services/UploadInvoiceService/configuration91.svcinfo
+ESF_kz/ENUMs/CustomerType.cs
+ESF_kz/ENUMs/InvoiceType.cs
+ESF_kz/ENUMs/NdsRateType.cs
+ESF_kz/ENUMs/PaperReasonType.cs
+ESF_kz/ENUMs/SellerType.cs
+ESF_kz/ENUMs/TruOriginCode.cs
+ESF_kz/ENUMs/mySessionStatus.cs
+ESF_kz/ESF.cs
+ESF_kz/ESF_kz.csproj
+ESF_kz/Facades/ConfigManagerFacade.cs
+ESF_kz/Facades/FormManagerFacade.cs
+ESF_kz/Facades/InvoiceManagerFacade.cs
+ESF_kz/Facades/InvoiceServiceOperationsFacade.cs
+ESF_kz/Facades/LocalServiceOperationFacade.cs
+ESF_kz/Facades/LogManagerFacade.cs
+ESF_kz/Facades/ParsingManager.cs
+ESF_kz/Facades/ResponseManagerFacade.cs
+ESF_kz/Facades/SessionDataManagerFacade.cs
+ESF_kz/Facades/SessionServiceOperationsFacade.cs
+ESF_kz/Facades/UploadInvoiceServiceOperationFacade.cs
+ESF_kz/Facades/ValidatingManager.cs
+ESF_kz/Form1.Designer.cs
+ESF_kz/Form1.cs
+ESF_kz/Form1.resx
+ESF_kz/Forms/AbstractUCESFpanel.Designer.cs
+ESF_kz/Forms/AbstractUCESFpanel.cs
+ESF_kz/Forms/AbstractUCESFpanelTab.Designer.cs
+ESF_kz/Forms/AbstractUCESFpanelTab.cs
+ESF_kz/Forms/ESF_form.Designer.cs
+ESF_kz/Forms/ESF_form.cs
+ESF_kz/Forms/ESF_form.resx
+ESF_kz/Forms/InfoForm.Designer.cs
+ESF_kz/Forms/InfoForm.cs
+ESF_kz/Forms/InfoForm.resx
+ESF_kz/Forms/LogInForm.Designer.cs
+ESF_kz/Forms/LogInForm.cs
+ESF_kz/Forms/LogInForm.resx
+ESF_kz/Forms/MainForm.Designer.cs
+ESF_kz/Forms/MainForm.cs
+ESF_kz/Forms/MainForm.resx
+ESF_kz/Forms/PanelESFpartC.Designer.cs
+ESF_kz/Forms/PanelESFpartC.cs
+ESF_kz/Forms/PanelESFpartC.resx
+ESF_kz/Forms/ProductForm.Designer.cs
+ESF_kz/Forms/ProductForm.cs
+ESF_kz/Forms/ProductForm.resx
+ESF_kz/Forms/UserInfoForm.Designer.cs
+ESF_kz/Forms/UserInfoForm.cs
+ESF_kz/Forms/UserInfoForm.resx
+ESF_kz/Forms/panelESFPartHtab.Designer.cs
+ESF_kz/Forms/panelESFPartHtab.cs
+ESF_kz/Forms/panelESFPartHtab.resx
+ESF_kz/Forms/panelESFpartA.Designer.cs
+ESF_kz/Forms/panelESFpartA.cs
+ESF_kz/Forms/panelESFpartA.resx
+ESF_kz/Forms/panelESFpartB.Designer.cs
+ESF_kz/Forms/panelESFpartB.cs
+ESF_kz/Forms/panelESFpartB.resx
+ESF_kz/Forms/panelESFpartBtab.Designer.cs
+ESF_kz/Forms/panelESFpartBtab.cs
+ESF_kz/Forms/panelESFpartBtab.resx
+ESF_kz/Forms/panelESFpartCtab.Designer.cs
+ESF_kz/Forms/panelESFpartCtab.cs
+ESF_kz/Forms/panelESFpartCtab.resx
+ESF_kz/Forms/panelESFpartD.Designer.cs
+ESF_kz/Forms/panelESFpartD.cs
+ESF_kz/Forms/panelESFpartD.resx
+ESF_kz/Forms/panelESFpartE.Designer.cs
+ESF_kz/Forms/panelESFpartE.cs
+ESF_kz/Forms/panelESFpartE.resx
+ESF_kz/Forms/panelESFpartF.Designer.cs
+ESF_kz/Forms/panelESFpartF.cs
+ESF_kz/Forms/panelESFpartF.resx
+ESF_kz/Forms/panelESFpartG.Designer.cs
+ESF_kz/Forms/panelESFpartG.cs
+ESF_kz/Forms/panelESFpartG.resx
+ESF_kz/Forms/panelESFpartH.Designer.cs
+ESF_kz/Forms/panelESFpartH.cs
+ESF_kz/Forms/panelESFpartH.resx
+ESF_kz/Forms/panelESFpartI.Designer.cs
+ESF_kz/Forms/panelESFpartI.cs
+ESF_kz/Forms/panelESFpartI.resx
+ESF_kz/Forms/panelESFpartJ.Designer.cs
+ESF_kz/Forms/panelESFpartJ.cs
+ESF_kz/Forms/panelESFpartJ.resx
+ESF_kz/Forms/panelESFpartK.Designer.cs
+ESF_kz/Forms/panelESFpartK.cs
+ESF_kz/Forms/panelESFpartK.resx
+ESF_kz/Forms/panelESFpartL.Designer.cs
+ESF_kz/Forms/panelESFpartL.cs
+ESF_kz/Forms/panelESFpartL.resx
+ESF_kz/InvoiceXMLParser.cs
+ESF_kz/Models/AbstractCustomer.cs
+ESF_kz/Models/AbstractInvoice.cs
+ESF_kz/Models/AbstractProduct.cs
+ESF_kz/Models/AbstractProductShare.cs
+ESF_kz/Models/ConsigneeV1.cs
+ESF_kz/Models/ConsigneeV2.cs
+ESF_kz/Models/Consignor.cs
+ESF_kz/Models/CustomerV1.cs
+ESF_kz/Models/CustomerV2.cs
+ESF_kz/Models/DeliveryTermV1.cs
+ESF_kz/Models/DeliveryTermV2.cs
+ESF_kz/Models/InvoiceV1.cs
+ESF_kz/Models/InvoiceV2.cs
+ESF_kz/Models/MyCustomAttribute.cs
+ESF_kz/Models/ParticipantV1.cs
+ESF_kz/Models/ParticipantV2.cs
+ESF_kz/Models/ProductSetV1.cs
+ESF_kz/Models/ProductSetV2.cs
+ESF_kz/Models/ProductShare.cs
+ESF_kz/Models/ProductV1.cs
+ESF_kz/Models/ProductV2.cs
+ESF_kz/Models/PublicOffice.cs
+ESF_kz/Models/RelatedInvoice.cs
+ESF_kz/Models/SellerV1.cs
+ESF_kz/Models/SellerV2.cs
+ESF_kz/Models/invoiceContainer.cs
+ESF_kz/Program.cs
+ESF_kz/Properties/AssemblyInfo.cs
+ESF_kz/Properties/Resources.Designer.cs
+ESF_kz/Properties/Resources.resx
+ESF_kz/Properties/Settings.Designer.cs
+ESF_kz/Properties/Settings.settings
+ESF_kz/Resources/Info_icon.png
+ESF_kz/Resources/Oklik.png
+
+# hits
+./ESF_kz/ESF_kz.csproj:55:      <DesignTime>True</DesignTime>
+./ESF_kz/ESF_kz.csproj:60:      <DesignTime>True</DesignTime>
+./ESF_kz/ESF_kz.csproj:65:      <DesignTime>True</DesignTime>
+./ESF_kz/ESF_kz.csproj:70:      <DesignTime>True</DesignTime>
+./ESF_kz/ESF_kz.csproj:96:    <Compile Include="Forms\AbstractUCESFpanel.Designer.cs">
+./ESF_kz/ESF_kz.csproj:102:    <Compile Include="Forms\AbstractUCESFpanelTab.Designer.cs">
+./ESF_kz/ESF_kz.csproj:108:    <Compile Include="Forms\ESF_form.Designer.cs">
+./ESF_kz/ESF_kz.csproj:114:    <Compile Include="Form1.Designer.cs">
+./ESF_kz/ESF_kz.csproj:120:    <Compile Include="Forms\InfoForm.Designer.cs">
+./ESF_kz/ESF_kz.csproj:126:    <Compile Include="Forms\LogInForm.Designer.cs">
+./ESF_kz/ESF_kz.csproj:132:    <Compile Include="Forms\MainForm.Designer.cs">
+./ESF_kz/ESF_kz.csproj:138:    <Compile Include="Forms\panelESFpartA.Designer.cs">
+./ESF_kz/ESF_kz.csproj:144:    <Compile Include="Forms\panelESFpartB.Designer.cs">
+./ESF_kz/ESF_kz.csproj:150:    <Compile Include="Forms\panelESFpartBtab.Designer.cs">
+./ESF_kz/ESF_kz.csproj:156:    <Compile Include="Forms\panelESFpartC.Designer.cs">
+./ESF_kz/ESF_kz.csproj:162:    <Compile Include="Forms\panelESFpartCtab.Designer.cs">
+./ESF_kz/ESF_kz.csproj:168:    <Compile Include="Forms\panelESFpartD.Designer.cs">
+./ESF_kz/ESF_kz.csproj:174:    <Compile Include="Forms\panelESFpartE.Designer.cs">
+./ESF_kz/ESF_kz.csproj:180:    <Compile Include="Forms\panelESFpartF.Designer.cs">
+./ESF_kz/ESF_kz.csproj:186:    <Compile Include="Forms\panelESFpartG.Designer.cs">
+./ESF_kz/ESF_kz.csproj:192:    <Compile Include="Forms\panelESFpartH.Designer.cs">
+./ESF_kz/ESF_kz.csproj:198:    <Compile Include="Forms\panelESFpartI.Designer.cs">
+./ESF_kz/ESF_kz.csproj:204:    <Compile Include="Forms\panelESFpartJ.Designer.cs">
+./ESF_kz/ESF_kz.csproj:210:    <Compile Include="Forms\panelESFpartL.Designer.cs">
+./ESF_kz/ESF_kz.csproj:216:    <Compile Include="Forms\panelESFpartHtab.Designer.cs">
+./ESF_kz/ESF_kz.csproj:222:    <Compile Include="Forms\panelESFpartK.Designer.cs">
+./ESF_kz/ESF_kz.csproj:228:    <Compile Include="Forms\ProductForm.Designer.cs">
+./ESF_kz/ESF_kz.csproj:234:    <Compile Include="Forms\UserInfoForm.Designer.cs">
+./ESF_kz/ESF_kz.csproj:242:    <Compile Include="Models\ConsigneeV1.cs" />
+./ESF_kz/ESF_kz.csproj:244:    <Compile Include="Models\ConsigneeV2.cs" />
+./ESF_kz/ESF_kz.csproj:245:    <Compile Include="Models\Consignor.cs" />
+./ESF_kz/ESF_kz.csproj:334:      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+./ESF_kz/ESF_kz.csproj:335:      <SubType>Designer</SubType>
+./ESF_kz/ESF_kz.csproj:337:    <Compile Include="Properties\Resources.Designer.cs">
+./ESF_kz/ESF_kz.csproj:340:      <DesignTime>True</DesignTime>
+./ESF_kz/ESF_kz.csproj:424:    <None Include="Connected Services\LocalService\ESF_kz.LocalService.signIdListResponse.datasource">
+./ESF_kz/ESF_kz.csproj:427:    <None Include="Connected Services\LocalService\ESF_kz.LocalService.signIdWithReasonListResponse.datasource">
+./ESF_kz/ESF_kz.csproj:474:      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+./ESF_kz/ESF_kz.csproj:476:    <Compile Include="Properties\Settings.Designer.cs">
+./ESF_kz/ESF_kz.csproj:479:      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+./ESF_kz/Connected Services/LocalService/LocalService.wsdl:2:<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="esf" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="LocalService" targetNamespace="esf" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+./ESF_kz/Connected Services/LocalService/LocalService.wsdl:4:    <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="esf" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+./ESF_kz/Connected Services/LocalService/LocalService.wsdl:26:          <xs:element name="signature" type="xs:string" />
+./ESF_kz/Connected Services/LocalService/LocalService.wsdl:32:          <xs:element name="signableData" type="xs:string" />
+./ESF_kz/Connected Services/LocalService/LocalService.wsdl:39:          <xs:element minOccurs="0" name="signedData" type="xs:string" />
+./ESF_kz/Connected Services/LocalService/LocalService.wsdl:40:          <xs:element minOccurs="0" name="signature" type="xs:string" />
+./ESF_kz/Connected Services/LocalService/LocalService.wsdl:86:          <xs:element minOccurs="0" name="signature" type="xs:string" />
+./ESF_kz/Connected Services/LocalService/LocalService.wsdl:94:      <xs:element name="signatureRequest" nillable="true" type="tns:SignatureRequest" />
+./ESF_kz/Connected Services/LocalService/LocalService.wsdl:95:      <xs:element name="signatureResponse" nillable="true" type="tns:SignatureResponse" />
+./ESF_kz/Connected Services/LocalService/LocalService.wsdl:101:  <wsdl:message name="signIdWithReasonList">
+./ESF_kz/Connected Services/LocalService/LocalService.wsdl:107:  <wsdl:message name="signIdList">
+./ESF_kz/Connected Services/LocalService/LocalService.wsdl:110:  <wsdl:message name="signIdWithReasonListResponse">
+./ESF_kz/Connected Services/LocalService/LocalService.wsdl:114:    <wsdl:part name="signatureRequest" element="tns:signatureRequest" />
+./ESF_kz/Connected Services/LocalService/LocalService.wsdl:117:    <wsdl:part name="signatureResponse" element="tns:signatureResponse" />
+./ESF_kz/Connected Services/LocalService/LocalService.wsdl:119:  <wsdl:message name="signIdListResponse">
+./ESF_kz/Connected Services/LocalService/LocalService.wsdl:123:    <wsdl:documentation>Локальный сервис для работы с ИС ЭСФ</wsdl:documentation>
+./ESF_kz/Connected Services/LocalService/LocalService.wsdl:124:    <wsdl:operation name="signIdWithReasonList">
+./ESF_kz/Connected Services/LocalService/LocalService.wsdl:125:      <wsdl:input name="signIdWithReasonList" message="tns:signIdWithReasonList" />
+./ESF_kz/Connected Services/LocalService/LocalService.wsdl:126:      <wsdl:output name="signIdWithReasonListResponse" message="tns:signIdWithReasonListResponse" />
+./ESF_kz/Connected Services/LocalService/LocalService.wsdl:132:    <wsdl:operation name="signIdList">
+./ESF_kz/Connected Services/LocalService/LocalService.wsdl:133:      <wsdl:input name="signIdList" message="tns:signIdList" />
+./ESF_kz/Connected Services/LocalService/LocalService.wsdl:134:      <wsdl:output name="signIdListResponse" message="tns:signIdListResponse" />
+./ESF_kz/Connected Services/LocalService/LocalService.wsdl:143:    <wsdl:operation name="signIdWithReasonList">
+./ESF_kz/Connected Services/LocalService/LocalService.wsdl:145:      <wsdl:input name="signIdWithReasonList">
+./ESF_kz/Connected Services/LocalService/LocalService.wsdl:148:      <wsdl:output name="signIdWithReasonListResponse">
+./ESF_kz/Connected Services/LocalService/LocalService.wsdl:161:    <wsdl:operation name="signIdList">
+./ESF_kz/Connected Services/LocalService/LocalService.wsdl:163:      <wsdl:input name="signIdList">
+./ESF_kz/Connected Services/LocalService/LocalService.wsdl:166:      <wsdl:output name="signIdListResponse">
+./ESF_kz/Connected Services/LocalService/ESF_kz.LocalService.signIdWithReasonListResponse.datasource:8:<GenericObjectDataSource DisplayName="signIdWithReasonListResponse" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+./ESF_kz/Connected Services/LocalService/ESF_kz.LocalService.signIdWithReasonListResponse.datasource:9:   <TypeInfo>ESF_kz.LocalService.signIdWithReasonListResponse, Connected Services.LocalService.Reference.cs.dll, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</TypeInfo>
+./ESF_kz/Connected Services/LocalService/ESF_kz.LocalService.signIdListResponse.datasource:8:<GenericObjectDataSource DisplayName="signIdListResponse" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+./ESF_kz/Connected Services/LocalService/ESF_kz.LocalService.signIdListResponse.datasource:9:   <TypeInfo>ESF_kz.LocalService.signIdListResponse, Connected Services.LocalService.Reference.cs.dll, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</TypeInfo>
+./ESF_kz/Connected Services/LocalService/Reference.cs:15:    [System.ServiceModel.ServiceContractAttribute(Namespace="esf", ConfigurationName="LocalService.LocalService")]
+./ESF_kz/Connected Services/LocalService/Reference.cs:18:        // CODEGEN: Generating message contract since the operation signIdWithReasonList is neither RPC nor document wrapped.
+./ESF_kz/Connected Services/LocalService/Reference.cs:22:        ESF_kz.LocalService.signIdWithReasonListResponse signIdWithReasonList(ESF_kz.LocalService.signIdWithReasonList request);
+./ESF_kz/Connected Services/LocalService/Reference.cs:25:        System.Threading.Tasks.Task<ESF_kz.LocalService.signIdWithReasonListResponse> signIdWithReasonListAsync(ESF_kz.LocalService.signIdWithReasonList request);
+./ESF_kz/Connected Services/LocalService/Reference.cs:36:        // CODEGEN: Generating message contract since the operation signIdList is neither RPC nor document wrapped.
+./ESF_kz/Connected Services/LocalService/Reference.cs:40:        ESF_kz.LocalService.signIdListResponse signIdList(ESF_kz.LocalService.signIdList request);
+./ESF_kz/Connected Services/LocalService/Reference.cs:43:        System.Threading.Tasks.Task<ESF_kz.LocalService.signIdListResponse> signIdListAsync(ESF_kz.LocalService.signIdList request);
+./ESF_kz/Connected Services/LocalService/Reference.cs:59:    [System.ComponentModel.DesignerCategoryAttribute("code")]
+./ESF_kz/Connected Services/LocalService/Reference.cs:60:    [System.Xml.Serialization.XmlTypeAttribute(Namespace="esf")]
+./ESF_kz/Connected Services/LocalService/Reference.cs:120:    [System.ComponentModel.DesignerCategoryAttribute("code")]
+./ESF_kz/Connected Services/LocalService/Reference.cs:121:    [System.Xml.Serialization.XmlTypeAttribute(Namespace="esf")]
+./ESF_kz/Connected Services/LocalService/Reference.cs:166:    [System.ComponentModel.DesignerCategoryAttribute("code")]
+./ESF_kz/Connected Services/LocalService/Reference.cs:167:    [System.Xml.Serialization.XmlTypeAttribute(Namespace="esf")]
+./ESF_kz/Connected Services/LocalService/Reference.cs:174:        private string signatureField;
+./ESF_kz/Connected Services/LocalService/Reference.cs:202:        public string signature {
+./ESF_kz/Connected Services/LocalService/Reference.cs:204:                return this.signatureField;
+./ESF_kz/Connected Services/LocalService/Reference.cs:207:                this.signatureField = value;
+./ESF_kz/Connected Services/LocalService/Reference.cs:208:                this.RaisePropertyChanged("signature");
+./ESF_kz/Connected Services/LocalService/Reference.cs:226:    [System.ComponentModel.DesignerCategoryAttribute("code")]
+./ESF_kz/Connected Services/LocalService/Reference.cs:227:    [System.Xml.Serialization.XmlTypeAttribute(Namespace="esf")]
+./ESF_kz/Connected Services/LocalService/Reference.cs:259:    [System.ComponentModel.DesignerCategoryAttribute("code")]
+./ESF_kz/Connected Services/LocalService/Reference.cs:260:    [System.Xml.Serialization.XmlTypeAttribute(Namespace="esf")]
+./ESF_kz/Connected Services/LocalService/Reference.cs:334:    [System.ComponentModel.DesignerCategoryAttribute("code")]
+./ESF_kz/Connected Services/LocalService/Reference.cs:335:    [System.Xml.Serialization.XmlTypeAttribute(Namespace="esf")]
+./ESF_kz/Connected Services/LocalService/Reference.cs:395:    [System.ComponentModel.DesignerCategoryAttribute("code")]
+./ESF_kz/Connected Services/LocalService/Reference.cs:396:    [System.Xml.Serialization.XmlTypeAttribute(Namespace="esf")]
+./ESF_kz/Connected Services/LocalService/Reference.cs:399:        private string signedDataField;
+./ESF_kz/Connected Services/LocalService/Reference.cs:401:        private string signatureField;
+./ESF_kz/Connected Services/LocalService/Reference.cs:407:        public string signedData {
+./ESF_kz/Connected Services/LocalService/Reference.cs:409:                return this.signedDataField;
+./ESF_kz/Connected Services/LocalService/Reference.cs:412:                this.signedDataField = value;
+./ESF_kz/Connected Services/LocalService/Reference.cs:413:                this.RaisePropertyChanged("signedData");
+./ESF_kz/Connected Services/LocalService/Reference.cs:419:        public string signature {
+./ESF_kz/Connected Services/LocalService/Reference.cs:421:                return this.signatureField;
+./ESF_kz/Connected Services/LocalService/Reference.cs:424:                this.signatureField = value;
+./ESF_kz/Connected Services/LocalService/Reference.cs:425:                this.RaisePropertyChanged("signature");
+./ESF_kz/Connected Services/LocalService/Reference.cs:455:    [System.ComponentModel.DesignerCategoryAttribute("code")]
+./ESF_kz/Connected Services/LocalService/Reference.cs:456:    [System.Xml.Serialization.XmlTypeAttribute(Namespace="esf")]
+./ESF_kz/Connected Services/LocalService/Reference.cs:459:        private string signableDataField;
+./ESF_kz/Connected Services/LocalService/Reference.cs:467:        public string signableData {
+./ESF_kz/Connected Services/LocalService/Reference.cs:469:                return this.signableDataField;
+./ESF_kz/Connected Services/LocalService/Reference.cs:472:                this.signableDataField = value;
+./ESF_kz/Connected Services/LocalService/Reference.cs:473:                this.RaisePropertyChanged("signableData");
+./ESF_kz/Connected Services/LocalService/Reference.cs:515:    [System.ComponentModel.DesignerCategoryAttribute("code")]
+./ESF_kz/Connected Services/LocalService/Reference.cs:516:    [System.Xml.Serialization.XmlTypeAttribute(Namespace="esf")]
+./ESF_kz/Connected Services/LocalService/Reference.cs:519:        private string signatureField;
+./ESF_kz/Connected Services/LocalService/Reference.cs:525:        public string signature {
+./ESF_kz/Connected Services/LocalService/Reference.cs:527:                return this.signatureField;
+./ESF_kz/Connected Services/LocalService/Reference.cs:530:                this.signatureField = value;
+./ESF_kz/Connected Services/LocalService/Reference.cs:531:                this.RaisePropertyChanged("signature");
+./ESF_kz/Connected Services/LocalService/Reference.cs:561:    public partial class signIdWithReasonList {
+./ESF_kz/Connected Services/LocalService/Reference.cs:563:        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="esf", Order=0)]
+./ESF_kz/Connected Services/LocalService/Reference.cs:567:        public signIdWithReasonList() {
+./ESF_kz/Connected Services/LocalService/Reference.cs:570:        public signIdWithReasonList(ESF_kz.LocalService.ListWithReasonSignatureRequest idWithReasonListRequest) {
+./ESF_kz/Connected Services/LocalService/Reference.cs:579:    public partial class signIdWithReasonListResponse {
+./ESF_kz/Connected Services/LocalService/Reference.cs:581:        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="esf", Order=0)]
+./ESF_kz/Connected Services/LocalService/Reference.cs:585:        public signIdWithReasonListResponse() {
+./ESF_kz/Connected Services/LocalService/Reference.cs:588:        public signIdWithReasonListResponse(ESF_kz.LocalService.ListSignatureResponse listSignatureResponse) {
+./ESF_kz/Connected Services/LocalService/Reference.cs:599:        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="esf", Order=0)]
+./ESF_kz/Connected Services/LocalService/Reference.cs:617:        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="esf", Order=0)]
+./ESF_kz/Connected Services/LocalService/Reference.cs:633:    public partial class signIdList {
+./ESF_kz/Connected Services/LocalService/Reference.cs:635:        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="esf", Order=0)]
+./ESF_kz/Connected Services/LocalService/Reference.cs:639:        public signIdList() {
+./ESF_kz/Connected Services/LocalService/Reference.cs:642:        public signIdList(ESF_kz.LocalService.ListSignatureRequest idListRequest) {
+./ESF_kz/Connected Services/LocalService/Reference.cs:651:    public partial class signIdListResponse {
+./ESF_kz/Connected Services/LocalService/Reference.cs:653:        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="esf", Order=0)]
+./ESF_kz/Connected Services/LocalService/Reference.cs:657:        public signIdListResponse() {
+./ESF_kz/Connected Services/LocalService/Reference.cs:660:        public signIdListResponse(ESF_kz.LocalService.ListSignatureResponse listSignatureResponse) {
+./ESF_kz/Connected Services/LocalService/Reference.cs:671:        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="esf", Order=0)]
+./ESF_kz/Connected Services/LocalService/Reference.cs:673:        public ESF_kz.LocalService.SignatureRequest signatureRequest;
+./ESF_kz/Connected Services/LocalService/Reference.cs:678:        public generateSignature(ESF_kz.LocalService.SignatureRequest signatureRequest) {
+./ESF_kz/Connected Services/LocalService/Reference.cs:679:            this.signatureRequest = signatureRequest;
+./ESF_kz/Connected Services/LocalService/Reference.cs:689:        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="esf", Order=0)]
+./ESF_kz/Connected Services/LocalService/Reference.cs:691:        public ESF_kz.LocalService.SignatureResponse signatureResponse;
+./ESF_kz/Connected Services/LocalService/Reference.cs:696:        public generateSignatureResponse(ESF_kz.LocalService.SignatureResponse signatureResponse) {
+./ESF_kz/Connected Services/LocalService/Reference.cs:697:            this.signatureResponse = signatureResponse;
+./ESF_kz/Connected Services/LocalService/Reference.cs:729:        ESF_kz.LocalService.signIdWithReasonListResponse ESF_kz.LocalService.LocalService.signIdWithReasonList(ESF_kz.LocalService.signIdWithReasonList request) {
+./ESF_kz/Connected Services/LocalService/Reference.cs:730:            return base.Channel.signIdWithReasonList(request);
+./ESF_kz/Connected Services/LocalService/Reference.cs:733:        public ESF_kz.LocalService.ListSignatureResponse signIdWithReasonList(ESF_kz.LocalService.ListWithReasonSignatureRequest idWithReasonListRequest) {
+./ESF_kz/Connected Services/LocalService/Reference.cs:734:            ESF_kz.LocalService.signIdWithReasonList inValue = new ESF_kz.LocalService.signIdWithReasonList();
+./ESF_kz/Connected Services/LocalService/Reference.cs:736:            ESF_kz.LocalService.signIdWithReasonListResponse retVal = ((ESF_kz.LocalService.LocalService)(this)).signIdWithReasonList(inValue);
+./ESF_kz/Connected Services/LocalService/Reference.cs:741:        System.Threading.Tasks.Task<ESF_kz.LocalService.signIdWithReasonListResponse> ESF_kz.LocalService.LocalService.signIdWithReasonListAsync(ESF_kz.LocalService.signIdWithReasonList request) {
+./ESF_kz/Connected Services/LocalService/Reference.cs:742:            return base.Channel.signIdWithReasonListAsync(request);
+./ESF_kz/Connected Services/LocalService/Reference.cs:745:        public System.Threading.Tasks.Task<ESF_kz.LocalService.signIdWithReasonListResponse> signIdWithReasonListAsync(ESF_kz.LocalService.ListWithReasonSignatureRequest idWithReasonListRequest) {
+./ESF_kz/Connected Services/LocalService/Reference.cs:746:            ESF_kz.LocalService.signIdWithReasonList inValue = new ESF_kz.LocalService.signIdWithReasonList();
+./ESF_kz/Connected Services/LocalService/Reference.cs:748:            return ((ESF_kz.LocalService.LocalService)(this)).signIdWithReasonListAsync(inValue);
+./ESF_kz/Connected Services/LocalService/Reference.cs:775:        ESF_kz.LocalService.signIdListResponse ESF_kz.LocalService.LocalService.signIdList(ESF_kz.LocalService.signIdList request) {
+./ESF_kz/Connected Services/LocalService/Reference.cs:776:            return base.Channel.signIdList(request);
+./ESF_kz/Connected Services/LocalService/Reference.cs:779:        public ESF_kz.LocalService.ListSignatureResponse signIdList(ESF_kz.LocalService.ListSignatureRequest idListRequest) {
+./ESF_kz/Connected Services/LocalService/Reference.cs:780:            ESF_kz.LocalService.signIdList inValue = new ESF_kz.LocalService.signIdList();
+./ESF_kz/Connected Services/LocalService/Reference.cs:782:            ESF_kz.LocalService.signIdListResponse retVal = ((ESF_kz.LocalService.LocalService)(this)).signIdList(inValue);
+./ESF_kz/Connected Services/LocalService/Reference.cs:787:        System.Threading.Tasks.Task<ESF_kz.LocalService.signIdListResponse> ESF_kz.LocalService.LocalService.signIdListAsync(ESF_kz.LocalService.signIdList request) {
+./ESF_kz/Connected Services/LocalService/Reference.cs:788:            return base.Channel.signIdListAsync(request);
+./ESF_kz/Connected Services/LocalService/Reference.cs:791:        public System.Threading.Tasks.Task<ESF_kz.LocalService.signIdListResponse> signIdListAsync(ESF_kz.LocalService.ListSignatureRequest idListRequest) {
+./ESF_kz/Connected Services/LocalService/Reference.cs:792:            ESF_kz.LocalService.signIdList inValue = new ESF_kz.LocalService.signIdList();
+./ESF_kz/Connected Services/LocalService/Reference.cs:794:            return ((ESF_kz.LocalService.LocalService)(this)).signIdListAsync(inValue);
+./ESF_kz/Connected Services/LocalService/Reference.cs:802:        public ESF_kz.LocalService.SignatureResponse generateSignature(ESF_kz.LocalService.SignatureRequest signatureRequest) {
+./ESF_kz/Connected Services/LocalService/Reference.cs:804:            inValue.signatureRequest = signatureRequest;
+./ESF_kz/Connected Services/LocalService/Reference.cs:806:            return retVal.signatureResponse;
+./ESF_kz/Connected Services/LocalService/Reference.cs:814:        public System.Threading.Tasks.Task<ESF_kz.LocalService.generateSignatureResponse> generateSignatureAsync(ESF_kz.LocalService.SignatureRequest signatureRequest) {
+./ESF_kz/Connected Services/LocalService/Reference.cs:816:            inValue.signatureRequest = signatureRequest;
+./ESF_kz/Connected Services/InvoiceService/configuration.svcinfo:9:    <endpoint normalizedDigest="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&lt;Data address=&quot;https://test3.esf.kgd.gov.kz:8443/esf-web/ws/api1/InvoiceService&quot; binding=&quot;basicHttpBinding&quot; bindingConfiguration=&quot;InvoiceServiceSoapBinding&quot; contract=&quot;InvoiceService.InvoiceService&quot; name=&quot;InvoiceServicePort&quot; /&gt;" digest="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&lt;Data address=&quot;https://test3.esf.kgd.gov.kz:8443/esf-web/ws/api1/InvoiceService&quot; binding=&quot;basicHttpBinding&quot; bindingConfiguration=&quot;InvoiceServiceSoapBinding&quot; contract=&quot;InvoiceService.InvoiceService&quot; name=&quot;InvoiceServicePort&quot; /&gt;" contractName="InvoiceService.InvoiceService" name="InvoiceServicePort" />
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:2:<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="esf" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="InvoiceService" targetNamespace="esf" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:4:    <xs:schema xmlns:esf="esf" xmlns:tns="esf" xmlns:ns1="abstractInvoice.esf" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="esf" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:5:      <xs:import namespace="abstractInvoice.esf" />
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:8:          <xs:extension base="esf:InvoiceByIdRequest">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:10:              <xs:element name="signature" type="xs:string">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:12:                  <xs:documentation>ЭЦП</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:26:          <xs:extension base="esf:AbstractSessionAwareRequest">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:33:                        <xs:documentation>Идентификатор ЭСФ в системе</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:57:                <xs:element minOccurs="0" maxOccurs="unbounded" name="changeStatusResult" type="esf:DeleteResult">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:59:                    <xs:documentation>Результат выполнения операции по удалению ошибочных ЭСФ</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:69:          <xs:documentation>Результат выполнения операции по удалению ошибочных ЭСФ</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:74:              <xs:documentation>Идентификатор ЭСФ в системе</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:79:              <xs:documentation>Флаг успешного удаления ЭСФ</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:110:          <xs:extension base="esf:AbstractSessionAwareRequest">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:112:              <xs:element name="criteria" type="esf:QueryInvoiceCriteria">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:114:                  <xs:documentation>Объект содержащий критерии поиска ЭСФ</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:123:          <xs:documentation>Объект содержащий критерии поиска ЭСФ</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:126:          <xs:element name="direction" type="esf:InvoiceDirection">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:128:              <xs:documentation>Признак, указывающий, являются ли запрашиваемые ЭСФ входящими или исходящими для запрашивающей стороны</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:133:              <xs:documentation>ИИН/БИН контрагента</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:138:              <xs:documentation>Дата выписки ЭСФ с которой выполняется поиск</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:143:              <xs:documentation>Дата выписки ЭСФ по которую выполняется поиск</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:148:              <xs:documentation>Дата последнего обновления ЭСФ с которой выполняется поиск</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:153:              <xs:documentation>Дата последнего обновления ЭСФ по которую выполняется поиск</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:159:                <xs:element maxOccurs="unbounded" name="invoiceStatus" type="esf:InvoiceStatus">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:161:                    <xs:documentation>Cтатус ЭСФ в системе</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:169:              <xs:documentation>Тип ЭСФ: ORDINARY_INVOICE - обычный, FIXED_INVOICE - исправленный,ADDITIONAL_INVOICE - дополнительный</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:209:                <xs:element minOccurs="0" maxOccurs="unbounded" name="invoiceInfo" type="esf:InvoiceInfo">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:211:                    <xs:documentation>Информация о зарегистрированном ЭСФ включая бланк</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:221:          <xs:documentation>Информация о зарегистрированном ЭСФ включая бланк</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:226:              <xs:documentation>ЭСФ (XML)</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:231:              <xs:documentation>Идентификатор ЭСФ в системе</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:236:              <xs:documentation>Регистрационный номер ЭСФ</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:241:              <xs:documentation>Дата поступления ЭСФ в систему</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:251:              <xs:documentation>Дата обновления ЭСФ</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:254:          <xs:element name="signatureValid" type="xs:boolean">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:256:              <xs:documentation>Статус ЭЦП</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:259:          <xs:element minOccurs="0" name="invoiceStatus" type="esf:InvoiceStatus">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:261:              <xs:documentation>Статус ЭСФ в системе</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:271:              <xs:documentation>Версия ЭСФ</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:279:          <xs:element name="signature">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:281:              <xs:documentation>ЭЦП (J)</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:290:          <xs:element name="signatureType" type="esf:SignatureType">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:292:              <xs:documentation>Тип ЭЦП (J)</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:297:              <xs:documentation>Сертификат для проверки подписи СФ, который содержит также информацию о пользователе — владельце сертификата, который и создал ЭСФ</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:300:          <xs:element minOccurs="0" name="deadline" type="esf:deadline">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:319:              <xs:documentation>Дата ввода ЭСФ</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:329:              <xs:documentation>Идентификатор ЭСФ</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:332:          <xs:element minOccurs="0" name="documentType" type="esf:DocumentType">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:344:              <xs:documentation>БИН</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:347:          <xs:element minOccurs="0" name="type" type="esf:DeadlineType">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:356:          <xs:extension base="esf:AbstractSessionAwareRequest">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:358:              <xs:element name="signature" type="xs:string">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:360:                  <xs:documentation>ЭЦП</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:371:                    <xs:element maxOccurs="unbounded" name="invoiceIdWithReason" type="esf:InvoiceIdWithReason">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:373:                        <xs:documentation>Идентификатор ЭСФ в системе вместе с причиной совершения операции</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:385:          <xs:documentation>Идентификатор ЭСФ в системе вместе с причиной совершения операции</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:390:              <xs:documentation>Идентификатор ЭСФ в системе</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:405:                <xs:element minOccurs="0" maxOccurs="unbounded" name="changeStatusResult" type="esf:ChangeStatusResult">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:420:          <xs:element name="invoiceSummary" type="esf:InvoiceSummary">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:422:              <xs:documentation>Краткая информация о ЭСФ</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:427:              <xs:documentation>Был ли изменен статус ЭСФ в результате текущей операции</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:430:          <xs:element minOccurs="0" name="errorCode" type="esf:errorCode">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:439:          <xs:documentation>Краткая информация об ЭСФ</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:444:              <xs:documentation>Идентификатор ЭСФ</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:449:              <xs:documentation>Дата выписки ЭСФ</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:452:          <xs:element minOccurs="0" name="invoiceStatus" type="esf:InvoiceStatus">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:454:              <xs:documentation>Cтатус ЭСФ в системе</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:459:              <xs:documentation>Исходящий номер ЭСФ в бухгалтерии отправителя</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:469:              <xs:documentation>Регистрационный номер ЭСФ</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:474:              <xs:documentation>Дата последнего обновления статуса ЭСФ (в формате времени с временной зоной)</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:484:                <xs:element minOccurs="0" maxOccurs="unbounded" name="invoiceSummary" type="esf:InvoiceSummary">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:486:                    <xs:documentation>Краткая информация об ЭСФ</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:496:          <xs:extension base="esf:AbstractSessionAwareRequest">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:501:                    <xs:element maxOccurs="unbounded" name="enterpriseKey" type="esf:EnterpriseKey">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:520:              <xs:documentation>Cерия свидетельства плательщика НДС</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:525:              <xs:documentation>Номер свидетельства плательщика НДС</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:530:              <xs:documentation>ИИН/БИН</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:550:                <xs:element minOccurs="0" maxOccurs="unbounded" name="enterpriseValidationResult" type="esf:EnterpriseValidationResult">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:567:              <xs:documentation>ИИН/БИН</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:570:          <xs:element name="resultType" type="esf:EnterpriseValidationResultType">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:579:          <xs:extension base="esf:AbstractSessionAwareRequest">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:584:                    <xs:element maxOccurs="unbounded" name="invoiceKey" type="esf:InvoiceKey">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:586:                        <xs:documentation>Объект содержащий дату и внутренний номер ЭСФ</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:592:              <xs:element name="direction" type="esf:InvoiceDirection">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:594:                  <xs:documentation>Признак, указывающий, являются ли запрашиваемые ЭСФ входящими или исходящими для запрашивающей стороны</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:603:          <xs:documentation>Объект содержащий дату и внутренний номер ЭСФ</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:608:              <xs:documentation>Дата выписки ЭСФ</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:613:              <xs:documentation>Номер ЭСФ в бухгалтерии поставщика</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:620:          <xs:extension base="esf:AbstractSessionAwareRequest">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:629:                  <xs:documentation>Идентификатор последнего ЭСФ полученный в предыдущем блоке</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:632:              <xs:element name="direction" type="esf:InvoiceDirection">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:634:                  <xs:documentation>Признак, указывающий, являются ли запрашиваемые ЭСФ входящими или исходящими для запрашивающей стороны</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:644:                  <xs:documentation>Возвращать полную информацию об ЭСФ при изменении статуса</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:660:              <xs:documentation>Идентификатор ЭСФ последней записи в этом блоке</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:671:                <xs:element minOccurs="0" maxOccurs="unbounded" name="invoiceInfo" type="esf:InvoiceInfo">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:673:                    <xs:documentation>Информация о зарегистрированном ЭСФ включая бланк</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:683:          <xs:extension base="esf:AbstractSessionAwareRequest">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:690:                        <xs:documentation>Идентификатор ЭСФ в системе</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:705:                <xs:element minOccurs="0" maxOccurs="unbounded" name="invoiceError" type="esf:InvoiceError">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:707:                    <xs:documentation>Список c описанием ошибок тяжелого ФЛК для ЭСФ</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:717:          <xs:documentation>Информация об ошибках тяжелого ФЛК для ЭСФ</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:722:              <xs:documentation>Идентификатор ЭСФ</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:728:                <xs:element maxOccurs="unbounded" name="error" type="esf:Error">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:730:                    <xs:documentation>Ошибки валидации ЭСФ</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:748:          <xs:element minOccurs="0" name="errorCode" type="esf:errorCode">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:762:          <xs:extension base="esf:AbstractSessionAwareRequest">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:769:                        <xs:documentation>Список идентификаторов ЭСФ</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:784:                <xs:element maxOccurs="unbounded" name="esfHistory" type="esf:InvoiceInfoHistoryRecord">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:786:                    <xs:documentation>Список истории ЭСФ</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:796:          <xs:documentation>Информация об истории ЭСФ</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:801:              <xs:documentation>Идентификатор ЭСФ в системе</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:804:          <xs:element minOccurs="0" name="status" type="esf:InvoiceStatus">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:806:              <xs:documentation>Статус ЭСФ</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:821:              <xs:documentation>ИИН/БИН участника иницировавшего изменение</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:829:          <xs:element minOccurs="0" name="clientType" type="esf:ClientType">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:838:          <xs:documentation>Признак, указывающий, являются ли запрашиваемые ЭСФ входящими или исходящими для запрашивающей стороны</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:855:          <xs:documentation>Статус ЭСФ в системе</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:875:              <xs:documentation>Аннулирован ИС ЭСФ для отнесения в зачет и на вычеты</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:922:          <xs:documentation>Тип ЭЦП</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:927:              <xs:documentation>ЭЦП юридического лица</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:932:              <xs:documentation>ЭЦП лица, уполномоченного подписывать счета-фактуры</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:974:              <xs:documentation>Сопроводительная накладная на товары</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1001:              <xs:documentation>Отклонение ЭСФ</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1006:              <xs:documentation>Отклонение отзыва ЭСФ</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1061:              <xs:documentation>Дата формирования основной ЭСФ на основании СНТ</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1066:              <xs:documentation>Дата формирования дополнительной ЭСФ на основании СНТ</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1686:              <xs:documentation>ИИН/БИН отсутствует в справочнике</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1691:              <xs:documentation>Серия свидетельства НДС или номер свидетельства НДС отсутствуют в справочнике</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1733:      <xs:element name="accessDeniedException" nillable="true" type="esf:AccessDeniedFault" />
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1734:      <xs:element name="businessException" nillable="true" type="esf:BusinessFault" />
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1735:      <xs:element name="sessionClosedException" nillable="true" type="esf:SessionClosedFault" />
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1736:      <xs:element name="deleteInvoiceByIdRequest" nillable="true" type="esf:DeleteInvoiceByIdRequest" />
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1737:      <xs:element name="deleteInvoiceByIdResponse" nillable="true" type="esf:DeleteInvoiceByIdResponse" />
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1738:      <xs:element name="queryInvoiceRequest" nillable="true" type="esf:QueryInvoiceRequest" />
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1739:      <xs:element name="queryInvoiceResponse" nillable="true" type="esf:QueryInvoiceResponse" />
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1740:      <xs:element name="declineInvoiceByIdRequest" nillable="true" type="esf:InvoiceByIdWithReasonRequest" />
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1741:      <xs:element name="declineInvoiceByIdResponse" nillable="true" type="esf:TryChangeStatusResponse" />
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1742:      <xs:element name="queryInvoiceSummaryByIdRequest" nillable="true" type="esf:InvoiceByIdRequest" />
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1743:      <xs:element name="queryInvoiceSummaryByIdResponse" nillable="true" type="esf:InvoiceSummaryResponse" />
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1744:      <xs:element name="enterpriseValidationRequest" nillable="true" type="esf:EnterpriseValidationRequest" />
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1745:      <xs:element name="enterpriseValidationResponse" nillable="true" type="esf:EnterpriseValidationResponse" />
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1746:      <xs:element name="queryInvoiceByKeyRequest" nillable="true" type="esf:InvoiceByKeyRequest" />
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1747:      <xs:element name="queryInvoiceByKeyResponse" nillable="true" type="esf:QueryInvoiceResponse" />
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1748:      <xs:element name="queryUpdatesRequest" nillable="true" type="esf:QueryInvoiceUpdateRequest" />
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1749:      <xs:element name="queryUpdatesResponse" nillable="true" type="esf:QueryInvoiceUpdateResponse" />
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1750:      <xs:element name="queryInvoiceSummaryByKeyRequest" nillable="true" type="esf:InvoiceByKeyRequest" />
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1751:      <xs:element name="queryInvoiceSummaryByKeyResponse" nillable="true" type="esf:InvoiceSummaryResponse" />
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1752:      <xs:element name="queryInvoiceByIdRequest" nillable="true" type="esf:InvoiceByIdRequest" />
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1753:      <xs:element name="queryInvoiceByIdResponse" nillable="true" type="esf:QueryInvoiceResponse" />
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1754:      <xs:element name="confirmInvoiceByIdRequest" nillable="true" type="esf:InvoiceByIdRequest" />
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1755:      <xs:element name="confirmInvoiceByIdResponse" nillable="true" type="esf:InvoiceSummaryResponse" />
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1756:      <xs:element name="queryInvoiceErrorByIdRequest" nillable="true" type="esf:InvoiceErrorByIdRequest" />
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1757:      <xs:element name="queryInvoiceErrorByIdResponse" nillable="true" type="esf:InvoiceErrorByIdResponse" />
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1758:      <xs:element name="revokeInvoiceByIdRequest" nillable="true" type="esf:InvoiceByIdWithReasonRequest" />
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1759:      <xs:element name="revokeInvoiceByIdResponse" nillable="true" type="esf:TryChangeStatusResponse" />
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1760:      <xs:element name="queryInvoiceHistoryByIdRequest" nillable="true" type="esf:QueryInvoiceHistoryByIdRequest" />
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1761:      <xs:element name="queryInvoiceHistoryByIdResponse" nillable="true" type="esf:QueryInvoiceHistoryByIdResponse" />
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1762:      <xs:element name="unrevokeInvoiceByIdRequest" nillable="true" type="esf:InvoiceByIdWithReasonRequest" />
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1763:      <xs:element name="unrevokeInvoiceByIdResponse" nillable="true" type="esf:TryChangeStatusResponse" />
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1765:    <xs:schema targetNamespace="abstractInvoice.esf" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1768:          <xs:documentation>Тип ЭСФ</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1773:              <xs:documentation>Основной ЭСФ</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1778:              <xs:documentation>Исправленный ЭСФ (A 4)</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1783:              <xs:documentation>Дополнительный ЭСФ (A 5)</xs:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1884:    <wsdl:documentation>Сервис работы с ЭСФ</wsdl:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1886:      <wsdl:documentation>Удалить указанную ЭСФ в статусе FAILED</wsdl:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1894:      <wsdl:documentation>Вернуть список ЭСФ удовлетворяющих указанному критерию</wsdl:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1902:      <wsdl:documentation>Перевести ЭСФ с указанными идентификаторами в статус - DECLINED (Отклонено получателем). Операция разрешена только для ЭСФ с типом FIXED_INVOICE и ADDITIONAL_INVOICE</wsdl:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1910:      <wsdl:documentation>Получить список статусов ЭСФ по идентификаторам</wsdl:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1924:      <wsdl:documentation>Поиск ЭСФ по дате и внутреннему номеру</wsdl:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1932:      <wsdl:documentation>Получить список новых зарегистрированных или измененных в системе ЭСФ</wsdl:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1940:      <wsdl:documentation>Поиск статусов ЭСФ по дате и внутреннему номеру</wsdl:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1948:      <wsdl:documentation>Вернуть список ЭСФ по идентификаторам</wsdl:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1963:      <wsdl:documentation>Получить список ошибок тяжелого ФЛК по идентификаторам ЭСФ</wsdl:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1971:      <wsdl:documentation>Перевести ЭСФ с указанными идентификаторами в статус - REVOKED (Отозвано отправителем). Операция разрешена только для ЭСФ с типом ORDINARY_INVOICE</wsdl:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1979:      <wsdl:documentation>Получить записи об истории ЭСФ</wsdl:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:1987:      <wsdl:documentation>Перевести ЭСФ с указанными идентификаторами в статус - DELIVERED (Доставлено). Операция разрешена только для ЭСФ со статусом REVOKED</wsdl:documentation>
+./ESF_kz/Connected Services/InvoiceService/InvoiceService.wsdl:2243:      <soap:address location="https://test3.esf.kgd.gov.kz:8443/esf-web/ws/api1/InvoiceService" />
+./ESF_kz/Connected Services/InvoiceService/Reference.svcmap:22:    <MetadataSource Address="https://test3.esf.kgd.gov.kz:8443/esf-web/ws/api1/InvoiceService?wsdl" Protocol="http" SourceId="1" />
+./ESF_kz/Connected Services/InvoiceService/Reference.svcmap:25:    <MetadataFile FileName="InvoiceService.wsdl" MetadataType="Wsdl" ID="8b82d28b-2f95-4508-9b26-61eb1071004e" SourceId="1" SourceUrl="https://test3.esf.kgd.gov.kz:8443/esf-web/ws/api1/InvoiceService?wsdl" />
+./ESF_kz/Connected Services/InvoiceService/configuration91.svcinfo:224:    <endpoint name="InvoiceServicePort" contract="InvoiceService.InvoiceService" bindingType="basicHttpBinding" address="https://test3.esf.kgd.gov.kz:8443/esf-web/ws/api1/InvoiceService" bindingConfiguration="InvoiceServiceSoapBinding">
+./ESF_kz/Connected Services/InvoiceService/configuration91.svcinfo:227:          <serializedValue>https://test3.esf.kgd.gov.kz:8443/esf-web/ws/api1/InvoiceService</serializedValue>
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:18:    [System.ComponentModel.DesignerCategoryAttribute("code")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:19:    [System.Xml.Serialization.XmlTypeAttribute(Namespace="esf")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:50:    [System.ComponentModel.DesignerCategoryAttribute("code")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:51:    [System.Xml.Serialization.XmlTypeAttribute(Namespace="esf")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:96:    [System.ComponentModel.DesignerCategoryAttribute("code")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:97:    [System.Xml.Serialization.XmlTypeAttribute(Namespace="esf")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:129:    [System.ComponentModel.DesignerCategoryAttribute("code")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:130:    [System.Xml.Serialization.XmlTypeAttribute(Namespace="esf")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:175:    [System.ComponentModel.DesignerCategoryAttribute("code")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:176:    [System.Xml.Serialization.XmlTypeAttribute(Namespace="esf")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:263:    [System.ComponentModel.DesignerCategoryAttribute("code")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:264:    [System.Xml.Serialization.XmlTypeAttribute(Namespace="esf")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:309:    [System.ComponentModel.DesignerCategoryAttribute("code")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:310:    [System.Xml.Serialization.XmlTypeAttribute(Namespace="esf")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:537:    [System.Xml.Serialization.XmlTypeAttribute(Namespace="esf")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:550:    [System.Xml.Serialization.XmlTypeAttribute(Namespace="esf")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:593:    [System.Xml.Serialization.XmlTypeAttribute(Namespace="abstractInvoice.esf")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:619:    [System.ComponentModel.DesignerCategoryAttribute("code")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:620:    [System.Xml.Serialization.XmlTypeAttribute(Namespace="esf")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:651:    [System.ComponentModel.DesignerCategoryAttribute("code")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:652:    [System.Xml.Serialization.XmlTypeAttribute(Namespace="esf")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:675:    [System.ComponentModel.DesignerCategoryAttribute("code")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:676:    [System.Xml.Serialization.XmlTypeAttribute(Namespace="esf")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:699:    [System.ComponentModel.DesignerCategoryAttribute("code")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:700:    [System.Xml.Serialization.XmlTypeAttribute(Namespace="esf")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:806:    [System.ComponentModel.DesignerCategoryAttribute("code")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:807:    [System.Xml.Serialization.XmlTypeAttribute(Namespace="esf")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:844:    [System.ComponentModel.DesignerCategoryAttribute("code")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:845:    [System.Xml.Serialization.XmlTypeAttribute(Namespace="esf")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:868:    [System.ComponentModel.DesignerCategoryAttribute("code")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:869:    [System.Xml.Serialization.XmlTypeAttribute(Namespace="esf")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:872:        private string signatureField;
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:880:        public string signature {
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:882:                return this.signatureField;
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:885:                this.signatureField = value;
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:886:                this.RaisePropertyChanged("signature");
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:920:    [System.ComponentModel.DesignerCategoryAttribute("code")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:921:    [System.Xml.Serialization.XmlTypeAttribute(Namespace="esf")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:944:    [System.ComponentModel.DesignerCategoryAttribute("code")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:945:    [System.Xml.Serialization.XmlTypeAttribute(Namespace="esf")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:968:    [System.ComponentModel.DesignerCategoryAttribute("code")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:969:    [System.Xml.Serialization.XmlTypeAttribute(Namespace="esf")]
+./ESF_kz/Connected Services/InvoiceService/Reference.cs:972:        private string signatureField;
