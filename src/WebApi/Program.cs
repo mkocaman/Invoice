@@ -41,6 +41,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Authentication & Authorization
+builder.Services.AddAuthentication();
+builder.Services.AddAuthorization();
+
 // DbContext ekleme
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
@@ -102,6 +106,7 @@ app.UseHttpsRedirection();
 // Türkçe: Correlation middleware'i en başa yakın konumda ekleyin
 app.UseMiddleware<CorrelationMiddleware>();
 
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 

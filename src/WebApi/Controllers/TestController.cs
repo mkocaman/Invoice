@@ -1,6 +1,7 @@
 // Türkçe Açıklama:
 // Test controller - RabbitMQ ve DB loglarını tetiklemek için
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RabbitMQ.Client;
 
@@ -8,6 +9,7 @@ namespace WebApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[AllowAnonymous]
 public class TestController : ControllerBase
 {
     private readonly ILogger<TestController> _logger;
@@ -19,6 +21,7 @@ public class TestController : ControllerBase
         _connectionFactory = connectionFactory;
     }
 
+    [AllowAnonymous]
     [HttpPost("rabbitmq")]
     public IActionResult TestRabbitMq()
     {
@@ -50,6 +53,7 @@ public class TestController : ControllerBase
         }
     }
 
+    [AllowAnonymous]
     [HttpGet("logs")]
     public IActionResult GetLogs()
     {
