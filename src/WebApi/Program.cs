@@ -2,6 +2,7 @@
 // WebApi Program.cs - Serilog konfigürasyonu ile kategoriye göre farklı dosyalara yazdırma
 // CorrelationMiddleware entegrasyonu
 // PHASE 1 eklemeleri (CSMS-JWT, CORS, RateLimit, Swagger, Exception)
+// PHASE 2 eklemeleri (FluentValidation, Pagination, ProblemDetails)
 
 using Serilog;
 using WebApi.Infrastructure.Logging;
@@ -10,6 +11,9 @@ using WebApi.Infrastructure.RateLimiting;
 using WebApi.Infrastructure.Security.Jwt;
 using WebApi.Infrastructure.Security.Policies;
 using WebApi.Infrastructure.Swagger;
+using WebApi.Infrastructure.ProblemDetails;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using RabbitMQ.Client;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Db;
@@ -75,8 +79,21 @@ builder.Services.AddGlobalExceptionHandling();
 // [SWAGGER]
 builder.Services.AddSwaggerAndOpenApi();
 
-// Add services to the container.
-builder.Services.AddControllers();
+// [VALIDATION] FluentValidation — otomatik model doğrulama (400)
+builder.Services
+    .AddFluentValidationAutoValidation()
+    .AddValidatorsFromAssemblyContaining<WebApi.Infrastructure.Validation.CreateInvoiceRequestValidator>();
+
+// [PROBLEMDETAILS] ModelState hatalarını ProblemDetails'a dönüştürmek için özel fabrika
+builder.Services.AddSingleton<Microsoft.AspNetCore.Mvc.Infrastructure.ProblemDetailsFactory, ValidationProblemDetailsFactory>();
+
+// [CONTROLLERS] Controller davranışları
+builder.Services.AddControllers()
+    .ConfigureApiBehaviorOptions(options =>
+    {
+        // Türkçe: ModelState hataları otomatik 400 döndürsün (ProblemDetailsFactory devrede)
+        options.SuppressModelStateInvalidFilter = false;
+    });
 
 // DbContext ekleme
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -151,8 +168,8 @@ app.UseSwaggerUI(c =>
     c.DisplayRequestDuration();
 });
 
+// Türkçe: Varsayılan olarak tüm controller'lar CsmsOnly İSTEMEZ; her controller kendisi karar verir.
+// (Phase1'de global RequireAuthorization kaldırıldı; TestController anonim kalacak şekilde tutulur.)
 app.MapControllers();
-// Not: CsmsOnly politikası sadece gerekli controller'larda [Authorize(Policy = "CsmsOnly")] ile uygulanır.
-// TestController gibi AllowAnonymous controller'lar bu politikadan etkilenmez.
 
 app.Run();
