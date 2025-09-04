@@ -7,7 +7,7 @@ using Invoice.Domain.Enums;
 using System.Text.Json;
 using System.Net; // HTML encoding için WebUtility
 using System.Xml.Linq;
-using Invoice.Infrastructure.KZ.Providers.KZ;
+using Invoice.Infrastructure.Providers.KZ;
 
 namespace Invoice.Infrastructure.KZ.Providers;
 
@@ -151,8 +151,8 @@ public class IsEsfProvider : IInvoiceProvider
             UnitPrice = item.UnitPrice.ToString("F2", System.Globalization.CultureInfo.InvariantCulture),
             Total = item.Total.ToString("F2", System.Globalization.CultureInfo.InvariantCulture),
             UnitCode = GetKazakhstanUnitCode(item.UnitCode),
-            TaxRate = (item.TaxRate ?? 12).ToString("F2", System.Globalization.CultureInfo.InvariantCulture)
-        }).ToList() ?? new List<object>();
+            TaxRate = item.TaxRate.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)
+        }).ToList();
 
         var net = items.Sum(item => decimal.Parse(item.Total.ToString())).ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
         var vat = items.Sum(item => decimal.Parse(item.Total.ToString()) * 0.12m).ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
@@ -165,7 +165,7 @@ public class IsEsfProvider : IInvoiceProvider
         root.Add(new XElement("Currency", "KZT"));
 
         var supplier = new XElement("Supplier");
-        supplier.Add(new XElement("BIN", envelope.Supplier?.TaxNumber ?? "123456789012")); // Varsayılan BIN
+        supplier.Add(new XElement("BIN", envelope.Customer?.TaxNumber ?? "123456789012")); // Varsayılan BIN
         root.Add(supplier);
 
         var customer = new XElement("Customer");

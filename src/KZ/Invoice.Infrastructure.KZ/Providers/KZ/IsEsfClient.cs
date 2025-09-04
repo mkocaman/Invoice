@@ -1,5 +1,6 @@
 using System.Xml;
 using System.Xml.Linq;
+using Microsoft.Extensions.Configuration;
 
 namespace Invoice.Infrastructure.Providers.KZ;
 

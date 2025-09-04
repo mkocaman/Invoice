@@ -1,9 +1,15 @@
 <Project>
   <PropertyGroup>
-    <!-- Türkçe: Uyarıları geçici olarak hata yapma; kalanlarını raporla -->
+    <!-- Türkçe: Temel .NET ayarları -->
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <EnableDefaultItems>true</EnableDefaultItems>
+  </PropertyGroup>
 
-    <!-- Türkçe: Eski hedeften restore uyarısı ve geçici downgrade uyarısı bastırmaları -->
-    <NoWarn>$(NoWarn);NU1701;NU1605</NoWarn>
+  <PropertyGroup>
+    <!-- Türkçe: Sadece gerçekten gerekli uyarıları bastır -->
+    <NoWarn>$(NoWarn);CS0108</NoWarn>
   </PropertyGroup>
 </Project>

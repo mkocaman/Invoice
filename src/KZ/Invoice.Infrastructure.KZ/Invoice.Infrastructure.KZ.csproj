@@ -1,22 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
+    <!-- Türkçe: net9, nullables, implicit usings -->
     <TargetFramework>net9.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <!-- Türkçe: Varsayılan derlenecek dosyalar otomatik dahil edilsin -->
+    <EnableDefaultItems>true</EnableDefaultItems>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
   </PropertyGroup>
 
+  <!-- Türkçe: Gerekli ortak referanslar -->
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Http" />
-    <PackageReference Include="Microsoft.Extensions.Http.Polly" />
-    <PackageReference Include="Polly" />
-    <PackageReference Include="Polly.Extensions.Http" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\Core\Invoice.Domain\Invoice.Domain.csproj" />
     <ProjectReference Include="..\..\Core\Invoice.Application\Invoice.Application.csproj" />
+    <ProjectReference Include="..\..\Core\Invoice.Domain\Invoice.Domain.csproj" />
     <ProjectReference Include="..\..\Core\Invoice.Infrastructure.Core\Invoice.Infrastructure.Core.csproj" />
   </ItemGroup>
-
 </Project>

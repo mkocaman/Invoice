@@ -4,6 +4,8 @@
 
 using Infrastructure.Db.Entities;
 using Infrastructure.Db.Services;
+using Infrastructure.Providers.Core;
+using Infrastructure.Providers.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Contracts;
 
@@ -67,5 +69,47 @@ public class InvoicesController : ControllerBase
         );
 
         return Ok(new { message = "Invoice event kaydedildi", id, dto.InvoiceId, dto.EventType });
+    }
+
+    [HttpPost("send")]
+    public async Task<IActionResult> Send([FromQuery] string provider, [FromBody] dynamic body, [FromServices] IProviderFactory factory)
+    {
+        // Türkçe: Fatura içeriği (örnek) — gerçek projede DTO kullan
+        string invoiceId = Guid.NewGuid().ToString("n");
+        string? ublXml = (string?)body?.ublXml;
+        string? jsonPayload = (string?)body?.jsonPayload;
+
+        var p = factory.Get(provider);
+        await p.AuthenticateAsync();
+
+        var result = await p.SendAsync(invoiceId, ublXml, jsonPayload);
+        // Türkçe: Audit + Status kayıtları (SENT/ACK/NACK mantığı)
+        var simulation = true;
+
+        var audit = new InvoiceAudit {
+            InvoiceId = invoiceId,
+            ExternalInvoiceNumber = result.ExternalInvoiceNumber,
+            EventType = result.Success ? "SENT" : "ERROR",
+            StatusFrom = result.Success ? "SIGNED" : "SIGNED",
+            StatusTo = result.Success ? "SENT" : "ERROR",
+            SystemCode = "TR",
+            XmlPayload = ublXml,
+            JsonPayload = jsonPayload,
+            RequestBody = result.RawRequest,
+            ResponseBody = result.RawResponse,
+            Simulation = simulation,
+            Actor = $"api:send:{provider}",
+            Notes = result.ErrorMessage
+        };
+        var id = await _audit.LogWithStatusAsync(audit, invoiceId, audit.EventType, audit.StatusFrom, audit.StatusTo, audit.SystemCode, simulation, result.ExternalInvoiceNumber, eventKey: $"{provider}-{invoiceId}-sent");
+
+        return Ok(new {
+            message = "Gönderim tamamlandı",
+            provider,
+            invoiceId,
+            external = result.ExternalInvoiceNumber,
+            success = result.Success,
+            error = result.ErrorMessage
+        });
     }
 }

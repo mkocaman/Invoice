@@ -8,7 +8,7 @@ using System.Text.Json;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Net; // HTML encoding için WebUtility
-using Invoice.Infrastructure.UZ.Providers.UZ;
+using Invoice.Infrastructure.Providers.UZ;
 
 namespace Invoice.Infrastructure.UZ.Providers;
 
@@ -157,7 +157,7 @@ public class DidoxProvider : IInvoiceProvider
         return new UzInvoicePayload(
             invoiceNumber: envelope.InvoiceNumber,
             currency: "UZS",
-            sellerInn: envelope.Supplier?.TaxNumber ?? "123456789", // Varsayılan INN
+            sellerInn: envelope.Customer?.TaxNumber ?? "123456789", // Varsayılan INN
             buyerInn: envelope.Customer?.TaxNumber ?? envelope.CustomerTaxNumber ?? "987654321",
             issueDate: envelope.IssueDate.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
             items: items,

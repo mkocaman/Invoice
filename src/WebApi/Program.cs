@@ -8,6 +8,10 @@ using RabbitMQ.Client;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Db;
 using Infrastructure.Db.Services;
+using Infrastructure.Providers.Config;
+using Infrastructure.Providers.Core;
+using Infrastructure.Providers.Contracts;
+using Infrastructure.Providers.Adapters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,6 +54,26 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // Audit servisi
 builder.Services.AddScoped<IInvoiceAuditService, InvoiceAuditService>();
+
+// Türkçe: ProviderOptions binding
+builder.Services.Configure<ProviderOptions>(builder.Configuration.GetSection("Providers"));
+// Türkçe: Factory
+builder.Services.AddSingleton<IProviderFactory, ProviderFactory>();
+
+// Türkçe: Foriba gerçek adapter (HttpClient ile)
+builder.Services.AddHttpClient<ForibaAdapter>();
+builder.Services.AddTransient<IInvoiceProvider, ForibaAdapter>();
+
+// Türkçe: 9 stub adapter
+builder.Services.AddTransient<IInvoiceProvider, LogoAdapter>();
+builder.Services.AddTransient<IInvoiceProvider, KolayBiAdapter>();
+builder.Services.AddTransient<IInvoiceProvider, MikroAdapter>();
+builder.Services.AddTransient<IInvoiceProvider, UyumsoftAdapter>();
+builder.Services.AddTransient<IInvoiceProvider, ElogoAdapter>();
+builder.Services.AddTransient<IInvoiceProvider, ParasutAdapter>();
+builder.Services.AddTransient<IInvoiceProvider, SovosAdapter>();
+builder.Services.AddTransient<IInvoiceProvider, DiaAdapter>();
+builder.Services.AddTransient<IInvoiceProvider, LucaAdapter>();
 
 // RabbitMQ servisleri
 builder.Services.AddSingleton<IConnectionFactory>(provider =>

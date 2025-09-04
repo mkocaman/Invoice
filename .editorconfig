@@ -1,0 +1,25 @@
+root = true
+
+# Türkçe: Derleyici/Analyzer uyarı seviyeleri
+[*.{cs,vb}]
+dotnet_analyzer_diagnostic.severity = warning
+
+# Obsolete API uyarıları (CS0618) -> info
+dotnet_diagnostic.CS0618.severity = suggestion
+
+# XML doc eksikliği (CS1591) -> none (public API için gerekmiyorsa)
+dotnet_diagnostic.CS1591.severity = none
+
+# Nullable uyarılar gürültüsünü azalt (örnek)
+dotnet_diagnostic.CS8618.severity = suggestion
+
+# Stil — using sırası ve gereksiz using temizliği
+dotnet_sort_system_directives_first = true
+dotnet_separate_import_directive_groups = true
+
+# Biçimlendirme
+csharp_new_line_before_open_brace = all
+csharp_prefer_braces = true:suggestion
+indent_size = 2
+insert_final_newline = true
+end_of_line = lf
