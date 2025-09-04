@@ -6,6 +6,7 @@
 // PHASE 3 eklemeleri (Serilog rolling files, Health checks, HTTP resilience)
 // PHASE 5 eklemeleri (Observability - Prometheus metrics, SLA reporting)
 // PHASE 6 eklemeleri (Multi-provider registry, selection strategy, health monitoring)
+// PHASE 7 eklemeleri (Workflow model, Inbox/Outbox/Idempotency, Background services)
 
 using Serilog;
 using WebApi.Infrastructure.Logging;
@@ -32,6 +33,8 @@ using Infrastructure.Providers.Core;
 using Infrastructure.Providers.Contracts;
 using Infrastructure.Providers.Adapters;
 using Infrastructure.Providers;
+using Infrastructure.Workflows;
+using Infrastructure.Workflows.Background;
 
 // Türkçe: Serilog'u appsettings'ten kur (dosya/konsol)
 SerilogExtensions.ConfigureSerilogFromConfiguration(new ConfigurationBuilder()
@@ -98,6 +101,10 @@ builder.Services.AddHttpClient("provider-default")
 // [PHASE 6] Multi-provider çekirdek servisler
 builder.Services.AddMultiProviderCore();
 
+// [PHASE 7] Workflow servisleri
+builder.Services.AddInvoiceWorkflow();
+builder.Services.AddRabbitAdapters();
+
 // [CONTROLLERS] Controller davranışları
 builder.Services.AddControllers()
     .ConfigureApiBehaviorOptions(options =>
@@ -105,6 +112,10 @@ builder.Services.AddControllers()
         // Türkçe: ModelState hataları otomatik 400 döndürsün (ProblemDetailsFactory devrede)
         options.SuppressModelStateInvalidFilter = false;
     });
+
+// [PHASE 7] Hosted Services (Outbox Dispatcher & Consumer)
+builder.Services.AddHostedService<OutboxDispatcher>();
+builder.Services.AddHostedService<InvoiceConsumer>();
 
 // DbContext ekleme
 builder.Services.AddDbContext<AppDbContext>(options =>

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Invoice.Smoke")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+33279c6a3accc9274e4c4b6459570e86c586a1a8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e66f2ec6d6e42e7aa33801d7311c2c3694406530")]
 [assembly: System.Reflection.AssemblyProductAttribute("Invoice.Smoke")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Invoice.Smoke")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
