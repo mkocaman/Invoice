@@ -17,7 +17,10 @@ namespace Invoice.Infrastructure.TR.Providers
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILogger<KolayBiProvider> _logger;
         public ProviderType ProviderType => ProviderType.KOLAYBI;
-
+        
+        public string Key => "kolaybi";
+        
+        public string CountryCode => "TR";
         public KolayBiProvider(IHttpClientFactory httpClientFactory, ILogger<KolayBiProvider> logger)
         {
             _httpClientFactory = httpClientFactory;

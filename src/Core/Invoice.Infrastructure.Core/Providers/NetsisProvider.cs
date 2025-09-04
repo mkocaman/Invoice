@@ -16,7 +16,10 @@ namespace Invoice.Infrastructure.Providers
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILogger<NetsisProvider> _logger;
         public ProviderType ProviderType => ProviderType.NETSIS;
-
+        
+        public string Key => "netsis";
+        
+        public string CountryCode => "TR";
         public NetsisProvider(IHttpClientFactory httpClientFactory, ILogger<NetsisProvider> logger)
         {
             _httpClientFactory = httpClientFactory;

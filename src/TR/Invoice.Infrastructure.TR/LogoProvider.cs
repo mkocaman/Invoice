@@ -27,7 +27,10 @@ namespace Invoice.Infrastructure.TR.Providers
         /// Provider tipi
         /// </summary>
         public ProviderType ProviderType => ProviderType.LOGO;
-
+        
+        public string Key => "logo";
+        
+        public string CountryCode => "TR";
         /// <summary>
         /// Fatura gönderir (minimal mock implementasyon)
         /// </summary>

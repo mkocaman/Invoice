@@ -18,7 +18,10 @@ namespace Invoice.Infrastructure.TR.Providers
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILogger<ParasutProvider> _logger;
         public ProviderType ProviderType => ProviderType.PARASUT;
-
+        
+        public string Key => "parasut";
+        
+        public string CountryCode => "TR";
         public ParasutProvider(IHttpClientFactory httpClientFactory, ILogger<ParasutProvider> logger)
         {
             _httpClientFactory = httpClientFactory;

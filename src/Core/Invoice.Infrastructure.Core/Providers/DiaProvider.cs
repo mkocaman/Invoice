@@ -19,7 +19,10 @@ namespace Invoice.Infrastructure.Providers
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILogger<DiaProvider> _logger;
         public ProviderType ProviderType => ProviderType.DIA;
-
+        
+        public string Key => "dia";
+        
+        public string CountryCode => "TR";
         public DiaProvider(IHttpClientFactory httpClientFactory, ILogger<DiaProvider> logger)
         {
             _httpClientFactory = httpClientFactory;

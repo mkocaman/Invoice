@@ -28,6 +28,16 @@ namespace Invoice.Infrastructure.Providers
         /// Provider tipi
         /// </summary>
         public ProviderType ProviderType => ProviderType.FORIBA;
+        
+        /// <summary>
+        /// Sağlayıcı anahtarı
+        /// </summary>
+        public string Key => "foriba";
+        
+        /// <summary>
+        /// Desteklenen ülke kodu
+        /// </summary>
+        public string CountryCode => "TR";
 
         /// <summary>
         /// Fatura gönderir (minimal mock implementasyon)

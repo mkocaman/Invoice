@@ -15,7 +15,10 @@ namespace Invoice.Infrastructure.TR.Providers
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILogger<MikroProvider> _logger;
         public ProviderType ProviderType => ProviderType.MIKRO;
-
+        
+        public string Key => "mikro";
+        
+        public string CountryCode => "TR";
         public MikroProvider(IHttpClientFactory httpClientFactory, ILogger<MikroProvider> logger)
         {
             _httpClientFactory = httpClientFactory;

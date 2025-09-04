@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Invoice.Infrastructure.KZ")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e66f2ec6d6e42e7aa33801d7311c2c3694406530")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d9ee2f167a9a3aa673547b279140142c65ea5560")]
 [assembly: System.Reflection.AssemblyProductAttribute("Invoice.Infrastructure.KZ")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Invoice.Infrastructure.KZ")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

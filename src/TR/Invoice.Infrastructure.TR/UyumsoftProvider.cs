@@ -16,7 +16,10 @@ namespace Invoice.Infrastructure.TR.Providers
     {
         private readonly ILogger<UyumsoftProvider> _logger;
         public ProviderType ProviderType => ProviderType.UYUMSOFT;
-
+        
+        public string Key => "uyumsoft";
+        
+        public string CountryCode => "TR";
         public UyumsoftProvider(ILogger<UyumsoftProvider> logger)
         {
             _logger = logger;

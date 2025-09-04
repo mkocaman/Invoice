@@ -16,7 +16,10 @@ namespace Invoice.Infrastructure.TR.Providers
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILogger<BizimHesapProvider> _logger;
         public ProviderType ProviderType => ProviderType.BIZIMHESAP;
-
+        
+        public string Key => "bizim-hesap";
+        
+        public string CountryCode => "TR";
         public BizimHesapProvider(IHttpClientFactory httpClientFactory, ILogger<BizimHesapProvider> logger)
         {
             _httpClientFactory = httpClientFactory;

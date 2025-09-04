@@ -31,6 +31,10 @@ public class FakturaUzProvider : IInvoiceProvider
     }
 
     public ProviderType ProviderType => ProviderType.FAKTURA_UZ;
+    
+    public string Key => "faktura-uz";
+    
+    public string CountryCode => "UZ";
 
     public async Task<ProviderSendResult> SendInvoiceAsync(InvoiceEnvelope envelope, ProviderConfig config, CancellationToken cancellationToken = default)
     {

@@ -37,6 +37,10 @@ public class IsEsfProvider : IInvoiceProvider
     }
 
     public ProviderType ProviderType => ProviderType.IS_ESF_KZ;
+    
+    public string Key => "is-esf-kz";
+    
+    public string CountryCode => "KZ";
 
     public async Task<ProviderSendResult> SendInvoiceAsync(InvoiceEnvelope envelope, ProviderConfig config, CancellationToken cancellationToken = default)
     {

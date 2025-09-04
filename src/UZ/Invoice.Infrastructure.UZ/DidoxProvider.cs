@@ -38,6 +38,10 @@ public class DidoxProvider : IInvoiceProvider
     }
 
     public ProviderType ProviderType => ProviderType.DIDOX_UZ;
+    
+    public string Key => "didox-uz";
+    
+    public string CountryCode => "UZ";
 
     public async Task<ProviderSendResult> SendInvoiceAsync(InvoiceEnvelope envelope, ProviderConfig config, CancellationToken cancellationToken = default)
     {

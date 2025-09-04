@@ -15,7 +15,10 @@ namespace Invoice.Infrastructure.TR.Providers
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILogger<IdeaProvider> _logger;
         public ProviderType ProviderType => ProviderType.IDEA;
-
+        
+        public string Key => "idea";
+        
+        public string CountryCode => "TR";
         public IdeaProvider(IHttpClientFactory httpClientFactory, ILogger<IdeaProvider> logger)
         {
             _httpClientFactory = httpClientFactory;

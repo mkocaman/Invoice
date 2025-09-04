@@ -14,6 +14,12 @@ namespace Invoice.Application.Interfaces
     {
         /// <summary>Türkçe: Sağlayıcı tipini döndürür (Foriba, Logo, Mikro vb.).</summary>
         ProviderType ProviderType { get; }
+        
+        /// <summary>Türkçe: Sağlayıcı anahtarı (foriba, logo, mikro vb.).</summary>
+        string Key { get; }
+        
+        /// <summary>Türkçe: Desteklenen ülke kodu (TR, UZ, KZ vb.).</summary>
+        string CountryCode { get; }
 
         /// <summary>
         /// Türkçe: Faturayı sağlayıcıya gönderir.
